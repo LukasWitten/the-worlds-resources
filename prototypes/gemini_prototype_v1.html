@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The World's Resources</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Leaflet CSS CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0f172a',
+                        cardbg: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom map dark mode filter */
+        .dark-tiles {
+            filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-slate-100 font-sans antialiased min-h-screen flex flex-col">
+
+    <!-- TOP NAVIGATION -->
+    <nav class="sticky top-0 z-50 bg-darkbg/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <span class="text-2xl">🌐</span>
+                    <a href="#home" onclick="showSection('home')" class="font-bold text-lg tracking-wide hover:text-indigo-400 transition">The World's Resources</a>
+                </div>
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <button onclick="showSection('home')" class="nav-link text-indigo-400 font-medium transition hover:text-indigo-300">Home</button>
+                    <button onclick="showSection('map')" class="nav-link text-slate-300 font-medium transition hover:text-indigo-300">Resource Map</button>
+                    <button onclick="showSection('sources')" class="nav-link text-slate-300 font-medium transition hover:text-indigo-300">Data Sources</button>
+                    <button onclick="showSection('contact')" class="nav-link text-slate-300 font-medium transition hover:text-indigo-300">Contact</button>
+                    <a href="https://github.com" target="_blank" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow-lg shadow-indigo-500/20">GitHub</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-cardbg border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="showSection('home'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-indigo-400">Home</button>
+            <button onclick="showSection('map'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-indigo-400">Resource Map</button>
+            <button onclick="showSection('sources'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-indigo-400">Data Sources</button>
+            <button onclick="showSection('contact'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-indigo-400">Contact</button>
+            <a href="https://github.com" target="_blank" class="block text-center bg-indigo-600 text-white py-2 rounded-lg mt-2">GitHub</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- 1. HOME SECTION -->
+        <section id="section-home" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Hero -->
+            <div class="text-center py-12 md:py-20">
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                    Visualizing the Veins of <span class="text-indigo-400">Global Trade.</span>
+                </h1>
+                <p class="max-w-2xl mx-auto text-lg sm:text-xl text-slate-400 mb-10">
+                    An open-source interactive map tracking the origins, transport routes, and processing hubs of the world's most critical resources—starting with Germany.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button onclick="showSection('map')" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-4 rounded-xl font-semibold text-lg transition shadow-xl shadow-indigo-500/25 flex items-center justify-center space-x-2">
+                        <span>🚀 Explore Resource Map</span>
+                    </button>
+                    <a href="https://github.com" target="_blank" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 px-8 py-4 rounded-xl font-semibold text-lg transition flex items-center justify-center space-x-2">
+                        <span>View on GitHub</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Preview Card -->
+            <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-20 bg-cardbg group cursor-pointer" onclick="showSection('map')">
+                <div class="absolute inset-0 bg-indigo-900/10 z-10 group-hover:bg-transparent transition"></div>
+                <div class="h-96 w-full bg-slate-900 flex items-center justify-center relative">
+                    <div class="absolute inset-0 opacity-40 bg-[radial-gradient(#312e81_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    <div class="text-center z-20 px-4">
+                        <span class="text-5xl mb-4 block">🗺️</span>
+                        <h3 class="text-2xl font-bold text-white mb-2">Interactive Dark Mode World Map</h3>
+                        <p class="text-slate-400">Click here to launch the map with interactive filters & fluid transport routes.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Sections -->
+            <div class="grid md:grid-cols-3 gap-8 mb-20">
+                <div class="bg-cardbg p-8 rounded-2xl border border-slate-800">
+                    <div class="text-3xl mb-4">🗺️</div>
+                    <h3 class="text-xl font-bold mb-3">Minimalist Dark Map</h3>
+                    <p class="text-slate-400 leading-relaxed">Designed for ultimate visual focus. Dark mode aesthetics highlight neon-colored resource flows and precise geographic extraction points.</p>
+                </div>
+                <div class="bg-cardbg p-8 rounded-2xl border border-slate-800">
+                    <div class="text-3xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-3">Dynamic Routes</h3>
+                    <p class="text-slate-400 leading-relaxed">Watch animated pathways moving dynamically from extraction sources and import ports to processing hubs and consumer markets.</p>
+                </div>
+                <div class="bg-cardbg p-8 rounded-2xl border border-slate-800">
+                    <div class="text-3xl mb-4">🎛️</div>
+                    <h3 class="text-xl font-bold mb-3">Collapsible Filters</h3>
+                    <p class="text-slate-400 leading-relaxed">Toggle specific resources on or off via the sidebar, or collapse all menus for an immersive full-screen map experience.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. RESOURCE MAP SECTION (Hidden by default) -->
+        <section id="section-map" class="hidden h-[calc(100vh-4rem)] relative flex overflow-hidden">
+            <!-- Left Sidebar / Filter Menu -->
+            <div id="map-sidebar" class="absolute md:relative z-30 w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-6 flex flex-col justify-between transition-transform duration-300 shadow-2xl">
+                <div>
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-xl font-bold flex items-center space-x-2">
+                            <span>🎛️</span>
+                            <span>Resource Filters</span>
+                        </h2>
+                        <!-- Close Sidebar Button for Mobile/Immersive -->
+                        <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white md:hidden">
+                            ✕
+                        </button>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-6">Select resources to display their sources, routes, and processing hubs on the map.</p>
+                    
+                    <!-- Resource Checkboxes -->
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+                            <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                            <span class="font-medium text-blue-400">💧 Water Streams</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+                            <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                            <span class="font-medium text-amber-500">🛢️ Crude Oil & Refineries</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+                            <input type="checkbox" checked class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                            <span class="font-medium text-yellow-400">🪙 Gold & Precious Metals</span>
+                        </label>
+                        <label class="flex items-center space-x-3 p-3 rounded-xl bg-slate-800/50 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+                            <input type="checkbox" class="rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-indigo-500 h-4 w-4">
+                            <span class="font-medium text-orange-400">⚡ Copper & Industry</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="pt-6 border-t border-slate-800 text-xs text-slate-500">
+                    <p>MVP Focus: Germany & Global Import Routes</p>
+                </div>
+            </div>
+
+            <!-- Map Container -->
+            <div class="flex-grow h-full relative">
+                <!-- Toggle Sidebar Button (Floating when collapsed) -->
+                <button id="sidebar-toggle-btn" onclick="toggleSidebar()" class="absolute top-4 left-4 z-20 bg-cardbg/90 hover:bg-cardbg text-white p-3 rounded-xl shadow-xl border border-slate-700 flex items-center space-x-2 backdrop-blur-md transition">
+                    <span id="toggle-icon">◀</span>
+                    <span class="text-sm font-medium hidden sm:inline">Toggle Menu</span>
+                </button>
+
+                <!-- Leaflet Map Div -->
+                <div id="leaflet-map" class="w-full h-full z-10"></div>
+            </div>
+        </section>
+
+        <!-- 3. DATA SOURCES SECTION -->
+        <section id="section-sources" class="hidden py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-extrabold mb-6">Data Sources & Transparency</h2>
+            <p class="text-slate-400 mb-8 leading-relaxed">
+                "The World’s Resources" is committed to absolute data transparency. All geographic coordinates, transport routes, and statistical figures presented on the map are gathered exclusively from open and verified public institutions.
+            </p>
+            <div class="space-y-6">
+                <div class="bg-cardbg p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-lg font-bold text-indigo-400 mb-2">Statistisches Bundesamt (Destatis)</h3>
+                    <p class="text-slate-400 text-sm">National trade volumes, import statistics, and raw material processing metrics for Germany.</p>
+                </div>
+                <div class="bg-cardbg p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-lg font-bold text-indigo-400 mb-2">Bundesnetzagentur (BNetzA)</h3>
+                    <p class="text-slate-400 text-sm">Infrastructure data regarding energy grids, pipelines, and domestic resource distribution networks.</p>
+                </div>
+                <div class="bg-cardbg p-6 rounded-2xl border border-slate-800">
+                    <h3 class="text-lg font-bold text-indigo-400 mb-2">Global Energy Monitor & OpenStreetMap</h3>
+                    <p class="text-slate-400 text-sm">Geographic coordinates for extraction facilities, refineries, and major supply line waypoints.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CONTACT SECTION -->
+        <section id="section-contact" class="hidden py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <h2 class="text-3xl font-extrabold mb-6">Contact & Community</h2>
+            <p class="text-slate-400 mb-8 leading-relaxed">
+                Have questions, found a data error, or want to contribute to this open-source project? Reach out to us through our community channels or directly via email.
+            </p>
+            <div class="grid sm:grid-cols-2 gap-6 mb-10">
+                <a href="https://github.com" target="_blank" class="bg-cardbg p-6 rounded-2xl border border-slate-800 hover:border-indigo-500 transition flex items-center space-x-4">
+                    <span class="text-3xl">💻</span>
+                    <div>
+                        <h3 class="font-bold text-white">GitHub Repository</h3>
+                        <p class="text-xs text-slate-400">Contribute code & report issues</p>
+                    </div>
+                </a>
+                <a href="https://x.com" target="_blank" class="bg-cardbg p-6 rounded-2xl border border-slate-800 hover:border-indigo-500 transition flex items-center space-x-4">
+                    <span class="text-3xl">🐦</span>
+                    <div>
+                        <h3 class="font-bold text-white">X / Twitter</h3>
+                        <p class="text-xs text-slate-400">Latest updates & announcements</p>
+                    </div>
+                </a>
+                <a href="https://linkedin.com" target="_blank" class="bg-cardbg p-6 rounded-2xl border border-slate-800 hover:border-indigo-500 transition flex items-center space-x-4">
+                    <span class="text-3xl">💼</span>
+                    <div>
+                        <h3 class="font-bold text-white">LinkedIn</h3>
+                        <p class="text-xs text-slate-400">Professional network & insights</p>
+                    </div>
+                </a>
+                <a href="mailto:contact@worldresources.org" class="bg-cardbg p-6 rounded-2xl border border-slate-800 hover:border-indigo-500 transition flex items-center space-x-4">
+                    <span class="text-3xl">✉️</span>
+                    <div>
+                        <h3 class="font-bold text-white">Direct E-Mail</h3>
+                        <p class="text-xs text-slate-400">contact@worldresources.org</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-cardbg border-t border-slate-800 py-8 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-4 sm:space-y-0">
+            <div>
+                © 2026 The World’s Resources. Released under the MIT License.
+            </div>
+            <div class="flex space-x-6">
+                <a href="#contact" onclick="showSection('contact')" class="hover:text-slate-300 transition">Contact</a>
+                <a href="https://github.com" target="_blank" class="hover:text-slate-300 transition">GitHub</a>
+                <!-- Impressum discret unten im Footer -->
+                <span onclick="alert('Impressum:\\nAngaben gemäß § 5 TMG\\nMax Mustermann\\nMusterstraße 1\\n10115 Berlin\\nE-Mail: contact@worldresources.org')" class="hover:text-slate-300 transition cursor-pointer">Impressum</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Leaflet JS CDN -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- App Logic Script -->
+    <script>
+        let map = null;
+        let sidebarOpen = true;
+
+        function showSection(sectionId) {
+            // Hide all sections
+            ['home', 'map', 'sources', 'contact'].forEach(id => {
+                document.getElementById(`section-${id}`).classList.add('hidden');
+            });
+
+            // Show selected section
+            document.getElementById(`section-${sectionId}`).classList.remove('hidden');
+
+            // Update nav link styles
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('text-indigo-400');
+                el.classList.add('text-slate-300');
+            });
+
+            // Initialize map if map section is opened and not yet initialized
+            if (sectionId === 'map') {
+                setTimeout(() => {
+                    if (!map) {
+                        initMap();
+                    } else {
+                        map.invalidateSize();
+                    }
+                }, 100);
+            }
+
+            window.scrollTo(0, 0);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('map-sidebar');
+            const icon = document.getElementById('toggle-icon');
+            sidebarOpen = !sidebarOpen;
+
+            if (sidebarOpen) {
+                sidebar.classList.remove('-translate-x-full', 'absolute');
+                sidebar.classList.add('relative');
+                icon.innerText = '◀';
+            } else {
+                sidebar.classList.add('-translate-x-full', 'absolute');
+                sidebar.classList.remove('relative');
+                icon.innerText = '▶';
+            }
+            setTimeout(() => { if(map) map.invalidateSize(); }, 300);
+        }
+
+        function initMap() {
+            // Centered on Germany for MVP
+            map = L.map('leaflet-map', {
+                zoomControl: false
+            }).setView([51.1657, 10.4515], 6);
+
+            // Add custom zoom control to top-right
+            L.control.zoom({
+                position: 'bottomright'
+            }).addTo(map);
+
+            // Dark CartoDB tiles
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 19
+            }).addTo(map);
+
+            // Add dummy marker for Germany oil port (Wilhelmshaven)
+            L.circleMarker([53.53, 8.14], {
+                radius: 8,
+                fillColor: "#f59e0b",
+                color: "#fff",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).addTo(map).bindPopup("<b>Wilhelmshaven Port</b><br>Crude oil import hub.");
+
+            // Add dummy marker for refinery (Schwedt)
+            L.circleMarker([52.53, 14.45], {
+                radius: 8,
+                fillColor: "#f59e0b",
+                color: "#fff",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.9
+            }).addTo(map).bindPopup("<b>PCK Refinery Schwedt</b><br>Processing hub.");
+        }
+    </script>
+</body>
+</html>

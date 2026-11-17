@@ -1,0 +1,26 @@
+{
+  "name": "the-worlds-resources",
+  "version": "1.0.0",
+  "description": "Minimalist, open-source web application visualizing global resource flows and infrastructure.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "python3 -m http.server 8080",
+    "validate:data": "node scripts/validate-data.js"
+  },
+  "keywords": [
+    "resources",
+    "geospatial",
+    "geojson",
+    "leaflet",
+    "supply-chain",
+    "open-source"
+  ],
+  "author": "The World's Resources Contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

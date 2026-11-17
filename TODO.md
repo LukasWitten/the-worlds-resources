@@ -37,15 +37,15 @@ Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung 
 
 ## 📦 Schritt 2: Git Commit durchführen
 
-- [ ] **2.1 Geänderte und neue Dateien stagen**
+- [x] **2.1 Geänderte und neue Dateien stagen**
   ```bash
   git add .
   ```
-- [ ] **2.2 Status prüfen**
+- [x] **2.2 Status prüfen**
   ```bash
   git status
   ```
-- [ ] **2.3 Commit erstellen**
+- [x] **2.3 Commit erstellen**
   ```bash
   git commit -m "feat: Add Natural Gas, intercontinental Lithium route, and GitHub Pages deployment workflow"
   ```
@@ -54,14 +54,14 @@ Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung 
 
 ## 🌐 Schritt 3: GitHub-Repository anlegen & verknüpfen
 
-- [ ] **3.1 Neues Repository auf GitHub öffnen**
+- [x] **3.1 Neues Repository auf GitHub öffnen**
   - Öffne [github.com/new](https://github.com/new).
-- [ ] **3.2 Einstellungen wählen**
+- [x] **3.2 Einstellungen wählen**
   - **Repository name**: `the-worlds-resources`
   - **Visibility**: **Public** *(Erforderlich für kostenloses Hosting über GitHub Pages)*.
   - Keine Haken bei *„Add a README“*, *„Add .gitignore“* oder *„Choose a license“* setzen (bereits im lokalen Projekt vorhanden).
   - Auf **Create repository** klicken.
-- [ ] **3.3 Lokales Projekt mit GitHub verknüpfen & pushen**
+- [x] **3.3 Lokales Projekt mit GitHub verknüpfen & pushen**
   *(Ersetze `DEIN-NUTZERNAME` mit deinem GitHub-Benutzernamen)*:
   ```bash
   git remote add origin https://github.com/DEIN-NUTZERNAME/the-worlds-resources.git
@@ -73,17 +73,17 @@ Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung 
 
 ## ⚡ Schritt 4: GitHub Pages aktivieren & Website live schalten
 
-- [ ] **4.1 Repository-Einstellungen öffnen**
+- [x] **4.1 Repository-Einstellungen öffnen**
   - Gehe in deinem GitHub-Repository oben rechts auf **Settings**.
-- [ ] **4.2 Zu GitHub Pages navigieren**
+- [x] **4.2 Zu GitHub Pages navigieren**
   - Klicke im linken Menü auf **Pages** (unter dem Bereich *Code and automation*).
-- [ ] **4.3 Build-Quelle auf GitHub Actions umstellen**
+- [x] **4.3 Build-Quelle auf GitHub Actions umstellen**
   - Unter **Build and deployment** ➔ **Source** wählst du im Dropdown-Menü:
     👉 **GitHub Actions**
-- [ ] **4.4 Deployment-Vorgang prüfen**
+- [x] **4.4 Deployment-Vorgang prüfen**
   - Klicke oben auf den Reiter **Actions**.
   - Der Workflow `Deploy to GitHub Pages` startet automatisch. Nach ca. 30–60 Sekunden erscheint ein grünes Häkchen.
-- [ ] **4.5 Live-Website im Browser aufrufen**
+- [x] **4.5 Live-Website im Browser aufrufen**
   - Deine Website ist nun weltweit live erreichbar unter:
     `https://DEIN-NUTZERNAME.github.io/the-worlds-resources/`
 
@@ -91,12 +91,12 @@ Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung 
 
 ## 🎯 Schritt 5: Feinschliff & nächste Ausbaustufen
 
-- [ ] **5.1 Repository-About-Bereich pflegen**
+- [x] **5.1 Repository-About-Bereich pflegen**
   - Auf der GitHub-Projektstartseite rechts oben bei **About** auf das Zahnrad-Symbol klicken.
   - Die Live-URL (`https://DEIN-NUTZERNAME.github.io/the-worlds-resources/`) eintragen und das Häkchen bei *„Use your GitHub Pages website“* aktivieren.
 - [ ] **5.2 Optionale 4. Ressource: Stromnetz & Windkraft**
   - Anbindung von Nordsee-Offshore-Windparks über Gleichstromtrassen (SuedLink / SuedOstLink) zu den Verbrauchszentren im Süden.
 - [ ] **5.3 Optionale 5. Ressource: Kupfer**
   - Globale Kupferlieferkette (Chile / Sambia ➔ Aurubis Kupferhütte Hamburg ➔ Verkabelung & Transformatoren).
-- [ ] **5.4 Eigene Domain (optional)**
+- [x] **5.4 Eigene Domain (optional)**
   - Hinterlegung einer Custom Domain (z. B. `worldresources.org` oder `die-rohstoffe-der-welt.de`) unter **Settings** ➔ **Pages** ➔ **Custom domain**.

@@ -39,18 +39,18 @@ class Inspector {
     const source = p.source || {};
 
     const typeBadge = {
-      extraction_site: '<span class="px-2.5 py-1 text-xs rounded-full bg-purple-950 text-purple-400 border border-purple-800">⛏️ Förderstätte</span>',
-      import_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-sky-950 text-sky-400 border border-sky-800">⚓ Import-Terminal / Hafen</span>',
-      processing_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-400 border border-amber-800">🏭 Raffinerie / Veredelung</span>',
-      storage_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">🏬 Untergrundspeicher</span>',
-      pipeline: '<span class="px-2.5 py-1 text-xs rounded-full bg-indigo-950 text-indigo-400 border border-indigo-800">⚡ Pipeline-Trasse</span>',
-      rail_corridor: '<span class="px-2.5 py-1 text-xs rounded-full bg-yellow-950 text-yellow-400 border border-yellow-800">🚂 Schienengüterkorridor</span>',
-      shipping_route: '<span class="px-2.5 py-1 text-xs rounded-full bg-teal-950 text-teal-400 border border-teal-800">🚢 Übersee-Seeweg</span>'
-    }[p.type] || '<span class="px-2.5 py-1 text-xs rounded-full bg-slate-800 text-slate-300">Infrastruktur</span>';
+      extraction_site: '<span class="px-2.5 py-1 text-xs rounded-full bg-purple-950 text-purple-400 border border-purple-800">⛏️ Extraction Site</span>',
+      import_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-sky-950 text-sky-400 border border-sky-800">⚓ Import Terminal / Port</span>',
+      processing_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-400 border border-amber-800">🏭 Refinery / Processing</span>',
+      storage_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">🏬 Underground Storage</span>',
+      pipeline: '<span class="px-2.5 py-1 text-xs rounded-full bg-indigo-950 text-indigo-400 border border-indigo-800">⚡ Pipeline Corridor</span>',
+      rail_corridor: '<span class="px-2.5 py-1 text-xs rounded-full bg-yellow-950 text-yellow-400 border border-yellow-800">🚂 Rail Freight Corridor</span>',
+      shipping_route: '<span class="px-2.5 py-1 text-xs rounded-full bg-teal-950 text-teal-400 border border-teal-800">🚢 Ocean Shipping Route</span>'
+    }[p.type] || '<span class="px-2.5 py-1 text-xs rounded-full bg-slate-800 text-slate-300">Infrastructure</span>';
 
     const resourceBadge = {
-      crude_oil: '<span class="text-amber-400 text-xs font-semibold px-2 py-0.5 rounded bg-amber-950/60 border border-amber-800/60">🛢️ Rohöl</span>',
-      natural_gas: '<span class="text-emerald-400 text-xs font-semibold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/60">🔥 Erdgas & LNG</span>',
+      crude_oil: '<span class="text-amber-400 text-xs font-semibold px-2 py-0.5 rounded bg-amber-950/60 border border-amber-800/60">🛢️ Crude Oil</span>',
+      natural_gas: '<span class="text-emerald-400 text-xs font-semibold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/60">🔥 Natural Gas & LNG</span>',
       lithium: '<span class="text-purple-400 text-xs font-semibold px-2 py-0.5 rounded bg-purple-950/60 border border-purple-800/60">🔋 Lithium</span>'
     }[p.resource] || '';
 
@@ -60,7 +60,7 @@ class Inspector {
             📦 ${prod}
           </span>
         `).join('')
-      : '<span class="text-xs text-slate-500">Keine spezifischen Endprodukte hinterlegt.</span>';
+      : '<span class="text-xs text-slate-500">No specific end products listed.</span>';
 
     this.container.innerHTML = `
       <!-- Fixed / Sticky Top Header Bar -->
@@ -71,12 +71,12 @@ class Inspector {
         </div>
         <div class="flex items-center space-x-1.5">
           <!-- Toggle Fullscreen Button -->
-          <button id="toggle-fullscreen-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition flex items-center space-x-1.5 cursor-pointer text-xs" title="${this.isFullscreen ? 'Auf Seitenleiste verkleinern' : 'Auf Vollbild vergrößern'}">
+          <button id="toggle-fullscreen-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition flex items-center space-x-1.5 cursor-pointer text-xs" title="${this.isFullscreen ? 'Reduce to sidebar' : 'Expand to fullscreen'}">
             <span class="text-base">${this.isFullscreen ? '🗗' : '⛶'}</span>
-            <span class="font-medium hidden sm:inline">${this.isFullscreen ? 'Seitenleiste' : 'Vollbild'}</span>
+            <span class="font-medium hidden sm:inline">${this.isFullscreen ? 'Sidebar' : 'Fullscreen'}</span>
           </button>
           <!-- Close Button -->
-          <button id="close-inspector-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition cursor-pointer" title="Schließen" aria-label="Schließen">
+          <button id="close-inspector-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition cursor-pointer" title="Close" aria-label="Close">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -91,7 +91,7 @@ class Inspector {
           <!-- Facility / Route Heading -->
           <div>
             <h2 class="${this.isFullscreen ? 'text-3xl sm:text-4xl' : 'text-2xl'} font-extrabold text-white leading-tight mb-2">
-              ${p.name || 'Unbenanntes Objekt'}
+              ${p.name || 'Unnamed feature'}
             </h2>
             <p class="${this.isFullscreen ? 'text-base' : 'text-sm'} text-slate-300 leading-relaxed">
               ${p.summary || ''}
@@ -101,19 +101,19 @@ class Inspector {
           <!-- Key Metrics Grid -->
           <div class="grid ${this.isFullscreen ? 'grid-cols-2 sm:grid-cols-4 gap-4' : 'grid-cols-2 gap-3'} text-xs">
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
-              <span class="text-slate-500 block mb-1">Betreiber / Koordination</span>
+              <span class="text-slate-500 block mb-1">Operator / Coordination</span>
               <span class="font-semibold text-slate-200 text-sm">${p.operator || 'N/A'}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
-              <span class="text-slate-500 block mb-1">Kapazität / Dimension</span>
+              <span class="text-slate-500 block mb-1">Capacity / Dimension</span>
               <span class="font-semibold text-slate-200 text-sm">${p.capacity || (p.length_km ? `${p.length_km} km` : 'N/A')}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">Status</span>
-              <span class="font-semibold text-emerald-400 text-sm capitalize">${p.status === 'operational' ? 'In Betrieb' : 'Im Ausbau / Aktiv'}</span>
+              <span class="font-semibold text-emerald-400 text-sm capitalize">${p.status === 'operational' ? 'Operational' : 'Under development / Active'}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
-              <span class="text-slate-500 block mb-1">Lieferketten-Stufe</span>
+              <span class="text-slate-500 block mb-1">Supply-chain stage</span>
               <span class="font-semibold text-indigo-300 text-sm capitalize">${p.supply_chain_stage || 'Transport'}</span>
             </div>
           </div>
@@ -123,25 +123,25 @@ class Inspector {
             <div class="p-5 rounded-2xl bg-gradient-to-br from-indigo-950/70 via-purple-950/40 to-slate-900 border border-indigo-500/40 shadow-xl">
               <div class="flex items-center space-x-2 text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2.5">
                 <span class="text-base">💡</span>
-                <span>Der Aha-Moment für Verbraucher</span>
+                <span>The Consumer Aha-Moment</span>
               </div>
               <h3 class="${this.isFullscreen ? 'text-xl' : 'text-base'} font-bold text-white mb-2">${aha.title}</h3>
               <p class="${this.isFullscreen ? 'text-sm' : 'text-xs'} text-slate-200 leading-relaxed mb-3">${aha.explanation}</p>
               <div class="pt-3 border-t border-indigo-900/60 text-xs text-indigo-300 font-medium flex items-start space-x-2">
                 <span class="text-sm">🎯</span>
-                <span><strong>Alltagsbezug:</strong> ${aha.everyday_impact}</span>
+                <span><strong>Everyday impact:</strong> ${aha.everyday_impact}</span>
               </div>
             </div>
           ` : ''}
 
           <!-- Detailed Extended Description (Can be arbitrarily long) -->
           <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 space-y-3">
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Ausführliche Technische Dokumentation & Geopolitik</h4>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Technical Documentation & Geopolitics</h4>
             <div class="${this.isFullscreen ? 'text-base' : 'text-xs sm:text-sm'} text-slate-300 leading-relaxed space-y-3">
-              <p>${p.description || p.summary || 'Keine weitere Detailbeschreibung hinterlegt.'}</p>
+              <p>${p.description || p.summary || 'No further detailed description available.'}</p>
               ${p.flow_direction ? `
                 <div class="pt-2 text-xs text-slate-400">
-                  <strong class="text-slate-300">Fließ- & Transportkorridor:</strong> ${p.flow_direction}
+                  <strong class="text-slate-300">Flow & transport corridor:</strong> ${p.flow_direction}
                 </div>
               ` : ''}
             </div>
@@ -149,7 +149,7 @@ class Inspector {
 
           <!-- Consumer End-Products Tags -->
           <div>
-            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Verknüpfte Verbraucherprodukte</h4>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3">Linked Consumer Products</h4>
             <div class="flex flex-wrap gap-2">
               ${productsHtml}
             </div>
@@ -157,10 +157,10 @@ class Inspector {
 
           <!-- Official Data Source Footer -->
           <div class="pt-6 border-t border-slate-800 text-xs text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6">
-            <span>Datenquelle: <strong>${source.name || 'Öffentliche Behördendaten'}</strong> (${source.year || '2025/2026'})</span>
+            <span>Data source: <strong>${source.name || 'Public official data'}</strong> (${source.year || '2025/2026'})</span>
             ${source.url ? `
               <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 underline font-medium flex items-center space-x-1">
-                <span>Offiziellen Datensatz verifizieren</span>
+                <span>Verify official dataset</span>
                 <span>↗</span>
               </a>
             ` : ''}

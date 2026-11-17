@@ -101,13 +101,13 @@ class UIController {
         toggleBtn.classList.remove('left-4');
         toggleBtn.classList.add('left-[20.5rem]');
         if (toggleIcon) toggleIcon.innerText = '◀';
-        toggleBtn.setAttribute('title', 'Seitenleiste ausblenden');
+        toggleBtn.setAttribute('title', 'Hide sidebar');
       } else {
         sidebar.classList.add('-ml-80');
         toggleBtn.classList.remove('left-[20.5rem]');
         toggleBtn.classList.add('left-4');
         if (toggleIcon) toggleIcon.innerText = '▶';
-        toggleBtn.setAttribute('title', 'Seitenleiste einblenden');
+        toggleBtn.setAttribute('title', 'Show sidebar');
       }
 
       mapController.invalidateSize();
@@ -297,7 +297,7 @@ class UIController {
 
     const counter = document.getElementById('active-elements-count');
     if (counter) {
-      counter.innerText = `${filtered.length} aktiv`;
+      counter.innerText = `${filtered.length} active`;
     }
   }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" class="dark">
+<html lang="en" class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -58,7 +58,7 @@
 
         <!-- Mobile Menu Hamburger -->
         <div class="md:hidden flex items-center">
-          <button id="mobile-menu-btn" class="text-slate-400 hover:text-white p-2 rounded-lg focus:outline-none" aria-label="Menü öffnen">
+          <button id="mobile-menu-btn" class="text-slate-400 hover:text-white p-2 rounded-lg focus:outline-none" aria-label="Open menu">
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
@@ -81,9 +81,9 @@
   <!-- DEDICATED TOP NAVBAR TOGGLE ARROW (Floating above map at z-[1060]) -->
   <button id="navbar-toggle-btn"
     class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-[1060] bg-cardbg/95 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-b-xl border-b border-x border-slate-700/80 shadow-2xl backdrop-blur-md transition-all duration-300 flex items-center space-x-1.5 text-xs cursor-pointer group"
-    title="Menü oben ein-/ausblenden">
+    title="Show / hide top menu">
     <span id="navbar-toggle-icon" class="text-xs font-bold text-indigo-400 group-hover:text-indigo-300">▲</span>
-    <span id="navbar-toggle-text" class="text-[11px] font-medium text-slate-300">Menü oben</span>
+    <span id="navbar-toggle-text" class="text-[11px] font-medium text-slate-300">Top menu</span>
   </button>
 
   <!-- MAIN CONTAINER -->
@@ -96,20 +96,20 @@
       <div class="text-center max-w-3xl mx-auto mb-16">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-indigo-300 text-xs font-semibold mb-6">
           <span>✨</span>
-          <span>Open-Source MVP Live: Rohöl, Erdgas & Interkontinentale Lithium-Route</span>
+          <span>Open-Source MVP Live: Crude Oil, Natural Gas & Intercontinental Lithium Route</span>
         </div>
         <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
           Visualizing the Veins of <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-300 to-amber-300">Global Trade.</span>
         </h1>
         <p class="text-base sm:text-xl text-slate-400 mb-10 leading-relaxed">
-          Eine interaktive, minimalistische Weltkarte für die globalen Ressourcenströme der Menschheit. Von der chilenischen Atacama-Wüste und norwegischen Offshore-Gasfeldern bis in dein Wohnzimmer und Elektroauto.
+          An interactive, minimalist world map of humanity’s global resource flows. From the Chilean Atacama Desert and Norwegian offshore gas fields all the way into your living room and electric car.
         </p>
         <div class="flex flex-col sm:flex-row justify-center gap-4">
           <button data-section-target="map" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-xl font-semibold text-base transition shadow-xl shadow-indigo-600/30 flex items-center justify-center space-x-2 cursor-pointer">
-            <span>🚀 Interaktive Karte starten</span>
+            <span>🚀 Launch Interactive Map</span>
           </button>
           <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="bg-cardbg hover:bg-slate-800 text-slate-200 border border-slate-700 px-8 py-3.5 rounded-xl font-semibold text-base transition flex items-center justify-center space-x-2">
-            <span>Auf GitHub mitwirken ↗</span>
+            <span>Contribute on GitHub ↗</span>
           </a>
         </div>
       </div>
@@ -120,8 +120,8 @@
           <div class="absolute inset-0 opacity-30 bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]"></div>
           <div class="text-center z-10 px-4 group-hover:scale-105 transition duration-300">
             <span class="text-5xl mb-3 block">🗺️</span>
-            <h3 class="text-2xl font-bold text-white mb-2">Interaktive Dark-Mode Map</h3>
-            <p class="text-slate-400 text-sm max-w-md mx-auto">Klicke hier, um die Karte im Vollbildmodus mit Live-Filtern und Routen-Inspektor zu öffnen.</p>
+            <h3 class="text-2xl font-bold text-white mb-2">Interactive Dark-Mode Map</h3>
+            <p class="text-slate-400 text-sm max-w-md mx-auto">Click here to open the map in full-screen mode with live filters and the route inspector.</p>
           </div>
         </div>
       </div>
@@ -130,23 +130,23 @@
       <div class="grid md:grid-cols-3 gap-6 mb-16">
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <div class="text-3xl mb-3">🖤</div>
-          <h3 class="text-lg font-bold mb-2 text-white">Minimalistisches Dark Design</h3>
+          <h3 class="text-lg font-bold mb-2 text-white">Minimalist Dark Design</h3>
           <p class="text-slate-400 text-sm leading-relaxed">
-            Eine tiefdunkle Kartenästhetik hebt fluoreszierende Rohstoffflüsse und Infrastrukturknoten optimal hervor.
+            A deep dark map aesthetic makes fluorescent resource flows and infrastructure nodes stand out clearly.
           </p>
         </div>
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <div class="text-3xl mb-3">⚡</div>
-          <h3 class="text-lg font-bold mb-2 text-white">Dynamische Routen & Pipelines</h3>
+          <h3 class="text-lg font-bold mb-2 text-white">Dynamic Routes & Pipelines</h3>
           <p class="text-slate-400 text-sm leading-relaxed">
-            Reale GeoJSON-Daten mit Fließrichtungen von den Nordseehäfen, der Adria und Südamerika bis zu deutschen Verarbeitungszentren.
+            Real GeoJSON data with flow directions from North Sea ports, the Adriatic and South America to German processing centers.
           </p>
         </div>
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <div class="text-3xl mb-3">💡</div>
-          <h3 class="text-lg font-bold mb-2 text-white">Der "Aha-Moment"</h3>
+          <h3 class="text-lg font-bold mb-2 text-white">The "Aha Moment"</h3>
           <p class="text-slate-400 text-sm leading-relaxed">
-            Verbindet abstrakte Importmengen direkt mit alltäglichen Konsumgütern – von Benzin und Kerosin bis Kunststoffen, Heizwärme und Smartphone-Akkus.
+            Connects abstract import volumes directly to everyday consumer products – from gasoline and kerosene to plastics, heating and smartphone batteries.
           </p>
         </div>
       </div>
@@ -168,94 +168,94 @@
               <span>Filter & Layer</span>
             </h2>
             <span id="active-elements-count" class="text-xs px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-400 border border-indigo-800 font-mono">
-              32 aktiv
+              32 active
             </span>
           </div>
 
           <!-- Quick Perspective Switcher -->
           <div class="grid grid-cols-2 gap-2 mb-4">
             <button id="btn-focus-germany" class="px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition flex items-center justify-center space-x-1 cursor-pointer">
-              <span>🇩🇪 Deutschland</span>
+              <span>🇩🇪 Germany</span>
             </button>
             <button id="btn-focus-global" class="px-2.5 py-1.5 rounded-lg bg-indigo-950/80 hover:bg-indigo-900/90 text-[11px] font-semibold text-indigo-300 border border-indigo-700/60 transition flex items-center justify-center space-x-1 cursor-pointer">
-              <span>🌍 Interkontinental</span>
+              <span>🌍 Intercontinental</span>
             </button>
           </div>
 
           <!-- Search Filter -->
           <div class="mb-4">
-            <input id="map-search-input" type="text" placeholder="Suche (z.B. Schwedt, Atacama, Rehden)..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+            <input id="map-search-input" type="text" placeholder="Search (e.g. Schwedt, Atacama, Rehden)..." class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
           </div>
 
           <!-- Resource Selectors -->
           <div class="mb-4">
-            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Rohstoffe</h3>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Resources</h3>
             <div class="space-y-1.5">
               <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
                 <input type="checkbox" checked data-filter-type="resources" data-filter-key="crude_oil" class="rounded bg-slate-900 border-slate-700 text-amber-500 focus:ring-amber-500 h-4 w-4">
-                <span class="text-xs font-medium text-amber-400">🛢️ Rohöl & Kraftstoffe</span>
+                <span class="text-xs font-medium text-amber-400">🛢️ Crude Oil & Fuels</span>
               </label>
               <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
                 <input type="checkbox" checked data-filter-type="resources" data-filter-key="natural_gas" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500 h-4 w-4">
-                <span class="text-xs font-medium text-emerald-400">🔥 Erdgas & LNG-Terminals</span>
+                <span class="text-xs font-medium text-emerald-400">🔥 Natural Gas & LNG Terminals</span>
               </label>
               <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
                 <input type="checkbox" checked data-filter-type="resources" data-filter-key="lithium" class="rounded bg-slate-900 border-slate-700 text-purple-500 focus:ring-purple-500 h-4 w-4">
-                <span class="text-xs font-medium text-purple-400">🔋 Lithium & Batterien (Chile ⇄ DE)</span>
+                <span class="text-xs font-medium text-purple-400">🔋 Lithium & Batteries (Chile ⇄ DE)</span>
               </label>
             </div>
           </div>
 
           <!-- Infrastructure Type Selectors -->
           <div class="mb-4">
-            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Infrastrukturtypen</h3>
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Infrastructure Types</h3>
             <div class="space-y-1 text-xs">
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-purple-300">
                   <span>⛏️</span>
-                  <span>Förderstätten (Atacama)</span>
+                  <span>Extraction sites (Atacama)</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="extraction_site" class="rounded bg-slate-900 border-slate-700 text-purple-500 focus:ring-purple-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-sky-300">
                   <span>⚓</span>
-                  <span>Import-Terminals & Häfen</span>
+                  <span>Import terminals & ports</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="import_hub" class="rounded bg-slate-900 border-slate-700 text-sky-500 focus:ring-sky-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-amber-300">
                   <span>🏭</span>
-                  <span>Raffinerien & Kathodenwerk</span>
+                  <span>Refineries & cathode plants</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="processing_hub" class="rounded bg-slate-900 border-slate-700 text-amber-500 focus:ring-amber-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-emerald-300">
                   <span>🏬</span>
-                  <span>Untergrundspeicher (Rehden)</span>
+                  <span>Underground storage (Rehden)</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="storage_hub" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-indigo-300">
                   <span>⚡</span>
-                  <span>Pipeline-Trassen</span>
+                  <span>Pipeline corridors</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="pipeline" class="rounded bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-yellow-300">
                   <span>🚂</span>
-                  <span>Schienengüterkorridor</span>
+                  <span>Rail freight corridors</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="rail_corridor" class="rounded bg-slate-900 border-slate-700 text-yellow-500 focus:ring-yellow-500 h-4 w-4">
               </label>
               <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
                 <span class="flex items-center space-x-2 text-teal-300">
                   <span>🚢</span>
-                  <span>Seewege & Übersee-Liniendienste</span>
+                  <span>Shipping routes & ocean lines</span>
                 </span>
                 <input type="checkbox" checked data-filter-type="categories" data-filter-key="shipping_route" class="rounded bg-slate-900 border-slate-700 text-teal-500 focus:ring-teal-500 h-4 w-4">
               </label>
@@ -267,10 +267,10 @@
         <!-- Sidebar Footer & API Key Configuration -->
         <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
           <div>
-            <p>Datenstand: MVP 2026</p>
-            <p id="active-tile-source" class="text-[10px] text-slate-400">Karte: CARTO Dark Matter (Aktiv)</p>
+            <p>Data status: MVP 2026</p>
+            <p id="active-tile-source" class="text-[10px] text-slate-400">Map: CARTO Dark Matter (Active)</p>
           </div>
-          <button id="open-apikey-modal-btn" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 hover:text-white border border-slate-700 text-[10px] flex items-center space-x-1 transition cursor-pointer" title="Kartenquelle oder CARTO API Key konfigurieren">
+          <button id="open-apikey-modal-btn" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 hover:text-white border border-slate-700 text-[10px] flex items-center space-x-1 transition cursor-pointer" title="Configure map source or CARTO API Key">
             <span>🔑</span>
             <span>API Key</span>
           </button>
@@ -280,7 +280,7 @@
       <!-- DEDICATED SIDEBAR TOGGLE BUTTON (Floating above Leaflet at z-[1050]) -->
       <button id="sidebar-toggle-btn"
         class="absolute top-4 left-[20.5rem] z-[1050] bg-cardbg/95 hover:bg-slate-800 text-white px-3 py-2 rounded-xl shadow-2xl border border-slate-700/80 backdrop-blur-md transition-all duration-300 flex items-center space-x-2 text-xs cursor-pointer group"
-        title="Seitenleiste ein-/ausklappen">
+        title="Show / hide sidebar">
         <span id="sidebar-toggle-icon" class="text-sm font-bold text-indigo-400 group-hover:text-indigo-300 transition">◀</span>
         <span id="sidebar-toggle-text" class="text-[11px] font-medium hidden sm:inline text-slate-300">Filter & Layer</span>
       </button>
@@ -300,139 +300,174 @@
 
     <!-- 3. DATA SOURCES SECTION -->
     <section id="section-sources" class="hidden py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex-grow">
-      <h2 class="text-3xl font-extrabold mb-4 text-white">Datenquellen & Transparenz</h2>
+      <h2 class="text-3xl font-extrabold mb-4 text-white">Data Sources & Transparency</h2>
       <p class="text-slate-400 mb-8 leading-relaxed text-sm">
-        „The World’s Resources“ verpflichtet sich vollständiger Datenoffenheit. Alle Geokoordinaten, Pipeline-Trassen und Produktionsvolumina entstammen geprüften behördlichen Berichten und wissenschaftlichen Open-Data-Initiativen.
+        “The World’s Resources” is committed to full data openness. All geocoordinates, pipeline routes and production volumes come from verified official reports and scientific open-data initiatives.
       </p>
 
       <div class="space-y-4">
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <h3 class="text-base font-bold text-indigo-400 mb-1">Bundesnetzagentur (BNetzA) & FNB Gas</h3>
-          <p class="text-xs text-slate-400 leading-relaxed mb-3">Monitoringberichte und Netzinfrastrukturdaten zu Gas-Fernleitungen, LNG-Terminals und Untergrundspeichern.</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">Monitoring reports and network infrastructure data on gas transmission pipelines, LNG terminals and underground storage facilities.</p>
           <a href="https://www.bundesnetzagentur.de" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-300 hover:underline">bundesnetzagentur.de ↗</a>
         </div>
 
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <h3 class="text-base font-bold text-indigo-400 mb-1">U.S. Geological Survey (USGS) & BGR</h3>
-          <p class="text-xs text-slate-400 leading-relaxed mb-3">Globale Rohstoffstatistiken, Abbauvolumina und Schätzungen der Weltreserven für Lithium, Metalle und kritische Mineralien.</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">Global commodity statistics, extraction volumes and world reserve estimates for lithium, metals and critical minerals.</p>
           <a href="https://www.usgs.gov" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-300 hover:underline">usgs.gov ↗</a>
         </div>
 
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <h3 class="text-base font-bold text-indigo-400 mb-1">Statistisches Bundesamt (Destatis)</h3>
-          <p class="text-xs text-slate-400 leading-relaxed mb-3">Offizielle Außenhandelsstatistiken zu Rohstoff-Importmengen, Herkunftsländern und Energieträgern.</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">Official foreign-trade statistics on commodity import volumes, countries of origin and energy carriers.</p>
           <a href="https://www.destatis.de" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-300 hover:underline">destatis.de ↗</a>
         </div>
 
         <div class="glass-panel p-6 rounded-2xl border border-slate-800">
           <h3 class="text-base font-bold text-indigo-400 mb-1">OpenStreetMap & Overpass API</h3>
-          <p class="text-xs text-slate-400 leading-relaxed mb-3">Exakte topografische Geokoordinaten von Hafenanlagen, Raffineriegeländen und Leitungstrassen.</p>
+          <p class="text-xs text-slate-400 leading-relaxed mb-3">Exact topographic geocoordinates of port facilities, refinery sites and pipeline corridors.</p>
           <a href="https://www.openstreetmap.org" target="_blank" rel="noopener noreferrer" class="text-xs text-indigo-300 hover:underline">openstreetmap.org ↗</a>
         </div>
       </div>
     </section>
 
     <!-- 4. CONTACT SECTION -->
-    <section id="section-contact" class="hidden py-16 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto flex-grow">
-      <h2 class="text-3xl font-extrabold mb-4 text-white">Kontakt & Community</h2>
-      <p class="text-slate-400 mb-8 leading-relaxed text-sm">
-        Möchtest du neue Rohstoffdaten beisteuern, einen Darstellungsfehler melden oder an der Weiterentwicklung mitarbeiten?
+    <section id="section-contact" class="hidden py-16 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto flex-grow">
+      <h2 class="text-3xl font-extrabold mb-4 text-white">Contact & Community</h2>
+      <p class="text-slate-400 mb-8 leading-relaxed">
+        Want to contribute new resource data, report a display error, or help further develop the project?
       </p>
 
-      <div class="grid sm:grid-cols-2 gap-4 mb-8">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition flex items-center space-x-3.5">
-          <span class="text-2xl">💻</span>
-          <div>
-            <h3 class="text-sm font-bold text-white">GitHub Repository</h3>
-            <p class="text-xs text-slate-400">Issues, Pull Requests & Code</p>
-          </div>
-        </a>
-        <a href="mailto:contact@worldresources.org" class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-indigo-500/50 transition flex items-center space-x-3.5">
-          <span class="text-2xl">✉️</span>
-          <div>
-            <h3 class="text-sm font-bold text-white">E-Mail</h3>
-            <p class="text-xs text-slate-400">Direkter Austausch mit den Maintainern</p>
-          </div>
-        </a>
+      <div class="glass-panel p-8 rounded-2xl border border-slate-800 space-y-6">
+        <div>
+          <h3 class="text-sm font-semibold text-slate-300 mb-1">Email</h3>
+          <a href="mailto:contact@theworldsresources.org" class="text-indigo-400 hover:underline text-sm">contact@theworldsresources.org</a>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold text-slate-300 mb-1">GitHub</h3>
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline text-sm">Open the repository and open an issue or pull request ↗</a>
+        </div>
+        <div class="pt-4 border-t border-slate-800">
+          <p class="text-xs text-slate-500 leading-relaxed">
+            This is an independent, non-commercial open-source project under the MIT License. All data is based on publicly available sources. No warranty is given for completeness or accuracy.
+          </p>
+        </div>
       </div>
     </section>
 
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-cardbg border-t border-slate-800 py-6 px-4 sm:px-6 lg:px-8 mt-auto">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 space-y-3 sm:space-y-0">
-      <div>
-        © 2026 The World’s Resources. Lizenziert unter der MIT-Lizenz.
+  <footer class="border-t border-slate-800/80 py-6 px-4 sm:px-6 lg:px-8 bg-darkbg">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <div class="flex items-center space-x-2">
+        <span>🌐</span>
+        <span>The World's Resources — Open Source MVP 2026</span>
       </div>
-      <div class="flex space-x-6">
-        <button data-section-target="contact" class="hover:text-slate-300 transition">Kontakt</button>
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-slate-300 transition">GitHub</a>
-        <button data-open-imprint class="hover:text-slate-300 transition">Impressum & Datenschutz</button>
+      <div class="flex items-center space-x-4">
+        <button data-section-target="contact" class="hover:text-slate-300 transition">Contact</button>
+        <button data-open-imprint class="hover:text-slate-300 transition">Legal Notice & Privacy</button>
+        <a href="https://github.com" target="_blank" class="hover:text-slate-300 transition">GitHub ↗</a>
       </div>
     </div>
   </footer>
 
-  <!-- IMPRINT & PRIVACY MODAL -->
-  <div id="imprint-modal" class="hidden fixed inset-0 z-[2000] flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-    <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 max-w-lg w-full text-slate-300 text-xs leading-relaxed shadow-2xl">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-base font-bold text-white">Impressum & rechtliche Hinweise</h3>
-        <button id="close-imprint-btn" class="text-slate-400 hover:text-white text-lg">✕</button>
+  <!-- IMPRINT / LEGAL NOTICE MODAL -->
+  <div id="imprint-modal" class="fixed inset-0 z-[2000] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-cardbg border border-slate-700 rounded-2xl shadow-2xl max-w-lg w-full max-h-[85vh] overflow-y-auto">
+      <div class="sticky top-0 flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-cardbg/95 backdrop-blur">
+        <h3 class="text-base font-bold text-white">Legal Notice & Privacy Policy</h3>
+        <button id="close-imprint-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-      <div class="space-y-3">
-        <p><strong>Angaben gemäß § 5 TMG:</strong></p>
-        <p>The World’s Resources Open-Source Project<br>Musterstraße 1<br>10115 Berlin<br>E-Mail: contact@worldresources.org</p>
-        <p><strong>Lizenz:</strong><br>Quellcode und Dokumentation sind unter der MIT-Lizenz freigegeben.</p>
-        <p><strong>Haftung für Inhalte:</strong><br>Die Daten basieren auf öffentlich zugänglichen Datenquellen. Trotz sorgfältiger Recherche wird keine Gewähr für Vollständigkeit übernommen.</p>
+      <div class="px-6 py-5 space-y-6 text-sm text-slate-300 leading-relaxed">
+        
+        <div>
+          <h4 class="font-bold text-white mb-2">Legal Notice</h4>
+          <p class="text-xs text-slate-400 mb-2">Information pursuant to Section 5 DDG (Digital Services Act)</p>
+          <p class="mb-1"><strong class="text-slate-200">Responsible for content:</strong></p>
+          <p class="text-xs">
+            [Your First and Last Name]<br>
+            [Your Street and House Number]<br>
+            [Your Postal Code and City]<br>
+            Germany
+          </p>
+          <p class="mt-3 mb-1"><strong class="text-slate-200">Contact:</strong></p>
+          <p class="text-xs">Email: <a href="mailto:contact@theworldsresources.org" class="text-indigo-400 hover:underline">contact@theworldsresources.org</a></p>
+          <p class="mt-3 text-xs text-slate-400">
+            <strong class="text-slate-300">Project Notice:</strong><br>
+            “The World's Resources” is an independent, open-source project visualizing global resource flows.
+          </p>
+        </div>
+
+        <div class="border-t border-slate-800 pt-5">
+          <h4 class="font-bold text-white mb-2">Privacy Policy</h4>
+          
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">1. Data Protection at a Glance</h5>
+          <p class="text-xs text-slate-400">The following notes provide a simple overview of what happens to your personal data when you visit this website. Personal data is any data with which you can be personally identified.</p>
+
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">2. Hosting and Content Delivery Networks (CDN)</h5>
+          <p class="text-xs text-slate-400 mb-1"><strong>External Hosting (Vercel)</strong><br>
+          This website is hosted by an external service provider, Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA). Personal data collected on this website is stored on the host's servers.</p>
+          <p class="text-xs text-slate-400"><strong>Cloudflare (CDN & DNS)</strong><br>
+          We use services provided by Cloudflare Inc. (101 Townsend St, San Francisco, CA 94107, USA) to secure and accelerate the delivery of our website. Cloudflare processes technical network data (including visitors' IP addresses) to fend off attacks and provide content.</p>
+
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">3. General Information and Mandatory Information</h5>
+          <p class="text-xs text-slate-400 mb-1"><strong>SSL/TLS Encryption</strong><br>
+          For security reasons and to protect the transmission of confidential content, this site uses SSL/TLS encryption. You can recognize an encrypted connection in your browser's address bar when it changes from "http://" to "https://" and by the lock icon in your browser bar.</p>
+          <p class="text-xs text-slate-400"><strong>Email Contact</strong><br>
+          If you contact us via email (e.g., at contact@theworldsresources.org), your provided email address and the data transmitted will be stored by us for the purpose of processing your request. We will not share this data without your consent.</p>
+        </div>
+
+        <p class="text-[11px] text-slate-500 pt-2">
+          Full versions are also available as <a href="./LEGAL_NOTICE.md" class="text-indigo-400 hover:underline">LEGAL_NOTICE.md</a> and <a href="./PRIVACY_POLICY.md" class="text-indigo-400 hover:underline">PRIVACY_POLICY.md</a>.
+        </p>
       </div>
     </div>
   </div>
 
-  <!-- CARTO API KEY & BASEMAP MODAL -->
-  <div id="apikey-modal" class="hidden fixed inset-0 z-[2000] flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-    <div class="bg-cardbg border border-slate-800 rounded-2xl p-6 max-w-md w-full text-slate-300 text-xs leading-relaxed shadow-2xl">
+  <!-- API KEY MODAL -->
+  <div id="apikey-modal" class="fixed inset-0 z-[2000] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-cardbg border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-5 text-sm">
       <div class="flex items-center justify-between mb-4">
-        <h3 class="text-base font-bold text-white flex items-center space-x-2">
-          <span>🔑</span>
-          <span>Basiskarte & CARTO API Key</span>
-        </h3>
-        <button id="close-apikey-btn" class="text-slate-400 hover:text-white text-lg cursor-pointer">✕</button>
+        <h3 class="text-base font-bold text-white">🔑 Basemap & CARTO API Key</h3>
+        <button id="close-apikey-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
       </div>
-      <p class="text-slate-400 text-xs mb-4">
-        Wähle deinen bevorzugten Basiskarten-Provider oder hinterlege deinen persönlichen CARTO API Key, um Wasserzeichen zu entfernen.
-      </p>
+      <p class="text-xs text-slate-400 mb-4">Choose your preferred basemap provider or enter your personal CARTO API Key to remove watermarks.</p>
 
-      <!-- Provider Radio Select -->
-      <div class="mb-4 space-y-2">
+      <div class="space-y-2 mb-4">
         <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700">
           <input type="radio" name="tile-provider" value="carto" checked class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
           <div>
-            <span class="font-semibold text-white block">CARTO Dark Matter (Aktiv)</span>
-            <span class="text-[11px] text-slate-400">Nutzt deinen CARTO API Key.</span>
+            <span class="font-semibold text-white block">CARTO Dark Matter (Active)</span>
+            <span class="text-[11px] text-slate-400">Uses your CARTO API Key.</span>
           </div>
         </label>
         <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700">
           <input type="radio" name="tile-provider" value="esri" class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
           <div>
             <span class="font-semibold text-white block">Esri Dark Canvas</span>
-            <span class="text-[11px] text-slate-400">100% kostenlos, ohne Wasserzeichen, scharfe Kontraste für fluoreszierende Routen.</span>
+            <span class="text-[11px] text-slate-400">100% free, no watermark, sharp contrast for fluorescent routes.</span>
           </div>
         </label>
       </div>
 
-      <!-- CARTO Key Input Field (shown when CARTO selected) -->
+      <!-- CARTO Key Input Field -->
       <div id="carto-key-field" class="mb-4 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
-        <label class="block text-slate-300 font-semibold mb-1">Dein CARTO API Key:</label>
-        <input id="carto-key-input" type="text" placeholder="Hier deinen Key einfügen..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500">
+        <label class="block text-slate-300 font-semibold mb-1">Your CARTO API Key:</label>
+        <input id="carto-key-input" type="text" placeholder="Paste your key here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500">
         <p class="text-[10px] text-slate-500 mt-1.5">
-          Erhältlich unter <a href="https://carto.com/basemaps/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">carto.com/basemaps/apikey ↗</a>
+          Available at <a href="https://carto.com/basemaps/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">carto.com/basemaps/apikey ↗</a>
         </p>
       </div>
 
       <div class="flex justify-end space-x-2 pt-3 border-t border-slate-800">
-        <button id="cancel-apikey-btn" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs cursor-pointer">Abbrechen</button>
-        <button id="save-apikey-btn" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-600/30 cursor-pointer">Speichern & Anwenden</button>
+        <button id="cancel-apikey-btn" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs cursor-pointer">Cancel</button>
+        <button id="save-apikey-btn" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-600/30 cursor-pointer">Save & Apply</button>
       </div>
     </div>
   </div>

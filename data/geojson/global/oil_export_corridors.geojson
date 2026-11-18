@@ -590,12 +590,48 @@
             26.65
           ],
           [
-            45.0,
-            25.0
+            51.5,
+            26.65
           ],
           [
-            35.0,
-            30.0
+            56.4,
+            26.4
+          ],
+          [
+            58.5,
+            24.5
+          ],
+          [
+            60.0,
+            18.0
+          ],
+          [
+            48.0,
+            13.2
+          ],
+          [
+            43.3,
+            12.6
+          ],
+          [
+            38.5,
+            20.0
+          ],
+          [
+            34.7,
+            27.5
+          ],
+          [
+            32.5,
+            29.9
+          ],
+          [
+            32.35,
+            31.25
+          ],
+          [
+            30.0,
+            32.5
           ],
           [
             19.0,
@@ -613,8 +649,8 @@
         "country": "INT",
         "operator": "",
         "capacity": "",
-        "summary": "Long-haul tanker route from Saudi export terminals toward the European Mediterranean approach.",
-        "description": "VLCC and Suez-max cargoes from the Gulf steam west toward the Suez Canal and Eastern Mediterranean, feeding the approach already linked to Trieste and the TAL system.",
+        "summary": "Gulf export lane via Hormuz, Red Sea and Suez toward the Mediterranean approach.",
+        "description": "Realistic long-haul tanker path: Persian Gulf → Strait of Hormuz → Arabian Sea → Gulf of Aden → Red Sea → Suez Canal → Eastern Mediterranean. Educational approximation of the main commercial sea lane, not a specific vessel track.",
         "flow_direction": "Ras Tanura → Suez / Eastern Med → Mediterranean Crude Origins",
         "supply_chain_stage": "transport",
         "consumer_products": [
@@ -641,12 +677,48 @@
             29.95
           ],
           [
-            45.0,
-            27.0
+            51.5,
+            27.5
           ],
           [
-            35.0,
-            31.0
+            56.4,
+            26.4
+          ],
+          [
+            58.5,
+            24.5
+          ],
+          [
+            60.0,
+            18.0
+          ],
+          [
+            48.0,
+            13.2
+          ],
+          [
+            43.3,
+            12.6
+          ],
+          [
+            38.5,
+            20.0
+          ],
+          [
+            34.7,
+            27.5
+          ],
+          [
+            32.5,
+            29.9
+          ],
+          [
+            32.35,
+            31.25
+          ],
+          [
+            30.0,
+            32.5
           ],
           [
             19.0,
@@ -664,8 +736,8 @@
         "country": "INT",
         "operator": "",
         "capacity": "",
-        "summary": "Export path from southern Iraq toward the Mediterranean approach used by European importers.",
-        "description": "",
+        "summary": "Gulf export lane via Hormuz, Red Sea and Suez toward the Mediterranean approach.",
+        "description": "Realistic long-haul tanker path: Persian Gulf → Strait of Hormuz → Arabian Sea → Gulf of Aden → Red Sea → Suez Canal → Eastern Mediterranean. Educational approximation of the main commercial sea lane, not a specific vessel track.",
         "flow_direction": "Basra → Eastern Med approach",
         "supply_chain_stage": "transport",
         "consumer_products": [
@@ -688,12 +760,48 @@
             29.05
           ],
           [
-            44.5,
-            26.5
+            51.5,
+            27.5
           ],
           [
-            34.5,
-            30.5
+            56.4,
+            26.4
+          ],
+          [
+            58.5,
+            24.5
+          ],
+          [
+            60.0,
+            18.0
+          ],
+          [
+            48.0,
+            13.2
+          ],
+          [
+            43.3,
+            12.6
+          ],
+          [
+            38.5,
+            20.0
+          ],
+          [
+            34.7,
+            27.5
+          ],
+          [
+            32.5,
+            29.9
+          ],
+          [
+            32.35,
+            31.25
+          ],
+          [
+            30.0,
+            32.5
           ],
           [
             19.0,
@@ -711,8 +819,8 @@
         "country": "INT",
         "operator": "",
         "capacity": "",
-        "summary": "Kuwaiti export route toward the Mediterranean gateway into Europe.",
-        "description": "",
+        "summary": "Gulf export lane via Hormuz, Red Sea and Suez toward the Mediterranean approach.",
+        "description": "Realistic long-haul tanker path: Persian Gulf → Strait of Hormuz → Arabian Sea → Gulf of Aden → Red Sea → Suez Canal → Eastern Mediterranean. Educational approximation of the main commercial sea lane, not a specific vessel track.",
         "flow_direction": "Mina Al-Ahmadi → Eastern Med approach",
         "supply_chain_stage": "transport",
         "consumer_products": [
@@ -735,12 +843,48 @@
             25.15
           ],
           [
-            48.0,
-            25.0
+            54.7,
+            25.775
           ],
           [
-            36.0,
-            30.0
+            56.4,
+            26.4
+          ],
+          [
+            58.5,
+            24.5
+          ],
+          [
+            60.0,
+            18.0
+          ],
+          [
+            48.0,
+            13.2
+          ],
+          [
+            43.3,
+            12.6
+          ],
+          [
+            38.5,
+            20.0
+          ],
+          [
+            34.7,
+            27.5
+          ],
+          [
+            32.5,
+            29.9
+          ],
+          [
+            32.35,
+            31.25
+          ],
+          [
+            30.0,
+            32.5
           ],
           [
             19.0,
@@ -758,8 +902,8 @@
         "country": "INT",
         "operator": "",
         "capacity": "",
-        "summary": "Abu Dhabi grades moving west toward the Mediterranean approach.",
-        "description": "",
+        "summary": "Gulf export lane via Hormuz, Red Sea and Suez toward the Mediterranean approach.",
+        "description": "Realistic long-haul tanker path: Persian Gulf → Strait of Hormuz → Arabian Sea → Gulf of Aden → Red Sea → Suez Canal → Eastern Mediterranean. Educational approximation of the main commercial sea lane, not a specific vessel track.",
         "flow_direction": "UAE export hub → Eastern Med approach",
         "supply_chain_stage": "transport",
         "consumer_products": [
@@ -782,12 +926,28 @@
             10.1
           ],
           [
-            -40.0,
-            25.0
+            -60.0,
+            12.0
           ],
           [
-            -20.0,
-            40.0
+            -45.0,
+            20.0
+          ],
+          [
+            -30.0,
+            35.0
+          ],
+          [
+            -15.0,
+            45.0
+          ],
+          [
+            -8.0,
+            50.0
+          ],
+          [
+            -3.0,
+            54.0
           ],
           [
             2.5,
@@ -833,12 +993,36 @@
             29.5
           ],
           [
-            -70.0,
+            -88.0,
+            27.5
+          ],
+          [
+            -82.0,
+            24.0
+          ],
+          [
+            -75.0,
+            28.0
+          ],
+          [
+            -60.0,
             35.0
           ],
           [
-            -30.0,
-            45.0
+            -40.0,
+            42.0
+          ],
+          [
+            -20.0,
+            48.0
+          ],
+          [
+            -8.0,
+            50.5
+          ],
+          [
+            -3.0,
+            54.0
           ],
           [
             2.5,
@@ -880,8 +1064,16 @@
             46.5
           ],
           [
-            -30.0,
-            50.0
+            -45.0,
+            48.0
+          ],
+          [
+            -25.0,
+            51.0
+          ],
+          [
+            -10.0,
+            54.0
           ],
           [
             2.5,

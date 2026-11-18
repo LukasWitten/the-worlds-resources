@@ -18,7 +18,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [8.12, 53.64]
+        "coordinates": [
+          8.12,
+          53.64
+        ]
       },
       "properties": {
         "id": "lng-wilhelmshaven",
@@ -54,7 +57,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [9.16, 53.89]
+        "coordinates": [
+          9.16,
+          53.89
+        ]
       },
       "properties": {
         "id": "lng-brunsbuettel",
@@ -90,7 +96,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [7.44, 53.65]
+        "coordinates": [
+          7.44,
+          53.65
+        ]
       },
       "properties": {
         "id": "gas-hub-dornum",
@@ -125,7 +134,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [8.48, 52.6]
+        "coordinates": [
+          8.48,
+          52.6
+        ]
       },
       "properties": {
         "id": "gas-storage-rehden",
@@ -160,7 +172,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [12.49, 49.64]
+        "coordinates": [
+          12.49,
+          49.64
+        ]
       },
       "properties": {
         "id": "gas-hub-waidhaus",
@@ -196,11 +211,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [7.44, 53.65],
-          [8.05, 53.25],
-          [8.75, 52.95],
-          [9.85, 52.8],
-          [11.15, 52.85]
+          [
+            7.44,
+            53.65
+          ],
+          [
+            8.05,
+            53.25
+          ],
+          [
+            8.75,
+            52.95
+          ],
+          [
+            9.85,
+            52.8
+          ],
+          [
+            11.15,
+            52.85
+          ]
         ]
       },
       "properties": {
@@ -237,11 +267,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [13.65, 54.15],
-          [13.85, 53.45],
-          [14.15, 52.55],
-          [14.25, 51.75],
-          [13.65, 50.75]
+          [
+            13.65,
+            54.15
+          ],
+          [
+            13.85,
+            53.45
+          ],
+          [
+            14.15,
+            52.55
+          ],
+          [
+            14.25,
+            51.75
+          ],
+          [
+            13.65,
+            50.75
+          ]
         ]
       },
       "properties": {
@@ -278,11 +323,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [12.49, 49.64],
-          [11.55, 49.35],
-          [10.25, 49.15],
-          [8.95, 49.15],
-          [7.25, 49.15]
+          [
+            12.49,
+            49.64
+          ],
+          [
+            11.55,
+            49.35
+          ],
+          [
+            10.25,
+            49.15
+          ],
+          [
+            8.95,
+            49.15
+          ],
+          [
+            7.25,
+            49.15
+          ]
         ]
       },
       "properties": {
@@ -312,6 +372,162 @@
           "name": "Open Grid Europe MEGAL Datenblatt",
           "url": "https://www.oge.net",
           "year": 2025
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.15,
+          52.85
+        ]
+      },
+      "properties": {
+        "id": "gas-hub-salzwedel",
+        "name": "Gas Hub Salzwedel (NETRA Endpunkt)",
+        "resource": "natural_gas",
+        "category": "node",
+        "type": "processing_hub",
+        "status": "operational",
+        "country": "DE",
+        "operator": "GASCADE Gastransport / Open Grid Europe",
+        "capacity": "Wichtiger Verteilerknoten Norddeutschland",
+        "summary": "Östlicher End- und Übergabepunkt der NETRA-Ferngasleitung.",
+        "description": "An der Station Salzwedel wird Erdgas aus der NETRA in das weiterführende deutsche Fernleitungsnetz übergeben. Der Knoten verbindet norddeutsche Anlandungen mit Verbrauchsschwerpunkten und Speichern.",
+        "supply_chain_stage": "transmission",
+        "consumer_products": [
+          "Haushaltsgas",
+          "Industriegas",
+          "Kraftwerkseinsatz"
+        ],
+        "aha_moment": {
+          "title": "Vom Nordseegas ins Netz",
+          "explanation": "Gas, das in Dornum oder Wilhelmshaven anlandet, fließt über die NETRA bis nach Salzwedel und wird von hier aus ins gesamte deutsche Netz verteilt.",
+          "everyday_impact": "Ein Teil des Erdgases, das in norddeutschen Haushalten und Kraftwerken ankommt, passiert diesen Knoten."
+        },
+        "source": {
+          "name": "FNB Gas / GASCADE",
+          "year": "2025",
+          "url": "https://www.fnb-gas.de"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.65,
+          50.75
+        ]
+      },
+      "properties": {
+        "id": "gas-hub-eugal-south",
+        "name": "EUGAL Süd-Übergabe (Deutsch-Tschechische Grenze)",
+        "resource": "natural_gas",
+        "category": "node",
+        "type": "processing_hub",
+        "status": "operational",
+        "country": "DE",
+        "operator": "GASCADE Gastransport",
+        "capacity": "Hochdruck-Übergabe in Richtung Tschechien / Süddeutschland",
+        "summary": "Südlicher End- und Übergabepunkt der EUGAL-Pipeline.",
+        "description": "Die EUGAL transportiert Erdgas von der Ostseeküste südwärts. An diesem Knoten wird Gas in Richtung tschechisches Netz und süddeutsche Verbrauchszentren übergeben.",
+        "supply_chain_stage": "transmission",
+        "consumer_products": [
+          "Haushaltsgas",
+          "Industriegas",
+          "Export / Transit"
+        ],
+        "aha_moment": {
+          "title": "Gas-Autobahn nach Süden",
+          "explanation": "EUGAL ist eine der größten deutschen Ferngasleitungen und verbindet die Ostsee-Anlandung mit dem Süden und den Nachbarländern.",
+          "everyday_impact": "Gas aus dieser Trasse kann sowohl in deutschen Haushalten als auch in benachbarten Ländern ankommen."
+        },
+        "source": {
+          "name": "GASCADE / FNB Gas",
+          "year": "2025",
+          "url": "https://www.gascade.de"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.25,
+          49.15
+        ]
+      },
+      "properties": {
+        "id": "gas-hub-megal-west",
+        "name": "MEGAL West-Übergabe (Richtung Frankreich)",
+        "resource": "natural_gas",
+        "category": "node",
+        "type": "processing_hub",
+        "status": "operational",
+        "country": "DE",
+        "operator": "GRTgaz Deutschland / Open Grid Europe",
+        "capacity": "Wichtige West-Ost-Verbindung",
+        "summary": "Westlicher End- und Übergabepunkt der MEGAL-Pipeline.",
+        "description": "Die MEGAL (Mittel-Europäische Gasleitung) ist eine der zentralen Ost-West-Achsen im deutschen Fernleitungsnetz. An diesem Knoten wird Gas in Richtung Frankreich und den südwestlichen Raum übergeben.",
+        "supply_chain_stage": "transmission",
+        "consumer_products": [
+          "Haushaltsgas",
+          "Industriegas",
+          "Grenzüberschreitender Transit"
+        ],
+        "aha_moment": {
+          "title": "Ost-West-Gasbrücke",
+          "explanation": "Über die MEGAL fließt Gas quer durch Süddeutschland – von der tschechischen Grenze bis an die französische Grenze.",
+          "everyday_impact": "Viele Gaslieferungen in Süd- und Westdeutschland sowie in Nachbarländer nutzen diese Trasse."
+        },
+        "source": {
+          "name": "FNB Gas / GRTgaz",
+          "year": "2025",
+          "url": "https://www.fnb-gas.de"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.65,
+          54.15
+        ]
+      },
+      "properties": {
+        "id": "gas-hub-lubmin",
+        "name": "Anlandestation Lubmin / Greifswald (EUGAL Start)",
+        "resource": "natural_gas",
+        "category": "node",
+        "type": "import_hub",
+        "status": "operational",
+        "country": "DE",
+        "operator": "GASCADE Gastransport",
+        "capacity": "Ostsee-Anlandepunkt",
+        "summary": "Nördlicher Startpunkt der EUGAL an der Ostseeküste.",
+        "description": "Bei Lubmin / Greifswald wird Erdgas aus Ostsee-Verbindungen an Land gebracht und in die EUGAL eingespeist. Der Standort ist einer der zentralen Import- und Verteilknoten im Nordosten.",
+        "supply_chain_stage": "import",
+        "consumer_products": [
+          "Haushaltsgas",
+          "Industriegas",
+          "Kraftwerkseinsatz"
+        ],
+        "aha_moment": {
+          "title": "Ostsee-Tor für Erdgas",
+          "explanation": "Hier kommt Gas aus der Ostsee an und beginnt seine Reise durch das deutsche Fernleitungsnetz nach Süden.",
+          "everyday_impact": "Ein Teil des Gases, das in Ost- und Süddeutschland ankommt, startet an diesem Punkt."
+        },
+        "source": {
+          "name": "GASCADE / FNB Gas",
+          "year": "2025",
+          "url": "https://www.gascade.de"
         }
       }
     }

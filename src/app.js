@@ -18,10 +18,13 @@ async function bootstrap() {
   mapController.init('leaflet-map');
 
   // 3. Load All Datasets (Crude Oil, Natural Gas, Lithium Intercontinental)
+  // Use absolute paths from site root so this works both with Vite (public/ → /data/)
+  // and with static hosts / GitHub Pages / Vercel after deployment.
   await Promise.all([
-    dataService.loadDataset('germany_crude_oil', './data/geojson/germany/crude_oil.geojson'),
-    dataService.loadDataset('germany_natural_gas', './data/geojson/germany/natural_gas.geojson'),
-    dataService.loadDataset('global_lithium', './data/geojson/global/lithium.geojson')
+    dataService.loadDataset('germany_crude_oil', '/data/geojson/germany/crude_oil.geojson'),
+    dataService.loadDataset('germany_natural_gas', '/data/geojson/germany/natural_gas.geojson'),
+    dataService.loadDataset('global_lithium', '/data/geojson/global/lithium.geojson'),
+    dataService.loadDataset('global_oil_fields', '/data/geojson/global/oil_fields.geojson')
   ]);
 
   // 4. Initial Render

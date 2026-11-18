@@ -39,6 +39,7 @@ class Inspector {
     const source = p.source || {};
 
     const typeBadge = {
+      oil_field: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-300 border border-amber-700">🛢️ Major Oil Field</span>',
       extraction_site: '<span class="px-2.5 py-1 text-xs rounded-full bg-purple-950 text-purple-400 border border-purple-800">⛏️ Extraction Site</span>',
       import_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-sky-950 text-sky-400 border border-sky-800">⚓ Import Terminal / Port</span>',
       processing_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-400 border border-amber-800">🏭 Refinery / Processing</span>',
@@ -105,8 +106,8 @@ class Inspector {
               <span class="font-semibold text-slate-200 text-sm">${p.operator || 'N/A'}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
-              <span class="text-slate-500 block mb-1">Capacity / Dimension</span>
-              <span class="font-semibold text-slate-200 text-sm">${p.capacity || (p.length_km ? `${p.length_km} km` : 'N/A')}</span>
+              <span class="text-slate-500 block mb-1">${p.reserves_billion_bbl ? 'Reserves' : 'Capacity / Dimension'}</span>
+              <span class="font-semibold text-slate-200 text-sm">${p.reserves_billion_bbl ? `~${p.reserves_billion_bbl} bn bbl` : (p.capacity || (p.length_km ? `${p.length_km} km` : 'N/A'))}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">Status</span>

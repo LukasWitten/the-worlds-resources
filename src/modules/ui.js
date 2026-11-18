@@ -72,6 +72,8 @@ class UIController {
     const navbar = document.getElementById('top-navbar');
 
     if (sectionId === 'map') {
+      // Start in clean fullscreen: collapse sidebar + top navbar for maximum "wow" impact
+      this.collapseMapChrome();
       topNavbarToggleBtn?.classList.remove('hidden');
       mapController.invalidateSize();
     } else {
@@ -83,6 +85,32 @@ class UIController {
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /**
+   * Collapse sidebar and top navbar so the map opens in a clean fullscreen state.
+   */
+  collapseMapChrome() {
+    const sidebar = document.getElementById('map-sidebar');
+    const sidebarToggleBtn = document.getElementById('sidebar-toggle-btn');
+    const sidebarToggleIcon = document.getElementById('sidebar-toggle-icon');
+
+    // Collapse left sidebar
+    this.sidebarOpen = false;
+    if (sidebar) {
+      sidebar.classList.add('-ml-80');
+    }
+    if (sidebarToggleBtn) {
+      sidebarToggleBtn.classList.remove('left-[20.5rem]');
+      sidebarToggleBtn.classList.add('left-4');
+      sidebarToggleBtn.setAttribute('title', 'Show sidebar');
+    }
+    if (sidebarToggleIcon) {
+      sidebarToggleIcon.innerText = '▶';
+    }
+
+    // Collapse top navbar
+    this.toggleNavbar(false);
   }
 
   setupSidebarToggle() {
@@ -218,6 +246,49 @@ class UIController {
     btnGlobal?.addEventListener('click', () => {
       mapController.focusGlobalRoute();
     });
+
+    this.setupViewModeButtons();
+  }
+
+  setupViewModeButtons() {
+    const btnOverview = document.getElementById('btn-view-overview');
+    const btnOil = document.getElementById('btn-view-oil-fields');
+    const hint = document.getElementById('view-mode-hint');
+    const panelResources = document.getElementById('panel-resources');
+
+    const setActiveStyles = (mode) => {
+      const active = 'px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer';
+      const idle = 'px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer';
+      if (btnOverview) btnOverview.className = mode === 'overview' ? active : idle;
+      if (btnOil) btnOil.className = mode === 'oil_fields' ? active : idle;
+    };
+
+    const applyMode = (mode) => {
+      dataService.setViewMode(mode);
+      setActiveStyles(mode);
+
+      if (hint) {
+        hint.textContent = mode === 'oil_fields'
+          ? 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.'
+          : 'Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.';
+      }
+
+      // In isolated oil mode, resource toggles are less relevant – dim the panel slightly
+      if (panelResources) {
+        panelResources.style.opacity = mode === 'oil_fields' ? '0.45' : '1';
+        panelResources.style.pointerEvents = mode === 'oil_fields' ? 'none' : '';
+      }
+
+      this.refreshMap();
+
+      if (mode === 'oil_fields') {
+        mapController.focusOilFields();
+      }
+    };
+
+    btnOverview?.addEventListener('click', () => applyMode('overview'));
+    btnOil?.addEventListener('click', () => applyMode('oil_fields'));
+    setActiveStyles(dataService.getViewMode());
   }
 
   setupApiKeyModal() {

@@ -19,30 +19,33 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [8.1402, 53.535]
+        "coordinates": [
+          8.1402,
+          53.535
+        ]
       },
       "properties": {
         "id": "wilhelmshaven-port",
-        "name": "Ölpier Wilhelmshaven (NWO & JadeWeserPort)",
+        "name": "Wilhelmshaven Oil Hub (NWO & JadeWeserPort)",
         "resource": "crude_oil",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
-        "operator": "Nord-West Oelleitung GmbH (NWO)",
-        "capacity": "ca. 20 Mio. Tonnen Rohöl / Jahr",
-        "summary": "Deutschlands einziger Tiefwasser-Ölhafen für Supertanker (VLCC) an der Nordsee.",
-        "description": "Über Wilhelmshaven werden rund 80% aller Rohöl-Seetransporte nach Deutschland abgewickelt. Von hier aus transportieren Pipelines das Rohöl direkt in Raffinerien in Niedersachsen, Nordrhein-Westfalen und Hamburg.",
+        "operator": "Nord-West Oelleitung GmbH (NWO) / JadeWeserPort",
+        "capacity": "approx. 20 million tonnes of crude oil per year",
+        "summary": "Germany’s central crude oil import hub – the only deep-water port for VLCCs, where seaborne crude converges and is redistributed by pipeline.",
+        "description": "Wilhelmshaven is the single most important crude oil gateway into Germany. Around 80% of all seaborne crude imports enter here. Tankers arriving via the North Sea approach discharge at the oil pier; from this hub the Nord-West Oelleitung (NWO) and the Norddeutsche Oelleitung (NDO) redistribute the oil to refineries in western and northern Germany. Multiple inbound flows therefore meet at one node and then branch out again – a classic supply-chain hub.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Kraftstoffe für den Nordwesten",
-          "Kerosin für Flugverkehr",
-          "Chemische Grundbausteine für Kunststoffe"
+          "Gasoline & diesel for northern and western Germany",
+          "Jet fuel",
+          "Petrochemical feedstocks for plastics and chemicals"
         ],
         "aha_moment": {
-          "title": "Das Tor für dein Benzin",
-          "explanation": "Ein einziger Supertanker, der in Wilhelmshaven anlegt, liefert genug Rohöl, um über 1,5 Millionen Pkw ein ganzes Jahr lang zu betanken.",
-          "everyday_impact": "Jeder Tropfen Benzin an Tankstellen in Niedersachsen und NRW hat mit hoher Wahrscheinlichkeit in Wilhelmshaven deutschen Boden betreten."
+          "title": "Where the oil streams meet",
+          "explanation": "Seaborne crude from the North Sea and global trades arrives at Wilhelmshaven. From this single pier the oil is split into major pipeline corridors: NWO toward the Rhine (Shell Rheinland and beyond) and NDO toward Hamburg. One import point feeds several refining regions.",
+          "everyday_impact": "A large share of the fuel used in Lower Saxony, North Rhine-Westphalia and Hamburg has passed through this hub before reaching a refinery and finally a filling station."
         },
         "source": {
           "name": "NWO / en2x Jahresbericht",
@@ -55,7 +58,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [12.115, 54.148]
+        "coordinates": [
+          12.115,
+          54.148
+        ]
       },
       "properties": {
         "id": "rostock-port",
@@ -91,7 +97,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [13.78, 45.62]
+        "coordinates": [
+          13.78,
+          45.62
+        ]
       },
       "properties": {
         "id": "trieste-port",
@@ -127,7 +136,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [14.34, 53.09]
+        "coordinates": [
+          14.34,
+          53.09
+        ]
       },
       "properties": {
         "id": "refinery-schwedt",
@@ -165,7 +177,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [12.015, 51.315]
+        "coordinates": [
+          12.015,
+          51.315
+        ]
       },
       "properties": {
         "id": "refinery-leuna",
@@ -203,7 +218,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [8.33, 49.06]
+        "coordinates": [
+          8.33,
+          49.06
+        ]
       },
       "properties": {
         "id": "refinery-miro",
@@ -241,7 +259,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [6.995, 50.845]
+        "coordinates": [
+          6.995,
+          50.845
+        ]
       },
       "properties": {
         "id": "refinery-rheinland",
@@ -278,7 +299,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [7.045, 51.595]
+        "coordinates": [
+          7.045,
+          51.595
+        ]
       },
       "properties": {
         "id": "refinery-gelsenkirchen",
@@ -315,7 +339,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [11.62, 48.77]
+        "coordinates": [
+          11.62,
+          48.77
+        ]
       },
       "properties": {
         "id": "refinery-bayernoil",
@@ -352,7 +379,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [7.31, 52.56]
+        "coordinates": [
+          7.31,
+          52.56
+        ]
       },
       "properties": {
         "id": "refinery-lingen",
@@ -389,7 +419,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [9.97, 53.48]
+        "coordinates": [
+          9.97,
+          53.48
+        ]
       },
       "properties": {
         "id": "refinery-hamburg",
@@ -427,13 +460,34 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [8.1402, 53.535],
-          [8.19, 53.25],
-          [8.02, 52.88],
-          [7.31, 52.56],
-          [7.15, 52.05],
-          [7.045, 51.595],
-          [6.995, 50.845]
+          [
+            8.1402,
+            53.535
+          ],
+          [
+            8.19,
+            53.25
+          ],
+          [
+            8.02,
+            52.88
+          ],
+          [
+            7.31,
+            52.56
+          ],
+          [
+            7.15,
+            52.05
+          ],
+          [
+            7.045,
+            51.595
+          ],
+          [
+            6.995,
+            50.845
+          ]
         ]
       },
       "properties": {
@@ -446,9 +500,9 @@
         "operator": "Nord-West Oelleitung GmbH",
         "length_km": 391,
         "capacity": "ca. 16,3 Mio. Tonnen / Jahr",
-        "flow_direction": "Wilhelmshaven → Lingen → Ruhrgebiet → Rheinland",
-        "summary": "Zentrale Hauptschlagader für Rohöl vom Tiefseehafen Wilhelmshaven nach Westdeutschland.",
-        "description": "Die 1958 errichtete Pipeline transportiert Rohöl von der Nordseeküste quer durch Niedersachsen und Nordrhein-Westfalen zu den Raffinerien in Lingen, Gelsenkirchen und Köln.",
+        "flow_direction": "Wilhelmshaven Oil Hub → Shell Rheinland (Köln/Wesseling) and western Germany",
+        "summary": "Main outbound pipeline from the Wilhelmshaven oil hub to the Rhine refinery cluster.",
+        "description": "The Nord-West Oelleitung is the primary artery leaving the Wilhelmshaven hub. It carries crude that has just been unloaded from tankers southward to the large refining and chemical complex in the Rhine area (Shell Energy and Chemicals Park Rheinland).",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Rohölzubringer für Raffinerien im Westen"
@@ -470,11 +524,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [8.1402, 53.535],
-          [8.45, 53.55],
-          [8.95, 53.48],
-          [9.55, 53.45],
-          [9.97, 53.48]
+          [
+            8.1402,
+            53.535
+          ],
+          [
+            8.45,
+            53.55
+          ],
+          [
+            8.95,
+            53.48
+          ],
+          [
+            9.55,
+            53.45
+          ],
+          [
+            9.97,
+            53.48
+          ]
         ]
       },
       "properties": {
@@ -487,9 +556,9 @@
         "operator": "NDO GmbH",
         "length_km": 143,
         "capacity": "ca. 5 Mio. Tonnen / Jahr",
-        "flow_direction": "Wilhelmshaven → Hamburg-Harburg",
-        "summary": "Verbindungspipeline von Wilhelmshaven zur Holborn-Raffinerie in Hamburg.",
-        "description": "Unterquert die Weser und führt durch Norddeutschland direkt zur Holborn-Raffinerie am Südufer der Elbe.",
+        "flow_direction": "Wilhelmshaven Oil Hub → Holborn Europa Raffinerie (Hamburg)",
+        "summary": "Outbound pipeline from the Wilhelmshaven oil hub to the Hamburg refining area.",
+        "description": "The Norddeutsche Oelleitung leaves the Wilhelmshaven hub eastward and supplies the Holborn Europa refinery in Hamburg-Harburg. Together with the NWO it shows how one import hub feeds multiple regions.",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Rohölzubringer für Hamburg & Norddeutschland"
@@ -511,11 +580,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [12.115, 54.148],
-          [12.55, 53.85],
-          [13.25, 53.55],
-          [13.95, 53.25],
-          [14.34, 53.09]
+          [
+            12.115,
+            54.148
+          ],
+          [
+            12.55,
+            53.85
+          ],
+          [
+            13.25,
+            53.55
+          ],
+          [
+            13.95,
+            53.25
+          ],
+          [
+            14.34,
+            53.09
+          ]
         ]
       },
       "properties": {
@@ -552,12 +636,30 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [13.78, 45.62],
-          [13.2, 46.25],
-          [12.8, 46.85],
-          [12.4, 47.35],
-          [12.15, 47.85],
-          [11.62, 48.77]
+          [
+            13.78,
+            45.62
+          ],
+          [
+            13.2,
+            46.25
+          ],
+          [
+            12.8,
+            46.85
+          ],
+          [
+            12.4,
+            47.35
+          ],
+          [
+            12.15,
+            47.85
+          ],
+          [
+            11.62,
+            48.77
+          ]
         ]
       },
       "properties": {
@@ -594,11 +696,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [11.62, 48.77],
-          [10.9, 48.65],
-          [9.95, 48.8],
-          [8.95, 48.95],
-          [8.33, 49.06]
+          [
+            11.62,
+            48.77
+          ],
+          [
+            10.9,
+            48.65
+          ],
+          [
+            9.95,
+            48.8
+          ],
+          [
+            8.95,
+            48.95
+          ],
+          [
+            8.33,
+            49.06
+          ]
         ]
       },
       "properties": {
@@ -635,11 +752,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [2.5, 57.0],
-          [4.5, 55.8],
-          [6.8, 54.5],
-          [7.85, 53.9],
-          [8.1402, 53.535]
+          [
+            2.5,
+            57.0
+          ],
+          [
+            4.5,
+            55.8
+          ],
+          [
+            6.8,
+            54.5
+          ],
+          [
+            7.85,
+            53.9
+          ],
+          [
+            8.1402,
+            53.535
+          ]
         ]
       },
       "properties": {
@@ -652,9 +784,9 @@
         "operator": "Internationale Reedereien",
         "length_km": 680,
         "capacity": "Dauerhafter Schiffskorridor",
-        "flow_direction": "Nordseeölfelder / Atlantik → Wilhelmshaven Jadebusen",
-        "summary": "Offshore-Versorgungsroute für Supertanker nach Wilhelmshaven.",
-        "description": "Seeweg für Rohöltanker aus norwegischen und britischen Nordseefeldern (z.B. Johan Sverdrup, Brent) sowie Lieferungen aus den USA und Westafrika.",
+        "flow_direction": "North Sea / North Atlantic Crude Approach → Wilhelmshaven Oil Hub",
+        "summary": "Inbound tanker approach into Germany’s central crude oil hub at Wilhelmshaven.",
+        "description": "This shipping corridor represents the final inbound leg of crude oil tankers heading for Wilhelmshaven – Germany’s only deep-water oil port. All of this flow converges on the oil pier before being redistributed by the NWO and NDO pipelines.",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Rohölimporte per Tankschiff"
@@ -676,10 +808,22 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [19.0, 36.0],
-          [17.5, 39.5],
-          [15.5, 42.5],
-          [13.78, 45.62]
+          [
+            19.0,
+            36.0
+          ],
+          [
+            17.5,
+            39.5
+          ],
+          [
+            15.5,
+            42.5
+          ],
+          [
+            13.78,
+            45.62
+          ]
         ]
       },
       "properties": {
@@ -709,6 +853,88 @@
           "url": "https://www.porto.trieste.it/",
           "year": 2025
         }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          19.0,
+          36.0
+        ]
+      },
+      "properties": {
+        "id": "crude-origin-mediterranean",
+        "name": "Mediterranean Crude Origins (Suez / Eastern Med Approach)",
+        "resource": "crude_oil",
+        "category": "node",
+        "type": "extraction_site",
+        "status": "operational",
+        "country": "INT",
+        "operator": "Various (Libya, Egypt, Middle East via Suez)",
+        "capacity": "Multiple loading ports feeding the Adriatic route",
+        "summary": "Representative origin area for crude oil tankers bound for Trieste via the Adriatic.",
+        "description": "Crude oil arriving at the SIOT terminal in Trieste comes from several Mediterranean and Middle Eastern loading regions. This node represents the collective eastern-Mediterranean / Suez approach where tankers enter the route toward the Adriatic and the Transalpine Pipeline (TAL) system.",
+        "supply_chain_stage": "extraction",
+        "consumer_products": [
+          "Gasoline",
+          "Diesel",
+          "Jet fuel",
+          "Petrochemical feedstocks"
+        ],
+        "aha_moment": {
+          "title": "From the Mediterranean to your tank",
+          "explanation": "Tankers load crude in North Africa and the Middle East, pass through the eastern Mediterranean, and discharge at Trieste. From there the TAL pipeline carries the oil into southern Germany and Austria.",
+          "everyday_impact": "A significant share of diesel and gasoline used in southern Germany has travelled this Mediterranean–Adriatic–TAL route."
+        },
+        "source": {
+          "name": "SIOT / TAL / Open shipping data",
+          "year": "2025",
+          "url": "https://www.tal-oil.com"
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.5,
+          57.0
+        ]
+      },
+      "properties": {
+        "id": "crude-origin-north-sea",
+        "name": "North Sea / North Atlantic Crude Approach",
+        "resource": "crude_oil",
+        "category": "node",
+        "type": "extraction_site",
+        "status": "operational",
+        "country": "INT",
+        "operator": "Various (North Sea fields, Atlantic trades, global tankers)",
+        "capacity": "Major approach corridor for tankers to Wilhelmshaven",
+        "summary": "Representative origin / approach area for tankers bound for the Wilhelmshaven oil hub.",
+        "description": "Wilhelmshaven receives crude from North Sea production and from long-haul Atlantic and global trades. This node marks the northern approach corridor where tankers enter the final leg toward Germany’s only deep-water oil port.",
+        "supply_chain_stage": "extraction",
+        "consumer_products": [
+          "Gasoline",
+          "Diesel",
+          "Jet fuel",
+          "Heating oil",
+          "Petrochemicals"
+        ],
+        "aha_moment": {
+          "title": "The North Sea gateway",
+          "explanation": "Supertankers use this approach to reach Wilhelmshaven – Germany’s only port that can handle the largest crude carriers. From the pier, pipelines distribute the oil to refineries across northern and western Germany.",
+          "everyday_impact": "A large share of the fuel used in northern and western Germany arrives via this North Sea approach and the Wilhelmshaven oil pier."
+        },
+        "source": {
+          "name": "NWO / JadeWeserPort / shipping data",
+          "year": "2025",
+          "url": "https://www.nwo-gmbh.de"
+        },
+        "flow_direction": "North Sea & Atlantic trades → Wilhelmshaven Oil Hub"
       }
     }
   ]

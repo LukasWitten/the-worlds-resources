@@ -1,10 +1,15 @@
 /**
  * Data Service - Handles loading, caching, and filtering of resource GeoJSON datasets.
+ *
+ * viewMode:
+ *  - 'overview'   → normal multi-resource map
+ *  - 'oil_fields' → isolated oil view (field lakes + crude oil chain only)
  */
 
 class DataService {
   constructor() {
     this.datasets = new Map();
+    this.viewMode = 'overview';
     this.activeFilters = {
       resources: new Set(['crude_oil', 'natural_gas', 'lithium']),
       categories: new Set([
@@ -14,15 +19,13 @@ class DataService {
         'storage_hub',
         'pipeline',
         'rail_corridor',
-        'shipping_route'
+        'shipping_route',
+        'oil_field'
       ]),
       searchQuery: ''
     };
   }
 
-  /**
-   * Loads a GeoJSON file from the data directory
-   */
   async loadDataset(id, path) {
     try {
       const response = await fetch(path);
@@ -38,9 +41,6 @@ class DataService {
     }
   }
 
-  /**
-   * Retrieves all loaded features flattened
-   */
   getAllFeatures() {
     const all = [];
     for (const dataset of this.datasets.values()) {
@@ -51,8 +51,16 @@ class DataService {
     return all;
   }
 
+  setViewMode(mode) {
+    this.viewMode = mode || 'overview';
+  }
+
+  getViewMode() {
+    return this.viewMode;
+  }
+
   /**
-   * Returns features that match the active filter criteria
+   * Returns features that match the active view mode + filter criteria.
    */
   getFilteredFeatures() {
     const all = this.getAllFeatures();
@@ -61,23 +69,35 @@ class DataService {
     return all.filter(feature => {
       const p = feature.properties || {};
 
-      // Filter by resource
-      if (!this.activeFilters.resources.has(p.resource)) {
-        return false;
+      // --- Isolated oil-fields mode ---
+      if (this.viewMode === 'oil_fields') {
+        // Show major oil-field polygons always (unless search excludes them)
+        // Plus the full crude_oil infrastructure chain (nodes + routes)
+        const isOilField = p.type === 'oil_field';
+        const isCrudeChain = p.resource === 'crude_oil';
+        if (!isOilField && !isCrudeChain) return false;
+      } else {
+        // Overview: respect resource + category toggles
+        if (!this.activeFilters.resources.has(p.resource)) return false;
+        if (!this.activeFilters.categories.has(p.type)) return false;
       }
 
-      // Filter by infrastructure type
-      if (!this.activeFilters.categories.has(p.type)) {
-        return false;
-      }
-
-      // Filter by search query if specified
+      // Search: name, country, region, summary, operator, resource
       if (query) {
-        const name = (p.name || '').toLowerCase();
-        const summary = (p.summary || '').toLowerCase();
-        const operator = (p.operator || '').toLowerCase();
-        const matches = name.includes(query) || summary.includes(query) || operator.includes(query);
-        if (!matches) return false;
+        const haystack = [
+          p.name,
+          p.country,
+          p.region,
+          p.summary,
+          p.operator,
+          p.resource,
+          p.type,
+          p.id
+        ]
+          .filter(Boolean)
+          .join(' ')
+          .toLowerCase();
+        if (!haystack.includes(query)) return false;
       }
 
       return true;

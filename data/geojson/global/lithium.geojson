@@ -18,7 +18,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-68.3, -23.5]
+        "coordinates": [
+          -68.3,
+          -23.5
+        ]
       },
       "properties": {
         "id": "lithium-salar-atacama",
@@ -53,7 +56,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [-70.4, -23.65]
+        "coordinates": [
+          -70.4,
+          -23.65
+        ]
       },
       "properties": {
         "id": "port-antofagasta",
@@ -87,7 +93,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [9.97, 53.53]
+        "coordinates": [
+          9.97,
+          53.53
+        ]
       },
       "properties": {
         "id": "port-hamburg-lithium",
@@ -121,7 +130,10 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [13.88, 51.48]
+        "coordinates": [
+          13.88,
+          51.48
+        ]
       },
       "properties": {
         "id": "processing-schwarzheide",
@@ -158,21 +170,66 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [-70.4, -23.65],
-          [-75.0, -18.0],
-          [-81.0, -5.0],
-          [-80.5, 2.0],
-          [-79.9, 9.1],
-          [-77.5, 14.5],
-          [-68.0, 22.0],
-          [-55.0, 32.0],
-          [-38.0, 42.0],
-          [-20.0, 48.0],
-          [-5.0, 49.5],
-          [1.5, 51.0],
-          [4.0, 52.5],
-          [8.0, 53.9],
-          [9.97, 53.53]
+          [
+            -70.4,
+            -23.65
+          ],
+          [
+            -75.0,
+            -18.0
+          ],
+          [
+            -81.0,
+            -5.0
+          ],
+          [
+            -80.5,
+            2.0
+          ],
+          [
+            -79.9,
+            9.1
+          ],
+          [
+            -77.5,
+            14.5
+          ],
+          [
+            -68.0,
+            22.0
+          ],
+          [
+            -55.0,
+            32.0
+          ],
+          [
+            -38.0,
+            42.0
+          ],
+          [
+            -20.0,
+            48.0
+          ],
+          [
+            -5.0,
+            49.5
+          ],
+          [
+            1.5,
+            51.0
+          ],
+          [
+            4.0,
+            52.5
+          ],
+          [
+            8.0,
+            53.9
+          ],
+          [
+            9.97,
+            53.53
+          ]
         ]
       },
       "properties": {
@@ -209,11 +266,26 @@
       "geometry": {
         "type": "LineString",
         "coordinates": [
-          [9.97, 53.53],
-          [10.8, 53.2],
-          [11.9, 52.6],
-          [13.1, 52.3],
-          [13.88, 51.48]
+          [
+            9.97,
+            53.53
+          ],
+          [
+            10.8,
+            53.2
+          ],
+          [
+            11.9,
+            52.6
+          ],
+          [
+            13.1,
+            52.3
+          ],
+          [
+            13.88,
+            51.48
+          ]
         ]
       },
       "properties": {
@@ -242,6 +314,53 @@
           "name": "DB Cargo Netzwerkübersicht",
           "url": "https://www.dbcargo.com",
           "year": 2025
+        }
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            -68.3,
+            -23.5
+          ],
+          [
+            -70.4,
+            -23.65
+          ]
+        ]
+      },
+      "properties": {
+        "id": "route-atacama-antofagasta",
+        "name": "Atacama → Antofagasta Lithium Corridor",
+        "resource": "lithium",
+        "category": "edge",
+        "type": "rail_corridor",
+        "status": "operational",
+        "country": "CL",
+        "operator": "Mining operators / Chilean logistics (e.g. SQM, Albemarle supply chains)",
+        "capacity": "Concentrated lithium products to export port",
+        "length_km": 220,
+        "summary": "Land transport corridor from the Salar de Atacama brine operations to the Pacific export port of Antofagasta.",
+        "description": "Lithium carbonate and related products produced at the Salar de Atacama are moved by road and rail roughly 200–250 km west to the port of Antofagasta. From there they are loaded onto ships for the intercontinental route to Europe.",
+        "flow_direction": "Salar de Atacama → Port of Antofagasta → Ocean vessels",
+        "supply_chain_stage": "transport",
+        "consumer_products": [
+          "EV batteries",
+          "Smartphone batteries",
+          "Grid storage"
+        ],
+        "aha_moment": {
+          "title": "From desert brine to the Pacific",
+          "explanation": "After lithium is extracted from the salt flats, it still has to cross the desert to the coast. Only then does the long sea journey to Europe begin.",
+          "everyday_impact": "Every lithium shipment that later arrives in Hamburg has first travelled this short but essential desert corridor."
+        },
+        "source": {
+          "name": "Chilean mining & port logistics / open data",
+          "year": "2025",
+          "url": "https://www.usgs.gov"
         }
       }
     }

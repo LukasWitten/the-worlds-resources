@@ -24,7 +24,8 @@ async function bootstrap() {
     dataService.loadDataset('germany_crude_oil', '/data/geojson/germany/crude_oil.geojson'),
     dataService.loadDataset('germany_natural_gas', '/data/geojson/germany/natural_gas.geojson'),
     dataService.loadDataset('global_lithium', '/data/geojson/global/lithium.geojson'),
-    dataService.loadDataset('global_oil_fields', '/data/geojson/global/oil_fields.geojson')
+    dataService.loadDataset('global_oil_fields', '/data/geojson/global/oil_fields.geojson'),
+    dataService.loadDataset('global_oil_export_corridors', '/data/geojson/global/oil_export_corridors.geojson')
   ]);
 
   // 4. Initial Render

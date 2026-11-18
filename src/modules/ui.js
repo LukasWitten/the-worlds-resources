@@ -84,6 +84,12 @@ class UIController {
       }
     }
 
+    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …)
+    const desiredHash = `#${sectionId}`;
+    if (window.location.hash !== desiredHash) {
+      history.replaceState(null, '', desiredHash);
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

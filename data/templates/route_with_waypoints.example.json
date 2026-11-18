@@ -1,0 +1,40 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [8.1402, 53.535],
+      [5.0, 55.0],
+      [2.5, 57.0]
+    ]
+  },
+  "properties": {
+    "id": "example-shipping-corridor",
+    "name": "Example Shipping Corridor",
+    "resource": "crude_oil",
+    "category": "edge",
+    "type": "shipping_route",
+    "status": "operational",
+    "country": "INT",
+    "operator": "",
+    "capacity": "",
+    "length_km": 0,
+    "summary": "Short description of the flow.",
+    "description": "Optional longer text.",
+    "flow_direction": "Start visible node → End visible node",
+    "supply_chain_stage": "transport",
+    "consumer_products": [
+      "Crude oil in transit"
+    ],
+    "aha_moment": {
+      "title": "Optional title",
+      "explanation": "Optional explanation",
+      "everyday_impact": "Optional impact"
+    },
+    "source": {
+      "name": "Source name",
+      "year": "2025",
+      "url": ""
+    }
+  }
+}

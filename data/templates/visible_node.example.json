@@ -1,0 +1,36 @@
+{
+  "type": "Feature",
+  "geometry": {
+    "type": "Point",
+    "coordinates": [0.0, 0.0]
+  },
+  "properties": {
+    "id": "example-port-name",
+    "name": "Example Port Name",
+    "resource": "crude_oil",
+    "category": "node",
+    "type": "import_hub",
+    "status": "operational",
+    "country": "DE",
+    "operator": "Operator name",
+    "capacity": "e.g. 10 million tonnes / year",
+    "summary": "Short tooltip summary (one sentence).",
+    "description": "Longer Inspector description (2–4 sentences).",
+    "supply_chain_stage": "import",
+    "consumer_products": [
+      "Product A",
+      "Product B"
+    ],
+    "aha_moment": {
+      "title": "Short title",
+      "explanation": "What is non-obvious about this place?",
+      "everyday_impact": "How does it connect to everyday products?"
+    },
+    "source": {
+      "name": "Source organisation or report",
+      "year": "2025",
+      "url": "https://"
+    },
+    "visible": true
+  }
+}

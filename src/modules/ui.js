@@ -2,7 +2,7 @@
  * UI Module - Handles top navigation, sidebar toggles, search, filters, and modals.
  */
 
-import { mapController, DEFAULT_CARTO_API_KEY } from './map.js';
+import { mapController } from './map.js';
 import { dataService } from './dataService.js';
 
 class UIController {
@@ -310,8 +310,8 @@ class UIController {
     const providerRadios = document.querySelectorAll('input[name="tile-provider"]');
 
     // Prepopulate current values (prefer default key if present)
-    const currentKey = localStorage.getItem('carto_api_key') || DEFAULT_CARTO_API_KEY || '';
-    const currentProvider = localStorage.getItem('tile_provider') || (currentKey ? 'carto' : 'esri');
+    const currentKey = mapController.cartoApiKey || '';
+    const currentProvider = mapController.currentProvider;
 
     if (keyInput) keyInput.value = currentKey;
 

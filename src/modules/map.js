@@ -7,10 +7,30 @@ import { inspector } from './inspector.js';
 import { escapeHtml } from './html.js';
 
 // =========================================================================
-// Project CARTO basemap key. It is public by nature (it is sent with every
-// tile request), so restrict it to the project domains in the CARTO dashboard.
+// Project CARTO basemap keys. They are public by nature (sent with every tile
+// request) and restricted by HTTP referrer in the CARTO dashboard:
+//  - production key: theworldsresources.org / .com (with and without www)
+//  - local key:      localhost, 127.0.0.1, *.localhost
 // =========================================================================
-export const DEFAULT_CARTO_API_KEY = 'cb1_5axy_1_4f1f333309a9b1bc4633b172';
+const CARTO_KEY_PRODUCTION = 'cb1_5axy_1_4f1f333309a9b1bc4633b172';
+const CARTO_KEY_LOCAL = 'cb1_5axy_2_2d564d6ce4dbe4c07cae3fc8';
+
+const LOCAL_HOST_PATTERN = /^(localhost|127\.0\.0\.1|.+\.localhost)$/;
+const isLocalHost = typeof window !== 'undefined' && LOCAL_HOST_PATTERN.test(window.location.hostname);
+
+export const DEFAULT_CARTO_API_KEY = isLocalHost ? CARTO_KEY_LOCAL : CARTO_KEY_PRODUCTION;
+
+const PROJECT_CARTO_KEYS = new Set([CARTO_KEY_PRODUCTION, CARTO_KEY_LOCAL]);
+
+/** A key the visitor entered themselves (project keys saved by older versions are ignored). */
+function readCustomCartoKey() {
+  try {
+    const stored = localStorage.getItem('carto_api_key');
+    return stored && !PROJECT_CARTO_KEYS.has(stored) ? stored : '';
+  } catch {
+    return '';
+  }
+}
 
 class MapController {
   constructor() {
@@ -20,7 +40,7 @@ class MapController {
     this.activeFeatures = [];
 
     // A key the visitor saved in the basemap dialog wins over the project default
-    this.cartoApiKey = localStorage.getItem('carto_api_key') || DEFAULT_CARTO_API_KEY || '';
+    this.cartoApiKey = readCustomCartoKey() || DEFAULT_CARTO_API_KEY || '';
     
     // Default to CARTO if a key exists; otherwise fallback to Esri
     if (this.cartoApiKey) {
@@ -116,11 +136,17 @@ class MapController {
 
   setTileProvider(provider, apiKey = '') {
     this.currentProvider = provider || 'carto';
-    this.cartoApiKey = apiKey ? apiKey.trim() : (DEFAULT_CARTO_API_KEY || '');
+    const customKey = apiKey ? apiKey.trim() : '';
+    const isCustom = customKey && !PROJECT_CARTO_KEYS.has(customKey);
+    this.cartoApiKey = isCustom ? customKey : (DEFAULT_CARTO_API_KEY || '');
 
-    localStorage.setItem('tile_provider', this.currentProvider);
-    if (this.cartoApiKey) {
-      localStorage.setItem('carto_api_key', this.cartoApiKey);
+    try {
+      localStorage.setItem('tile_provider', this.currentProvider);
+      // Only persist keys the visitor entered; project keys always come from the code
+      if (isCustom) localStorage.setItem('carto_api_key', customKey);
+      else localStorage.removeItem('carto_api_key');
+    } catch {
+      // Storage unavailable (private mode etc.) – settings just won't persist
     }
 
     this.setupTileLayer();

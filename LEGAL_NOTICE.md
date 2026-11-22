@@ -3,9 +3,9 @@
 Information pursuant to Section 5 DDG (Digital Services Act)
 
 **Responsible for content:**
-[Your First and Last Name]
-[Your Street and House Number]
-[Your Postal Code and City]
+Lukas Wittenzellner
+Zirkel 11
+76133 Karlsruhe
 Germany
 
 **Contact:**

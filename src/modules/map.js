@@ -2,10 +2,13 @@
  * Map Module - Leaflet Map setup, dark styling, glowing SVG markers, and animated pipeline routes.
  */
 
+import L from 'leaflet';
 import { inspector } from './inspector.js';
+import { escapeHtml } from './html.js';
 
 // =========================================================================
-// HIER DEINEN CARTO API KEY EINTRAGEN:
+// Project CARTO basemap key. It is public by nature (it is sent with every
+// tile request), so restrict it to the project domains in the CARTO dashboard.
 // =========================================================================
 export const DEFAULT_CARTO_API_KEY = 'cb1_5axy_1_4f1f333309a9b1bc4633b172';
 
@@ -16,8 +19,8 @@ class MapController {
     this.layersGroup = null;
     this.activeFeatures = [];
 
-    // Prioritize user-provided hardcoded key or saved key
-    this.cartoApiKey = DEFAULT_CARTO_API_KEY || localStorage.getItem('carto_api_key') || '';
+    // A key the visitor saved in the basemap dialog wins over the project default
+    this.cartoApiKey = localStorage.getItem('carto_api_key') || DEFAULT_CARTO_API_KEY || '';
     
     // Default to CARTO if a key exists; otherwise fallback to Esri
     if (this.cartoApiKey) {
@@ -253,10 +256,10 @@ class MapController {
 
     layer.bindTooltip(`
       <div class="text-xs font-sans">
-        <strong class="text-white">${p.name || 'Oil field'}</strong><br>
-        <span class="text-amber-300">${reserves} bn bbl</span>
-        ${p.country ? `<span class="text-slate-400"> · ${p.country}</span>` : ''}<br>
-        <span class="text-slate-300">${p.summary || ''}</span>
+        <strong class="text-white">${escapeHtml(p.name || 'Oil field')}</strong><br>
+        <span class="text-amber-300">${escapeHtml(reserves)} bn bbl</span>
+        ${p.country ? `<span class="text-slate-400"> · ${escapeHtml(p.country)}</span>` : ''}<br>
+        <span class="text-slate-300">${escapeHtml(p.summary)}</span>
       </div>
     `, {
       sticky: true,
@@ -337,8 +340,8 @@ class MapController {
 
     marker.bindTooltip(`
       <div class="text-xs font-sans">
-        <strong class="text-white">${p.name}</strong><br>
-        <span class="text-slate-300">${p.capacity || p.summary}</span>
+        <strong class="text-white">${escapeHtml(p.name)}</strong><br>
+        <span class="text-slate-300">${escapeHtml(p.capacity || p.summary)}</span>
       </div>
     `, {
       direction: 'top',
@@ -386,8 +389,8 @@ class MapController {
 
     polyline.bindTooltip(`
       <div class="text-xs font-sans">
-        <strong class="text-white">${p.name}</strong><br>
-        <span class="text-slate-300">${p.flow_direction || p.summary}</span>
+        <strong class="text-white">${escapeHtml(p.name)}</strong><br>
+        <span class="text-slate-300">${escapeHtml(p.flow_direction || p.summary)}</span>
       </div>
     `, {
       sticky: true,

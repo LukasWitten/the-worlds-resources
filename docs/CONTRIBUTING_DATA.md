@@ -22,21 +22,24 @@ Invisible waypoints may only appear **between** start and end.
 ## 2. Where files live
 
 ```
-data/geojson/
-  germany/          # country-focused infrastructure
-    crude_oil.geojson
-    natural_gas.geojson
-  global/           # intercontinental layers
-    lithium.geojson
-    oil_fields.geojson
-    oil_export_corridors.geojson
-public/data/geojson/   # must stay in sync (copied for deployment)
+public/data/
+  geojson/
+    germany/          # country-focused infrastructure
+      crude_oil.geojson
+      natural_gas.geojson
+    global/           # intercontinental layers
+      lithium.geojson
+      oil_fields.geojson
+      oil_export_corridors.geojson
+  schemas/
+    resource-feature.schema.json
+  templates/          # copy-paste examples
 ```
 
-When you change a file under `data/geojson/`, **copy the same change** to `public/data/geojson/`.
+`public/data/` is the **only** place where data lives. It is served unchanged under `/data/` on the website, so there is nothing to copy or keep in sync.
 
-Schema reference: `data/schemas/resource-feature.schema.json`  
-Copy-paste templates: `data/templates/`
+Schema reference: `public/data/schemas/resource-feature.schema.json`  
+Copy-paste templates: `public/data/templates/`
 
 ---
 
@@ -176,7 +179,7 @@ Keep bends minimal (usually 1–3) so routes stay readable.
 | `shipping_route` | Teal or purple (lithium) |
 | `rail_corridor` | Yellow |
 
-**Start/end coordinates should match an existing visible node** (within ~0.08°), otherwise the multi-color node border and chain logic will not connect cleanly.
+**Start/end coordinates must match an existing visible node** (within ~0.08°) or lie inside an oil-field area. `npm run validate:data` fails otherwise, because the multi-color node border and chain logic would not connect.
 
 ---
 
@@ -184,20 +187,23 @@ Keep bends minimal (usually 1–3) so routes stay readable.
 
 - [ ] `id` is unique and matches the pattern  
 - [ ] `resource`, `category`, `type` use allowed values  
-- [ ] Visible nodes have: `name`, `summary`, `source`  
+- [ ] Visible nodes have: `name`, `summary`, `source` (with `url` whenever possible)  
 - [ ] Routes have a clear `flow_direction` (A → B)  
 - [ ] Route starts and ends on visible nodes  
 - [ ] Coordinates are `[lon, lat]` (not lat, lon)  
 - [ ] Texts are in **English** (project UI language)  
 - [ ] Sources are named (link if possible)  
 - [ ] File is valid JSON (trailing commas break the map)  
-- [ ] Same file updated under `public/data/geojson/`  
+- [ ] `npm run validate:data` passes  
 
-Optional local check:
+Local check (also runs automatically on every pull request):
 
 ```bash
+npm install
 npm run validate:data
 ```
+
+It checks the schema (allowed values, `[lon, lat]` ranges, required fields), unique ids across all files and that routes start and end on visible nodes. Missing source URLs are reported as warnings.
 
 ---
 
@@ -205,7 +211,7 @@ npm run validate:data
 
 1. Fork / branch the repository  
 2. Add or edit the GeoJSON following this guide  
-3. Test locally: `npm run dev` → open the map → verify markers and lines  
+3. Test locally: `npm install`, then `npm run dev` → open the map → verify markers and lines  
 4. Open a Pull Request with:
    - what you added (resource + region)
    - data sources used

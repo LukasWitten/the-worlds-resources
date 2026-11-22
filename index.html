@@ -5,29 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The World's Resources | Visualizing Global Trade</title>
   <meta name="description" content="Minimalist, open-source web application mapping global resource flows from source to everyday consumer products.">
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            darkbg: '#0b0f19',
-            cardbg: '#131b2e',
-            panelbg: '#182238'
-          }
-        }
-      }
-    };
-  </script>
 
-  <!-- Leaflet CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-  
-  <!-- Custom Application Styles -->
-  <link rel="stylesheet" href="./src/styles/main.css">
+  <!-- Styles: Leaflet + custom theme + Tailwind, bundled by Vite (no third-party CDNs) -->
+  <link rel="stylesheet" href="/src/styles/main.css">
 </head>
 <body class="bg-darkbg text-slate-100 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
 
@@ -445,7 +425,17 @@
           <p class="text-xs text-slate-400"><strong>Cloudflare (CDN & DNS)</strong><br>
           We use services provided by Cloudflare Inc. (101 Townsend St, San Francisco, CA 94107, USA) to secure and accelerate the delivery of our website. Cloudflare processes technical network data (including visitors' IP addresses) to fend off attacks and provide content.</p>
 
-          <h5 class="font-semibold text-slate-200 mt-3 mb-1">3. General Information and Mandatory Information</h5>
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">3. Map Tiles (Basemap Providers)</h5>
+          <p class="text-xs text-slate-400 mb-1"><strong>CARTO</strong><br>
+          The interactive map loads its background map images ("tiles") from CARTO (CartoDB Inc., USA). To deliver the tiles, your browser connects directly to CARTO's servers, which receive your IP address and technical request data (e.g. browser type, requested map area). This is necessary to display the map (Art. 6(1)(f) GDPR, legitimate interest in a functioning map). <a href="https://carto.com/privacy" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">CARTO privacy policy ↗</a></p>
+          <p class="text-xs text-slate-400 mb-1"><strong>Esri (optional)</strong><br>
+          If you switch the basemap to "Esri Dark Canvas" in the map settings, tiles are loaded from Esri (Environmental Systems Research Institute, Inc., USA) instead, with the same kind of technical data. <a href="https://www.esri.com/en-us/privacy/overview" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">Esri privacy policy ↗</a></p>
+          <p class="text-xs text-slate-400">All other scripts and styles of this website are served from our own domain; no further third-party CDNs are used.</p>
+
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">4. Local Storage in Your Browser</h5>
+          <p class="text-xs text-slate-400">This website does not set cookies and does not use tracking or analytics. If you change the basemap settings, your choice (and an optional CARTO key you enter) is saved in your browser's local storage so it persists between visits. This data stays on your device and is never sent to us. You can delete it at any time via your browser settings.</p>
+
+          <h5 class="font-semibold text-slate-200 mt-3 mb-1">5. General Information and Mandatory Information</h5>
           <p class="text-xs text-slate-400 mb-1"><strong>SSL/TLS Encryption</strong><br>
           For security reasons and to protect the transmission of confidential content, this site uses SSL/TLS encryption. You can recognize an encrypted connection in your browser's address bar when it changes from "http://" to "https://" and by the lock icon in your browser bar.</p>
           <p class="text-xs text-slate-400"><strong>Email Contact</strong><br>
@@ -453,7 +443,7 @@
         </div>
 
         <p class="text-[11px] text-slate-500 pt-2">
-          Full versions are also available as <a href="./LEGAL_NOTICE.md" class="text-indigo-400 hover:underline">LEGAL_NOTICE.md</a> and <a href="./PRIVACY_POLICY.md" class="text-indigo-400 hover:underline">PRIVACY_POLICY.md</a>.
+          Full versions are also available as <a href="https://github.com/LukasWitten/the-worlds-resources/blob/main/LEGAL_NOTICE.md" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">LEGAL_NOTICE.md</a> and <a href="https://github.com/LukasWitten/the-worlds-resources/blob/main/PRIVACY_POLICY.md" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">PRIVACY_POLICY.md</a>.
         </p>
       </div>
     </div>
@@ -503,10 +493,7 @@
     </div>
   </div>
 
-  <!-- Leaflet JS -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  
-  <!-- Main Application Script (ES Module) -->
+  <!-- Main Application Script (ES Module, bundles Leaflet, Tailwind and styles via Vite) -->
   <script type="module" src="./src/app.js"></script>
 </body>
 </html>

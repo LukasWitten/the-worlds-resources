@@ -1,48 +1,90 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://theworldsresources.org/data/schemas/resource-feature.schema.json",
   "title": "ResourceFeature",
-  "description": "Schema for geographic nodes and edges representing resource infrastructure in 'The World\\'s Resources'.",
+  "description": "One GeoJSON Feature of 'The World's Resources': a visible node (Point), a route (LineString / MultiLineString) or an oil-field area (Polygon). Validated by scripts/validate-data.js.",
   "type": "object",
   "required": ["type", "geometry", "properties"],
-  "properties": {
-    "type": {
-      "type": "string",
-      "enum": ["Feature"]
+  "definitions": {
+    "position": {
+      "description": "GeoJSON position in [longitude, latitude] order.",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 3,
+      "items": [
+        { "type": "number", "minimum": -180, "maximum": 180 },
+        { "type": "number", "minimum": -90, "maximum": 90 },
+        { "type": "number" }
+      ]
     },
+    "line": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/definitions/position" }
+    },
+    "ring": {
+      "type": "array",
+      "minItems": 4,
+      "items": { "$ref": "#/definitions/position" }
+    },
+    "nodeType": {
+      "enum": ["import_hub", "extraction_site", "processing_hub", "storage_hub"]
+    },
+    "edgeType": {
+      "enum": ["pipeline", "shipping_route", "rail_corridor"]
+    }
+  },
+  "properties": {
+    "type": { "const": "Feature" },
     "geometry": {
       "type": "object",
       "required": ["type", "coordinates"],
       "properties": {
-        "type": {
-          "type": "string",
-          "enum": ["Point", "LineString", "MultiLineString"]
+        "type": { "enum": ["Point", "LineString", "MultiLineString", "Polygon"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "type": { "const": "Point" } } },
+          "then": { "properties": { "coordinates": { "$ref": "#/definitions/position" } } }
         },
-        "coordinates": {
-          "type": "array"
+        {
+          "if": { "properties": { "type": { "const": "LineString" } } },
+          "then": { "properties": { "coordinates": { "$ref": "#/definitions/line" } } }
+        },
+        {
+          "if": { "properties": { "type": { "const": "MultiLineString" } } },
+          "then": {
+            "properties": {
+              "coordinates": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/line" } }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "type": { "const": "Polygon" } } },
+          "then": {
+            "properties": {
+              "coordinates": { "type": "array", "minItems": 1, "items": { "$ref": "#/definitions/ring" } }
+            }
+          }
         }
-      }
+      ]
     },
     "properties": {
       "type": "object",
-      "required": ["id", "name", "resource", "category", "type", "summary", "source"],
+      "required": ["id", "name", "resource", "type", "summary", "source"],
       "properties": {
         "id": {
           "type": "string",
           "pattern": "^[a-z0-9_-]+$"
         },
-        "name": {
-          "type": "string"
-        },
+        "name": { "type": "string", "minLength": 1 },
         "resource": {
-          "type": "string",
           "enum": ["crude_oil", "natural_gas", "hydrogen", "copper", "lithium", "gold", "water"]
         },
         "category": {
-          "type": "string",
           "enum": ["node", "edge"]
         },
         "type": {
-          "type": "string",
           "enum": [
             "import_hub",
             "extraction_site",
@@ -50,44 +92,32 @@
             "storage_hub",
             "pipeline",
             "shipping_route",
-            "rail_corridor"
+            "rail_corridor",
+            "oil_field"
           ]
         },
         "status": {
-          "type": "string",
           "enum": ["operational", "planned", "under_expansion", "decommissioned"],
           "default": "operational"
         },
-        "country": {
-          "type": "string"
-        },
-        "operator": {
-          "type": "string"
-        },
-        "capacity": {
-          "type": "string"
-        },
-        "length_km": {
-          "type": "number"
-        },
-        "flow_direction": {
-          "type": "string"
-        },
-        "summary": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
+        "visible": { "type": "boolean" },
+        "country": { "type": "string" },
+        "region": { "type": "string" },
+        "operator": { "type": "string" },
+        "capacity": { "type": "string" },
+        "length_km": { "type": "number", "minimum": 0 },
+        "reserves_billion_bbl": { "type": "number", "minimum": 0 },
+        "reserves_note": { "type": "string" },
+        "rank_hint": { "type": "integer", "minimum": 1 },
+        "flow_direction": { "type": "string" },
+        "summary": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
         "consumer_products": {
           "type": "array",
-          "items": {
-            "type": "string"
-          }
+          "items": { "type": "string" }
         },
         "supply_chain_stage": {
-          "type": "string",
-          "enum": ["extraction", "import", "transport", "processing", "distribution", "consumer"]
+          "enum": ["extraction", "export", "import", "transport", "transmission", "processing", "distribution", "consumer"]
         },
         "aha_moment": {
           "type": "object",
@@ -101,12 +131,64 @@
           "type": "object",
           "required": ["name"],
           "properties": {
-            "name": { "type": "string" },
-            "url": { "type": "string" },
-            "year": { "type": "integer" }
+            "name": { "type": "string", "minLength": 1 },
+            "url": {
+              "description": "Empty or an absolute http(s) link.",
+              "anyOf": [
+                { "const": "" },
+                { "type": "string", "format": "uri", "pattern": "^https?://" }
+              ]
+            },
+            "year": {
+              "description": "Publication year, e.g. 2025 or \"2024/2025\".",
+              "type": ["integer", "string"]
+            }
           }
         }
       }
     }
-  }
+  },
+  "allOf": [
+    {
+      "description": "Points are visible nodes.",
+      "if": { "properties": { "geometry": { "properties": { "type": { "const": "Point" } } } } },
+      "then": {
+        "properties": {
+          "properties": {
+            "required": ["category"],
+            "properties": {
+              "category": { "const": "node" },
+              "type": { "$ref": "#/definitions/nodeType" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Lines are routes (edges).",
+      "if": { "properties": { "geometry": { "properties": { "type": { "enum": ["LineString", "MultiLineString"] } } } } },
+      "then": {
+        "properties": {
+          "properties": {
+            "required": ["category"],
+            "properties": {
+              "category": { "const": "edge" },
+              "type": { "$ref": "#/definitions/edgeType" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "description": "Polygons are oil-field 'lakes'.",
+      "if": { "properties": { "geometry": { "properties": { "type": { "const": "Polygon" } } } } },
+      "then": {
+        "properties": {
+          "properties": {
+            "properties": { "type": { "const": "oil_field" } }
+          }
+        }
+      }
+    }
+  ]
 }

@@ -80,7 +80,7 @@ No backend. No build requirement beyond what the main site already uses (Vite op
 - Visible node → `category: "node"`, `visible: true`
 - Waypoints → **only** middle coordinates on LineString (no Point features)
 - Route → `category: "edge"`, `type`: `pipeline` | `shipping_route` | `rail_corridor`
-- Export must be valid JSON ready to paste into `data/geojson/...`
+- Export must be valid JSON ready to paste into `public/data/geojson/...`
 
 ---
 

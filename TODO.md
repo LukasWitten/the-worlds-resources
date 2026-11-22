@@ -2,17 +2,29 @@
 
 Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung über den Git-Commit bis zum weltweiten Livegang deiner Web-App auf GitHub Pages.
 
+> **Hinweis (23.11.2026):** Die Website läuft inzwischen über **Vercel** (theworldsresources.org). Der GitHub-Pages-Workflow wurde entfernt und durch `.github/workflows/ci.yml` ersetzt, das bei jedem Pull Request die Daten prüft und den Build testet. Die Schritte 3–4 unten beschreiben den früheren GitHub-Pages-Weg und sind nur noch historisch.
+
+## ⚠️ Offene Punkte (aus dem Tech-Review)
+
+- [ ] **Impressum ausfüllen:** Name und ladungsfähige Anschrift in `index.html` (Imprint-Modal) und `LEGAL_NOTICE.md` eintragen – die Platzhalter sind live sichtbar (§ 5 DDG).
+- [ ] **Datenschutzerklärung prüfen:** Abschnitte zu CARTO/Esri und Local Storage wurden ergänzt – bitte inhaltlich gegenlesen.
+- [ ] **GitHub Pages abschalten:** Repository → Settings → Pages → deaktivieren (die alte, fehlerhafte Kopie unter lukaswitten.github.io ist sonst weiter online).
+- [ ] **CARTO-Key absichern:** Im CARTO-Dashboard auf die Domains theworldsresources.org/.com beschränken.
+- [ ] **Quellen nachtragen:** 30 Features haben keine Quell-URL (`npm run validate:data` zeigt sie als Warnung).
+- [ ] **Datenlizenz festlegen:** z. B. ODbL (falls OSM-Daten) oder CC BY 4.0 für `public/data/`; MIT gilt nur für den Code.
+- [ ] **Routen per ID verknüpfen:** `from_node_id` / `to_node_id` statt Koordinaten-Nähe.
+
 ---
 
 ## 📌 Aktueller Zwischenstand (Bereits implementiert)
 
-- [x] **Projektstruktur**: Saubere, modulare Open-Source-Architektur (`data/`, `src/`, `docs/`, `prototypes/`, `scripts/`).
+- [x] **Projektstruktur**: Saubere, modulare Open-Source-Architektur (`public/data/`, `src/`, `docs/`, `prototypes/`, `scripts/`).
 - [x] **Ressource 1 (Rohöl & Kraftstoffe)**: 18 Infrastrukturpunkte (Wilhelmshaven, Rostock, Schwedt, Leuna, MiRO, TAL- & NWO-Pipelines).
 - [x] **Ressource 2 (Erdgas & LNG)**: 8 Infrastrukturpunkte (FSRU Wilhelmshaven, LNG Brunsbüttel, Gasspeicher Rehden, EUGAL/NETRA/MEGAL).
 - [x] **Ressource 3 (Lithium / Interkontinental)**: 6 Infrastrukturpunkte (Salar de Atacama ➔ Puerto Antofagasta ➔ 12.850 km Seeweg via Panamakanal ➔ Hafen Hamburg ➔ Kathodenwerk BASF Schwarzheide).
 - [x] **Interaktive Map-Features**: Fließrichtungs-Animationen, Farbdifferenzierung, Perspektiven-Umschalter (*„🇩echenland“* / *„🌍 Interkontinental“*).
 - [x] **„Aha-Moment“-Inspector**: Detailansicht für Alltagsbezüge (Flugbenzin BER, Kunstdünger, Smartphone-Akkus) mit Datenquellen-Nachweis.
-- [x] **Automatisierung**: GitHub Actions Workflow `.github/workflows/deploy.yml` für automatisches Deployment.
+- [x] **Automatisierung**: GitHub Actions Workflow `.github/workflows/ci.yml` (Datenprüfung + Build bei jedem PR); Deployment über Vercel.
 
 ---
 

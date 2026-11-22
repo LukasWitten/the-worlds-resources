@@ -11,7 +11,19 @@ This website is hosted by an external service provider, Vercel Inc. (340 S Lemon
 ### Cloudflare (CDN & DNS)
 We use services provided by Cloudflare Inc. (101 Townsend St, San Francisco, CA 94107, USA) to secure and accelerate the delivery of our website. Cloudflare processes technical network data (including visitors' IP addresses) to fend off attacks and provide content.
 
-## 3. General Information and Mandatory Information
+## 3. Map Tiles (Basemap Providers)
+### CARTO
+The interactive map loads its background map images ("tiles") from CARTO (CartoDB Inc., USA). To deliver the tiles, your browser connects directly to CARTO's servers, which receive your IP address and technical request data (e.g. browser type, requested map area). This is necessary to display the map (Art. 6(1)(f) GDPR, legitimate interest in a functioning map). Privacy policy: https://carto.com/privacy
+
+### Esri (optional)
+If you switch the basemap to "Esri Dark Canvas" in the map settings, tiles are loaded from Esri (Environmental Systems Research Institute, Inc., USA) instead, with the same kind of technical data. Privacy policy: https://www.esri.com/en-us/privacy/overview
+
+All other scripts and styles of this website are served from our own domain; no further third-party CDNs are used.
+
+## 4. Local Storage in Your Browser
+This website does not set cookies and does not use tracking or analytics. If you change the basemap settings, your choice (and an optional CARTO key you enter) is saved in your browser's local storage so it persists between visits. This data stays on your device and is never sent to us. You can delete it at any time via your browser settings.
+
+## 5. General Information and Mandatory Information
 ### SSL/TLS Encryption
 For security reasons and to protect the transmission of confidential content, this site uses SSL/TLS encryption. You can recognize an encrypted connection in your browser's address bar when it changes from "http://" to "https://" and by the lock icon in your browser bar.
 

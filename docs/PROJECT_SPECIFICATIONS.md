@@ -33,6 +33,8 @@ This document contains the complete project vision, concept, roadmap, and techni
 ## 2. Technical Implementation Proposals
 
 ### **Technology Stack**
+> **Current implementation (Nov 2026):** Vanilla JavaScript (ES modules) bundled with **Vite**, **Leaflet** and **Tailwind CSS v3** from npm, GeoJSON data in `public/data/`, hosted on **Vercel** behind Cloudflare. The options below are the original proposals; React/Next.js and Deck.gl are not used. A later move to MapLibre GL with vector tiles is the most likely upgrade path once the datasets grow.
+
 * **Frontend Framework:** React.js or Next.js for a modular UI (Alternatively for quick start: Vanilla JavaScript / HTML5 with Tailwind CSS).
 * **Mapping Libraries:**
   * *For easy setup & interactive markers:* **Leaflet.js** (currently used in the prototype).

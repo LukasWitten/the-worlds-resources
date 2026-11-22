@@ -2,6 +2,9 @@
  * Inspector Module - Manages the details drawer, scroll isolation, and fullscreen reader mode.
  */
 
+import L from 'leaflet';
+import { escapeHtml, safeHttpUrl } from './html.js';
+
 class Inspector {
   constructor() {
     this.container = null;
@@ -15,7 +18,7 @@ class Inspector {
     if (!this.container) return;
 
     // Prevent any scroll or click event inside inspector from zooming or moving the Leaflet map
-    if (typeof L !== 'undefined' && L.DomEvent) {
+    if (L.DomEvent) {
       L.DomEvent.disableScrollPropagation(this.container);
       L.DomEvent.disableClickPropagation(this.container);
     }
@@ -37,6 +40,8 @@ class Inspector {
     const aha = p.aha_moment || {};
     const products = p.consumer_products || [];
     const source = p.source || {};
+    const sourceUrl = safeHttpUrl(source.url);
+    const e = escapeHtml;
 
     const typeBadge = {
       oil_field: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-300 border border-amber-700">🛢️ Major Oil Field</span>',
@@ -58,7 +63,7 @@ class Inspector {
     const productsHtml = products.length > 0 
       ? products.map(prod => `
           <span class="inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-900/90 text-slate-200 border border-slate-700/70 shadow-sm">
-            📦 ${prod}
+            📦 ${e(prod)}
           </span>
         `).join('')
       : '<span class="text-xs text-slate-500">No specific end products listed.</span>';
@@ -92,10 +97,10 @@ class Inspector {
           <!-- Facility / Route Heading -->
           <div>
             <h2 class="${this.isFullscreen ? 'text-3xl sm:text-4xl' : 'text-2xl'} font-extrabold text-white leading-tight mb-2">
-              ${p.name || 'Unnamed feature'}
+              ${e(p.name || 'Unnamed feature')}
             </h2>
             <p class="${this.isFullscreen ? 'text-base' : 'text-sm'} text-slate-300 leading-relaxed">
-              ${p.summary || ''}
+              ${e(p.summary)}
             </p>
           </div>
 
@@ -103,11 +108,11 @@ class Inspector {
           <div class="grid ${this.isFullscreen ? 'grid-cols-2 sm:grid-cols-4 gap-4' : 'grid-cols-2 gap-3'} text-xs">
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">Operator / Coordination</span>
-              <span class="font-semibold text-slate-200 text-sm">${p.operator || 'N/A'}</span>
+              <span class="font-semibold text-slate-200 text-sm">${e(p.operator || 'N/A')}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">${p.reserves_billion_bbl ? 'Reserves' : 'Capacity / Dimension'}</span>
-              <span class="font-semibold text-slate-200 text-sm">${p.reserves_billion_bbl ? `~${p.reserves_billion_bbl} bn bbl` : (p.capacity || (p.length_km ? `${p.length_km} km` : 'N/A'))}</span>
+              <span class="font-semibold text-slate-200 text-sm">${e(p.reserves_billion_bbl ? `~${p.reserves_billion_bbl} bn bbl` : (p.capacity || (p.length_km ? `${p.length_km} km` : 'N/A')))}</span>
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">Status</span>
@@ -115,7 +120,7 @@ class Inspector {
             </div>
             <div class="p-3.5 rounded-xl bg-slate-900/70 border border-slate-800">
               <span class="text-slate-500 block mb-1">Supply-chain stage</span>
-              <span class="font-semibold text-indigo-300 text-sm capitalize">${p.supply_chain_stage || 'Transport'}</span>
+              <span class="font-semibold text-indigo-300 text-sm capitalize">${e(p.supply_chain_stage || 'Transport')}</span>
             </div>
           </div>
 
@@ -126,11 +131,11 @@ class Inspector {
                 <span class="text-base">💡</span>
                 <span>The Consumer Aha-Moment</span>
               </div>
-              <h3 class="${this.isFullscreen ? 'text-xl' : 'text-base'} font-bold text-white mb-2">${aha.title}</h3>
-              <p class="${this.isFullscreen ? 'text-sm' : 'text-xs'} text-slate-200 leading-relaxed mb-3">${aha.explanation}</p>
+              <h3 class="${this.isFullscreen ? 'text-xl' : 'text-base'} font-bold text-white mb-2">${e(aha.title)}</h3>
+              <p class="${this.isFullscreen ? 'text-sm' : 'text-xs'} text-slate-200 leading-relaxed mb-3">${e(aha.explanation)}</p>
               <div class="pt-3 border-t border-indigo-900/60 text-xs text-indigo-300 font-medium flex items-start space-x-2">
                 <span class="text-sm">🎯</span>
-                <span><strong>Everyday impact:</strong> ${aha.everyday_impact}</span>
+                <span><strong>Everyday impact:</strong> ${e(aha.everyday_impact)}</span>
               </div>
             </div>
           ` : ''}
@@ -139,10 +144,10 @@ class Inspector {
           <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 space-y-3">
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Technical Documentation & Geopolitics</h4>
             <div class="${this.isFullscreen ? 'text-base' : 'text-xs sm:text-sm'} text-slate-300 leading-relaxed space-y-3">
-              <p>${p.description || p.summary || 'No further detailed description available.'}</p>
+              <p>${e(p.description || p.summary || 'No further detailed description available.')}</p>
               ${p.flow_direction ? `
                 <div class="pt-2 text-xs text-slate-400">
-                  <strong class="text-slate-300">Flow & transport corridor:</strong> ${p.flow_direction}
+                  <strong class="text-slate-300">Flow & transport corridor:</strong> ${e(p.flow_direction)}
                 </div>
               ` : ''}
             </div>
@@ -158,9 +163,9 @@ class Inspector {
 
           <!-- Official Data Source Footer -->
           <div class="pt-6 border-t border-slate-800 text-xs text-slate-500 flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-6">
-            <span>Data source: <strong>${source.name || 'Public official data'}</strong> (${source.year || '2025/2026'})</span>
-            ${source.url ? `
-              <a href="${source.url}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 underline font-medium flex items-center space-x-1">
+            <span>Data source: <strong>${e(source.name || 'Public official data')}</strong> (${e(source.year || '2025/2026')})</span>
+            ${sourceUrl ? `
+              <a href="${e(sourceUrl)}" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:text-indigo-300 underline font-medium flex items-center space-x-1">
                 <span>Verify official dataset</span>
                 <span>↗</span>
               </a>

@@ -1,3 +1,6 @@
+/* Leaflet base styles (bundled from npm instead of the unpkg CDN) */
+@import 'leaflet/dist/leaflet.css';
+
 /* Base Dark Theme & Custom Glow Effects */
 :root {
   --bg-primary: #0b0f19;
@@ -144,3 +147,11 @@ body {
 #inspector-drawer div {
   overscroll-behavior: contain;
 }
+
+/*
+ * Tailwind layers come last so utility classes win over the custom rules above
+ * (same cascade order as the former Tailwind Play CDN).
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

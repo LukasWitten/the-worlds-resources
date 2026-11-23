@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://theworldsresources.org/data/schemas/sources.schema.json",
+  "title": "SourcesRegister",
+  "description": "Register of external datasets (public/data/reference/sources.json). Validated by scripts/validate-data.js.",
+  "type": "object",
+  "required": ["metadata", "sources"],
+  "properties": {
+    "metadata": { "type": "object" },
+    "sources": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^[a-z0-9][a-z0-9.\\-]*$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["name", "version", "license", "url"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "publisher": { "type": "string" },
+          "version": { "type": "string", "minLength": 1 },
+          "coverage": { "type": "string" },
+          "license": { "type": "string", "minLength": 1 },
+          "license_url": { "type": "string", "format": "uri" },
+          "url": { "type": "string", "format": "uri" },
+          "citation": { "type": "string" },
+          "used_for": { "type": "string" }
+        }
+      }
+    }
+  }
+}

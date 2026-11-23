@@ -6,6 +6,13 @@
  *  - every feature matches public/data/schemas/resource-feature.schema.json
  *  - the goods catalogue matches its schema, and every feature's "resource"
  *    is a good from that catalogue
+ *  - the sources register and the country master data match their schemas;
+ *    every source id they name exists, every feature's "country" is a known
+ *    country (or "INT")
+ *  - the trade files (public/data/trade/<year>/) match their schema, name only
+ *    known goods, countries (or "ZZ" = rest of the world) and sources, and add
+ *    up: flows of a good = its world total, flows of an exporter = the value in
+ *    its country profile, world.json = the top goods in the country profiles
  *  - feature ids are unique across the whole project
  *  - every route names its start/end via from_node_id / to_node_id, the ids
  *    exist, and the first/last coordinate lies on that node (or inside that
@@ -27,6 +34,13 @@ const TEMPLATES_DIR = path.join(DATA_ROOT, 'templates');
 const SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'resource-feature.schema.json');
 const GOODS_PATH = path.join(DATA_ROOT, 'reference', 'goods.json');
 const GOODS_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'goods.schema.json');
+const SOURCES_PATH = path.join(DATA_ROOT, 'reference', 'sources.json');
+const SOURCES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'sources.schema.json');
+const COUNTRIES_PATH = path.join(DATA_ROOT, 'reference', 'countries.json');
+const COUNTRIES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'countries.schema.json');
+const TRADE_DIR = path.join(DATA_ROOT, 'trade');
+const TRADE_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'trade.schema.json');
+const REST_OF_WORLD = 'ZZ';
 
 // How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
@@ -102,10 +116,139 @@ for (const [id, good] of Object.entries(goodsCatalogue.goods || {})) {
 }
 console.log(`[checked] ${GOODS_PATH} (${goodIds.size} goods)`);
 
+/** Validate a JSON file against a schema file; returns the data (or null if unreadable). */
+function checkAgainstSchema(file, schemaFile) {
+  const fileSchema = readJson(schemaFile);
+  const data = readJson(file);
+  if (!fileSchema || !data) return null;
+  const validate = ajv.compile(fileSchema);
+  if (!validate(data)) {
+    for (const msg of formatAjvErrors(validate.errors)) fail(file, msg);
+  }
+  return data;
+}
+
+const sourcesRegister = checkAgainstSchema(SOURCES_PATH, SOURCES_SCHEMA_PATH);
+const sourceIds = new Set(Object.keys(sourcesRegister?.sources || {}));
+console.log(`[checked] ${SOURCES_PATH} (${sourceIds.size} sources)`);
+
+const countryData = checkAgainstSchema(COUNTRIES_PATH, COUNTRIES_SCHEMA_PATH);
+const countryCodes = new Set(Object.keys(countryData?.countries || {}));
+for (const id of countryData?.metadata?.sources || []) {
+  if (!sourceIds.has(id)) fail(COUNTRIES_PATH, `metadata.sources names unknown source "${id}" (not in ${SOURCES_PATH})`);
+}
+console.log(`[checked] ${COUNTRIES_PATH} (${countryCodes.size} countries)`);
+
+// Trade data ------------------------------------------------------------------
+const tradeSchema = readJson(TRADE_SCHEMA_PATH);
+if (tradeSchema) ajv.addSchema(tradeSchema);
+const tradeValidator = (name) => ajv.getSchema(`${tradeSchema.$id}#/definitions/${name}`);
+
+function checkTradeFile(file, definition) {
+  const data = readJson(file);
+  if (!data) return null;
+  const validate = tradeValidator(definition);
+  if (!validate(data)) {
+    for (const msg of formatAjvErrors(validate.errors).slice(0, 10)) fail(file, msg);
+    return null;
+  }
+  const sourceId = data.meta?.provenance?.sourceId || data.provenance?.sourceId;
+  if (sourceId && !sourceIds.has(sourceId)) fail(file, `provenance.sourceId "${sourceId}" is not in ${SOURCES_PATH}`);
+  return data;
+}
+
+const knownCountry = (code) => code === REST_OF_WORLD || countryCodes.has(code);
+// Values are rounded to whole USD per row, so sums may differ by up to 0.5 USD per row
+const sumMatches = (a, b, rows) => Math.abs(a - b) <= Math.max(1, Math.ceil(rows / 2));
+
+function checkTradeYear(dir) {
+  const meta = checkTradeFile(path.join(dir, 'meta.json'), 'meta');
+  if (!meta) return;
+  const yearOf = path.basename(dir);
+  if (String(meta.year) !== yearOf) fail(path.join(dir, 'meta.json'), `year ${meta.year} does not match folder ${yearOf}`);
+
+  // by-good: flows per exporter, used to cross-check the country profiles
+  const exportedBy = new Map(); // "good|country" → { usd, rows }
+  for (const good of Object.keys(meta.goods)) {
+    const file = path.join(dir, 'by-good', `${good}.json`);
+    if (!goodIds.has(good)) fail(path.join(dir, 'meta.json'), `good "${good}" is not in ${GOODS_PATH}`);
+    if (!fs.existsSync(file)) { fail(file, 'listed in meta.json but missing'); continue; }
+    const data = checkTradeFile(file, 'byGood');
+    if (!data) continue;
+    let sum = 0;
+    for (const [from, to, usd] of data.rows) {
+      if (!knownCountry(from)) fail(file, `unknown exporter "${from}"`);
+      if (!knownCountry(to)) fail(file, `unknown importer "${to}"`);
+      sum += usd;
+      const acc = exportedBy.get(`${good}|${from}`) || { usd: 0, rows: 0 };
+      exportedBy.set(`${good}|${from}`, { usd: acc.usd + usd, rows: acc.rows + 1 });
+    }
+    if (!sumMatches(sum, data.meta.worldUsd, data.rows.length)) {
+      fail(file, `rows add up to ${sum} USD, meta.worldUsd is ${data.meta.worldUsd}`);
+    }
+  }
+
+  // by-country: profiles must match the flows and world.json
+  const world = checkTradeFile(path.join(dir, 'world.json'), 'world');
+  const files = listFiles(path.join(dir, 'by-country'), ['.json']);
+  const listed = new Set(meta.countries);
+  for (const file of files) {
+    const code = path.basename(file, '.json');
+    if (!listed.has(code)) fail(file, 'not listed in meta.json countries');
+    if (!countryCodes.has(code)) fail(file, `"${code}" is not in ${COUNTRIES_PATH}`);
+    const data = checkTradeFile(file, 'byCountry');
+    if (!data) continue;
+    for (const side of ['exports', 'imports']) {
+      for (const g of data[side]) {
+        if (!goodIds.has(g.good)) fail(file, `${side}: good "${g.good}" is not in ${GOODS_PATH}`);
+        for (const [partner] of g.partners) if (!knownCountry(partner)) fail(file, `${side} ${g.good}: unknown partner "${partner}"`);
+        const shareSum = g.partners.reduce((s, [, , share]) => s + share, 0);
+        if (g.partners.length && Math.abs(shareSum - 1) > 0.005) fail(file, `${side} ${g.good}: partner shares add up to ${shareSum.toFixed(4)}`);
+      }
+    }
+    for (const g of data.exports) {
+      // The profile value is rounded once, the flows per row (plus 1 for the profile itself)
+      const flows = exportedBy.get(`${g.good}|${code}`) || { usd: 0, rows: 0 };
+      if (!sumMatches(flows.usd, g.valueUsd, flows.rows + 1)) fail(file, `exports ${g.good}: ${g.valueUsd} USD, but the flows in by-good add up to ${flows.usd}`);
+    }
+    const marker = world?.countries?.[code];
+    for (const side of ['export', 'import']) {
+      const expected = data.top[side].join(',');
+      const actual = (marker?.[side] || []).map(m => m.good).join(',');
+      if (expected !== actual) fail(file, `top ${side} goods [${expected}] differ from world.json [${actual}]`);
+    }
+  }
+  for (const code of listed) {
+    if (!fs.existsSync(path.join(dir, 'by-country', `${code}.json`))) fail(path.join(dir, 'meta.json'), `country "${code}" has no by-country file`);
+  }
+  for (const code of Object.keys(world?.countries || {})) {
+    if (!countryCodes.has(code)) fail(path.join(dir, 'world.json'), `"${code}" is not in ${COUNTRIES_PATH}`);
+    if (!listed.has(code)) fail(path.join(dir, 'world.json'), `country "${code}" is not in meta.json countries`);
+  }
+  console.log(`[checked] ${dir} (${Object.keys(meta.goods).length} goods, ${files.length} countries)`);
+}
+
+if (tradeSchema && fs.existsSync(TRADE_DIR)) {
+  const yearDirs = fs.readdirSync(TRADE_DIR, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort();
+  for (const dir of yearDirs) checkTradeYear(path.join(TRADE_DIR, dir));
+  // index.json tells the app which years exist and which one to load first
+  const indexFile = path.join(TRADE_DIR, 'index.json');
+  const index = fs.existsSync(indexFile) ? readJson(indexFile) : (fail(indexFile, 'missing'), null);
+  if (index) {
+    const listed = (index.years || []).map(String).sort();
+    if (listed.join(',') !== yearDirs.join(',')) fail(indexFile, `years [${listed}] differ from the year folders [${yearDirs}]`);
+    if (String(index.latest) !== yearDirs[yearDirs.length - 1]) fail(indexFile, `latest ${index.latest} is not the newest year folder`);
+  }
+}
+
 function checkFeature(file, feature, index) {
   const resource = feature?.properties?.resource;
   if (resource && !goodIds.has(resource)) {
     fail(file, `${label(feature, index)} /properties/resource "${resource}" is not a good in ${GOODS_PATH} (${[...goodIds].join(', ')})`);
+  }
+  const country = feature?.properties?.country;
+  if (country && country !== 'INT' && countryCodes.size && !countryCodes.has(country)) {
+    fail(file, `${label(feature, index)} /properties/country "${country}" is not in ${COUNTRIES_PATH}`);
   }
   if (validateFeature(feature)) return true;
   for (const msg of formatAjvErrors(validateFeature.errors)) {

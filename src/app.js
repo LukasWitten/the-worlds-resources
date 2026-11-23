@@ -3,7 +3,7 @@
  */
 
 import { mapController } from './modules/map.js';
-import { uiController } from './modules/ui.js';
+import { uiController, mappedGoods } from './modules/ui.js';
 import { inspector } from './modules/inspector.js';
 import { dataService } from './modules/dataService.js';
 import { goods } from './modules/goods.js';
@@ -132,7 +132,7 @@ function route(hash) {
 function normalizeMapState(state) {
   const next = { ...state };
   if (!MAP_VIEWS.includes(next.view)) next.view = 'overview';
-  if (next.view === 'good' && goods.get(next.good)?.stage !== 'raw') next.view = 'overview';
+  if (next.view === 'good' && !mappedGoods().includes(next.good)) next.view = 'overview';
   if (next.view !== 'good') next.good = null;
   if (next.country && (next.view === 'oil_fields' || !dataService.getCountries().includes(next.country))) {
     next.country = null;

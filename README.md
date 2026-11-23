@@ -50,15 +50,30 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 | Command | What it does |
 |---------|--------------|
 | `npm run dev` | Development server with hot reload |
-| `npm run validate:data` | Checks all GeoJSON data (schema, unique ids, route endpoints) |
+| `npm run validate:data` | Checks all data: GeoJSON (schema, unique ids, route endpoints), catalogues and the generated trade files (schemas, codes, sums) |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serves the build with the same security headers as the live site |
+| `npm run data:countries` | Rebuilds `reference/countries.json` (needs the raw data, see below) |
+| `npm run data:trade` | Rebuilds `public/data/trade/` from CEPII BACI (needs the raw data, see below) |
+
+### Rebuilding the trade data
+
+The trade data in `public/data/trade/` and the country list are generated and
+committed, so you only need this to update them. Download the raw files into
+`data-raw/` (ignored by git):
+
+- `data-raw/baci/BACI_HS17_V202601.zip` from [CEPII BACI](https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37) (about 800 MB, Etalab 2.0)
+- `data-raw/naturalearth/ne_50m_admin_0_countries.zip` from [Natural Earth](https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/), unzipped in the same folder
+
+Then run `npm run data:countries`, `npm run data:trade` and `npm run validate:data`.
+Which goods are included comes from the HS codes in `reference/goods.json`.
 
 ## How it works
 
 - **Vanilla JavaScript** (ES modules), bundled with **Vite**. No framework.
 - **Leaflet** for the map, **Tailwind CSS** for styling. Everything is bundled – no scripts or styles from third-party CDNs.
 - **Data as GeoJSON** in `public/data/`, served as static files and validated against a JSON schema.
+- **Trade data as pre-computed JSON** (`public/data/trade/<year>/`), split by good and by country so a view loads only the few KB it needs.
 - **Routes reference their start and end node** (`from_node_id` / `to_node_id`), so all datasets together form a graph. The supply-chain view walks that graph.
 - **Hosting** on Vercel; security headers (including a Content-Security-Policy) live in `vercel.json`.
 - **CI** (GitHub Actions) validates the data and builds the site on every pull request.
@@ -68,18 +83,23 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 ```
 ├── public/
 │   ├── data/                        # The only data source, served as-is under /data/
-│   │   ├── reference/goods.json     # Goods catalogue: label, colour, icon, HS codes per resource
+│   │   ├── reference/
+│   │   │   ├── goods.json           # Goods catalogue: label, colour, icon, HS codes per good
+│   │   │   ├── countries.json       # Countries: ISO codes, region, marker position (generated)
+│   │   │   └── sources.json         # External datasets the generated files come from
+│   │   ├── trade/<year>/            # Trade flows and country profiles from CEPII BACI (generated)
 │   │   ├── geojson/
 │   │   │   ├── germany/             # crude_oil, natural_gas
 │   │   │   └── global/              # lithium, oil_fields, oil_export_corridors
-│   │   ├── schemas/                 # JSON schema for every feature
+│   │   ├── schemas/                 # JSON schemas for features, catalogues and trade files
 │   │   ├── templates/               # Copy-paste examples for nodes and routes
 │   │   └── LICENSE.md               # CC BY 4.0
 │   └── favicon.svg, og-image.jpg …
 ├── src/
 │   ├── app.js                       # Entry point, URL routing (#map/<id>)
 │   ├── modules/
-│   │   ├── dataService.js           # Loading and filtering the datasets
+│   │   ├── dataService.js           # Loading and filtering the datasets, flow API (exportsOf, importsOf, flowsOf)
+│   │   ├── trade.js                 # Trade data, loaded file by file on demand
 │   │   ├── mapState.js              # Central map state (view, resource, country, open feature) ↔ URL
 │   │   ├── goods.js                 # Goods catalogue (labels, colours, icons)
 │   │   ├── supplyChain.js           # Graph of nodes and routes, upstream/downstream chains, corridors
@@ -89,7 +109,9 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 │   │   ├── colors.js                # Shared route colors
 │   │   └── html.js                  # Escaping of data values (XSS protection)
 │   └── styles/main.css
-├── scripts/validate-data.js         # Data validator used locally and in CI
+├── scripts/
+│   ├── validate-data.js             # Data validator used locally and in CI
+│   └── pipeline/                    # build-countries.js, build-trade.js (raw data → public/data/)
 ├── docs/
 │   ├── CONTRIBUTING_DATA.md         # Full guide to the data format
 │   ├── PROJECT_SPECIFICATIONS.md    # Vision and concept

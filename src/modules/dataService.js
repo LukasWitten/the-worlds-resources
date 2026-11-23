@@ -6,7 +6,12 @@
  *  - view 'good'       → one good (resource) with all its sources, routes and destinations
  *  - view 'oil_fields' → isolated oil view (field lakes + crude oil chain only)
  *  - country           → only what lies in that country or belongs to a supply chain touching it
+ *
+ * Trade flows (export, import and resource views) come from trade.js and are
+ * loaded on demand: exportsOf(), importsOf(), flowsOf().
  */
+
+import { trade } from './trade.js';
 
 class DataService {
   constructor() {
@@ -52,6 +57,11 @@ class DataService {
       }
     }
     return all;
+  }
+
+  /** Ids of the goods that have places or routes on the map (the catalogue also lists goods known only from trade data). */
+  getMappedGoods() {
+    return new Set(this.getAllFeatures().map(f => f.properties?.resource).filter(Boolean));
   }
 
   /** Country codes (ISO alpha-2) that occur in the data; "INT" (international waters) is left out. */
@@ -124,6 +134,23 @@ class DataService {
 
   setSearchQuery(query) {
     this.activeFilters.searchQuery = query || '';
+  }
+
+  // --- Trade flows (async, loaded on first use) ---------------------------
+
+  /** Goods a country exports, with N, G, rank, score and top buyers; null if none. */
+  exportsOf(country, options) {
+    return trade.exportsOf(country, options);
+  }
+
+  /** Goods a country imports, with N, G, rank, supplier concentration (HHI) and top suppliers; null if none. */
+  importsOf(country, options) {
+    return trade.importsOf(country, options);
+  }
+
+  /** Bilateral flows of a good, optionally only from (direction 'export') or into ('import') one country. */
+  flowsOf(good, options) {
+    return trade.flowsOf(good, options);
   }
 
   getFeatureById(id) {

@@ -10,6 +10,12 @@ import { mapState } from './mapState.js';
 import { supplyChain } from './supplyChain.js';
 import { RAIL_COLOR } from './colors.js';
 
+/** Raw goods with places or routes on the map, in catalogue order (filters, resource view, legend). */
+export function mappedGoods() {
+  const mapped = dataService.getMappedGoods();
+  return goods.ids('raw').filter(id => mapped.has(id));
+}
+
 const regionNames = typeof Intl !== 'undefined' && Intl.DisplayNames
   ? new Intl.DisplayNames(['en'], { type: 'region' })
   : null;
@@ -219,12 +225,12 @@ class UIController {
     });
   }
 
-  /** One checkbox per raw good in the catalogue (call once the catalogue is loaded). */
+  /** One checkbox per raw good that has places on the map (call once the catalogue is loaded). */
   renderResourceFilters() {
     const list = document.getElementById('resource-filter-list');
     if (!list) return;
     const hidden = dataService.activeFilters.hiddenResources;
-    list.innerHTML = goods.ids('raw').map(id => {
+    list.innerHTML = mappedGoods().map(id => {
       const color = goods.color(id);
       return `
         <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
@@ -290,7 +296,7 @@ class UIController {
       btn.addEventListener('click', () => {
         const view = btn.dataset.mapView;
         // "Resource" keeps the last chosen resource, or starts with the first one
-        const good = view === 'good' ? (this.lastGood || goods.ids('raw')[0]) : null;
+        const good = view === 'good' ? (this.lastGood || mappedGoods()[0]) : null;
         mapState.set({ view, good });
       });
     });
@@ -319,7 +325,7 @@ class UIController {
   renderMapSelects() {
     const goodSelect = document.getElementById('good-select');
     if (goodSelect) {
-      goodSelect.innerHTML = goods.ids('raw')
+      goodSelect.innerHTML = mappedGoods()
         .map(id => `<option value="${escapeHtml(id)}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</option>`)
         .join('');
     }
@@ -434,7 +440,7 @@ class UIController {
     const icon = (emoji) => `<span class="w-5 text-center shrink-0" aria-hidden="true">${e(emoji)}</span>`;
 
     // Pipelines in the colour of the resource, sea routes may have their own colour, rail is one colour
-    const raw = goods.ids('raw');
+    const raw = mappedGoods();
     const routes = raw.map(id => row(line(goods.color(id)), `${goods.label(id)}`));
     const shippingColors = new Map();
     for (const id of raw) {

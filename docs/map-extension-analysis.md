@@ -602,7 +602,7 @@ Nichts davon verzögert die ersten Phasen spürbar. Es sind Namens- und Struktur
 4. **Legende** für die heutige Karte, mit den Linienarten aus 4.5 schon vorbereitet (heute nur „curated“).
 5. **Korridore ableiten** (`supplyChain.corridors()`).
 
-**Phase 1: Fundament (ca. 1,5 Wochen)**
+**Phase 1: Fundament (ca. 1,5 Wochen)**: ✅ umgesetzt am 23.11.2026. Abweichungen: Länder-Geometrien entfallen vorerst, weil Marker gewählt wurden (`countries.json` enthält dafür den Label-Punkt als `anchor`). Daten nur für 2024 mit Ranking über 2022–2024. Dazu `sources.json` aus Phase 0 und `trade/index.json` für das neueste Jahr.
 6. **Länder-Stammdaten und Geometrien** aus Natural Earth.
 7. **Pipeline `build-trade.js`**: BACI → `trade/<jahr>/` (world, by-good, by-country), Provenienz, Rest-der-Welt-Zeilen. Gesteuert von `goods.json`. Die BACI-Rohdaten liegen nicht im Repo, nur die erzeugten Dateien.
 8. **Validierung** aller neuen Dateien (Schemas, ISO-Codes, Summen, Quellen-IDs existieren).

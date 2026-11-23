@@ -6,7 +6,7 @@
     "resource": "crude_oil",
     "layer": "oil_export_corridors",
     "version": "0.1.0",
-    "description": "Stylized field-to-terminal and long-haul corridors connecting major oil fields to European import approaches (Mediterranean + North Sea).",
+    "description": "Stylized field-to-terminal and long-haul corridors connecting major oil fields to European import approaches (Mediterranean + English Channel).",
     "note": "Routes are educational simplifications, not exact tanker tracks or pipeline ROWs."
   },
   "features": [
@@ -626,19 +626,35 @@
             26.65
           ],
           [
-            56.4,
-            26.4
+            54.8,
+            26.15
+          ],
+          [
+            56.2,
+            26.5
+          ],
+          [
+            56.6,
+            26.35
+          ],
+          [
+            57,
+            25.6
           ],
           [
             58.5,
-            24.5
+            24.3
           ],
           [
-            60.0,
-            18.0
+            60.2,
+            22.6
           ],
           [
-            48.0,
+            60,
+            18
+          ],
+          [
+            48,
             13.2
           ],
           [
@@ -647,27 +663,51 @@
           ],
           [
             38.5,
-            20.0
+            20
           ],
           [
-            34.7,
-            27.5
+            34.4,
+            27.1
           ],
           [
-            32.5,
-            29.9
+            34.05,
+            27.7
           ],
           [
-            32.35,
-            31.25
+            33.4,
+            28.3
           ],
           [
-            30.0,
+            32.92,
+            29
+          ],
+          [
+            32.58,
+            29.7
+          ],
+          [
+            32.55,
+            29.95
+          ],
+          [
+            32.4,
+            30.35
+          ],
+          [
+            32.32,
+            30.7
+          ],
+          [
+            32.32,
+            31.27
+          ],
+          [
+            30,
             32.5
           ],
           [
-            19.0,
-            36.0
+            19,
+            36
           ]
         ]
       },
@@ -713,22 +753,38 @@
           ],
           [
             51.5,
-            27.5
+            27.3
           ],
           [
-            56.4,
-            26.4
+            54.8,
+            26.15
+          ],
+          [
+            56.2,
+            26.5
+          ],
+          [
+            56.6,
+            26.35
+          ],
+          [
+            57,
+            25.6
           ],
           [
             58.5,
-            24.5
+            24.3
           ],
           [
-            60.0,
-            18.0
+            60.2,
+            22.6
           ],
           [
-            48.0,
+            60,
+            18
+          ],
+          [
+            48,
             13.2
           ],
           [
@@ -737,27 +793,51 @@
           ],
           [
             38.5,
-            20.0
+            20
           ],
           [
-            34.7,
-            27.5
+            34.4,
+            27.1
           ],
           [
-            32.5,
-            29.9
+            34.05,
+            27.7
           ],
           [
-            32.35,
-            31.25
+            33.4,
+            28.3
           ],
           [
-            30.0,
+            32.92,
+            29
+          ],
+          [
+            32.58,
+            29.7
+          ],
+          [
+            32.55,
+            29.95
+          ],
+          [
+            32.4,
+            30.35
+          ],
+          [
+            32.32,
+            30.7
+          ],
+          [
+            32.32,
+            31.27
+          ],
+          [
+            30,
             32.5
           ],
           [
-            19.0,
-            36.0
+            19,
+            36
           ]
         ]
       },
@@ -799,22 +879,38 @@
           ],
           [
             51.5,
-            27.5
+            27.3
           ],
           [
-            56.4,
-            26.4
+            54.8,
+            26.15
+          ],
+          [
+            56.2,
+            26.5
+          ],
+          [
+            56.6,
+            26.35
+          ],
+          [
+            57,
+            25.6
           ],
           [
             58.5,
-            24.5
+            24.3
           ],
           [
-            60.0,
-            18.0
+            60.2,
+            22.6
           ],
           [
-            48.0,
+            60,
+            18
+          ],
+          [
+            48,
             13.2
           ],
           [
@@ -823,27 +919,51 @@
           ],
           [
             38.5,
-            20.0
+            20
           ],
           [
-            34.7,
-            27.5
+            34.4,
+            27.1
           ],
           [
-            32.5,
-            29.9
+            34.05,
+            27.7
           ],
           [
-            32.35,
-            31.25
+            33.4,
+            28.3
           ],
           [
-            30.0,
+            32.92,
+            29
+          ],
+          [
+            32.58,
+            29.7
+          ],
+          [
+            32.55,
+            29.95
+          ],
+          [
+            32.4,
+            30.35
+          ],
+          [
+            32.32,
+            30.7
+          ],
+          [
+            32.32,
+            31.27
+          ],
+          [
+            30,
             32.5
           ],
           [
-            19.0,
-            36.0
+            19,
+            36
           ]
         ]
       },
@@ -880,27 +1000,39 @@
         "type": "LineString",
         "coordinates": [
           [
-            53.0,
+            53,
             25.15
           ],
           [
-            54.7,
-            25.775
+            54.8,
+            26.15
           ],
           [
-            56.4,
-            26.4
+            56.2,
+            26.5
+          ],
+          [
+            56.6,
+            26.35
+          ],
+          [
+            57,
+            25.6
           ],
           [
             58.5,
-            24.5
+            24.3
           ],
           [
-            60.0,
-            18.0
+            60.2,
+            22.6
           ],
           [
-            48.0,
+            60,
+            18
+          ],
+          [
+            48,
             13.2
           ],
           [
@@ -909,27 +1041,51 @@
           ],
           [
             38.5,
-            20.0
+            20
           ],
           [
-            34.7,
-            27.5
+            34.4,
+            27.1
           ],
           [
-            32.5,
-            29.9
+            34.05,
+            27.7
           ],
           [
-            32.35,
-            31.25
+            33.4,
+            28.3
           ],
           [
-            30.0,
+            32.92,
+            29
+          ],
+          [
+            32.58,
+            29.7
+          ],
+          [
+            32.55,
+            29.95
+          ],
+          [
+            32.4,
+            30.35
+          ],
+          [
+            32.32,
+            30.7
+          ],
+          [
+            32.32,
+            31.27
+          ],
+          [
+            30,
             32.5
           ],
           [
-            19.0,
-            36.0
+            19,
+            36
           ]
         ]
       },
@@ -970,38 +1126,46 @@
             10.1
           ],
           [
-            -60.0,
-            12.0
+            -60,
+            12
           ],
           [
-            -45.0,
-            20.0
+            -45,
+            20
           ],
           [
-            -30.0,
-            35.0
+            -30,
+            35
           ],
           [
-            -15.0,
-            45.0
+            -15,
+            45
           ],
           [
-            -8.0,
-            50.0
+            -8,
+            48.2
           ],
           [
-            -3.0,
-            54.0
+            -5.5,
+            49.2
           ],
           [
-            2.5,
-            57.0
+            -1.5,
+            50.1
+          ],
+          [
+            0.3,
+            50.4
+          ],
+          [
+            1.45,
+            51
           ]
         ]
       },
       "properties": {
         "id": "ship-jose-northsea",
-        "name": "Venezuela → North Atlantic / North Sea Approach",
+        "name": "Venezuela → Atlantic → English Channel",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "export-jose-ve",
@@ -1013,7 +1177,7 @@
         "capacity": "",
         "summary": "Caribbean heavy-crude path into the North Atlantic approach that feeds northern European ports such as Wilhelmshaven.",
         "description": "",
-        "flow_direction": "Jose (Venezuela) → North Atlantic → North Sea Crude Approach",
+        "flow_direction": "Jose (Venezuela) → North Atlantic → English Channel → Strait of Dover",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Crude oil in transit"
@@ -1036,50 +1200,70 @@
         "type": "LineString",
         "coordinates": [
           [
-            -95.0,
+            -95,
             29.5
           ],
           [
-            -88.0,
+            -88,
             27.5
           ],
           [
-            -82.0,
-            24.0
+            -83.5,
+            24
           ],
           [
-            -75.0,
-            28.0
+            -80.3,
+            24.6
           ],
           [
-            -60.0,
-            35.0
+            -79.75,
+            25.8
           ],
           [
-            -40.0,
-            42.0
+            -79.6,
+            27.5
           ],
           [
-            -20.0,
-            48.0
+            -75,
+            31
           ],
           [
-            -8.0,
-            50.5
+            -60,
+            36
           ],
           [
-            -3.0,
-            54.0
+            -40,
+            42
           ],
           [
-            2.5,
-            57.0
+            -20,
+            47
+          ],
+          [
+            -8,
+            48.2
+          ],
+          [
+            -5.5,
+            49.2
+          ],
+          [
+            -1.5,
+            50.1
+          ],
+          [
+            0.3,
+            50.4
+          ],
+          [
+            1.45,
+            51
           ]
         ]
       },
       "properties": {
         "id": "ship-houston-northsea",
-        "name": "US Gulf → North Sea / North Atlantic Approach",
+        "name": "US Gulf → Atlantic → English Channel",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "export-us-gulf",
@@ -1090,8 +1274,8 @@
         "operator": "",
         "capacity": "",
         "summary": "US crude export route into the northern European approach corridor.",
-        "description": "Permian-linked exports from the Gulf Coast often steam to Europe, entering the same North Sea approach that leads to Wilhelmshaven.",
-        "flow_direction": "US Gulf Coast → North Atlantic → North Sea Crude Approach",
+        "description": "Permian-linked exports from the Gulf Coast often steam to Europe, passing through the same English Channel approach that leads to Wilhelmshaven.",
+        "flow_direction": "US Gulf Coast → Florida Straits → North Atlantic → English Channel → Strait of Dover",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Crude oil in transit"
@@ -1110,30 +1294,42 @@
         "type": "LineString",
         "coordinates": [
           [
-            -60.0,
+            -60,
             46.5
           ],
           [
-            -45.0,
-            48.0
+            -50,
+            45.8
           ],
           [
-            -25.0,
-            51.0
+            -30,
+            47.5
           ],
           [
-            -10.0,
-            54.0
+            -8,
+            48.2
           ],
           [
-            2.5,
-            57.0
+            -5.5,
+            49.2
+          ],
+          [
+            -1.5,
+            50.1
+          ],
+          [
+            0.3,
+            50.4
+          ],
+          [
+            1.45,
+            51
           ]
         ]
       },
       "properties": {
         "id": "ship-canada-northsea",
-        "name": "Canadian Atlantic → North Sea Approach",
+        "name": "Canadian Atlantic → English Channel",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "export-canada-atlantic",
@@ -1145,7 +1341,7 @@
         "capacity": "",
         "summary": "Northern Atlantic path linking Canadian eastbound crude toward northern Europe.",
         "description": "",
-        "flow_direction": "Canadian Atlantic → North Sea Crude Approach",
+        "flow_direction": "Canadian Atlantic → North Atlantic → English Channel → Strait of Dover",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Crude oil in transit"

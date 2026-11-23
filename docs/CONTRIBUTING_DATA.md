@@ -221,7 +221,7 @@ It checks the schema (allowed values, `[lon, lat]` ranges, required fields), uni
    - data sources used
    - screenshot if possible  
 
-If you cannot use Git, open a GitHub **Issue** and paste the JSON feature(s) there.
+If you cannot use Git, open a [data issue](https://github.com/LukasWitten/the-worlds-resources/issues/new?template=data.yml) and describe the change or paste the JSON feature(s) there.
 
 ---
 
@@ -246,4 +246,4 @@ Avoid politics; stick to logistics, scale, and consumer connection.
 
 ---
 
-*Questions? Open an issue with the label `data`.*
+*Questions? Open an issue with the label `data`. General contribution guide: [CONTRIBUTING.md](../CONTRIBUTING.md).*

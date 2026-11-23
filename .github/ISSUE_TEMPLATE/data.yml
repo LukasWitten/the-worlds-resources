@@ -1,0 +1,45 @@
+name: Data – add or correct a place or route
+description: Report wrong data or suggest a new node, route or resource. No Git needed.
+labels: ["data"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping to improve the map! You don't need to know GeoJSON – a clear description and a source are enough.
+        If you already have GeoJSON, paste it below (format: docs/CONTRIBUTING_DATA.md).
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is it about?
+      options:
+        - Something on the map is wrong or outdated
+        - A place (port, refinery, mine, storage …) is missing
+        - A route (pipeline, shipping lane, rail) is missing
+        - A new resource or region
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: feature
+    attributes:
+      label: Existing place or route (if any)
+      description: Name, or the link from the share button, e.g. https://www.theworldsresources.org/#map/refinery-leuna
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What is wrong or missing? Where is it (coordinates or a map link help), who operates it, how much does it carry?
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources
+      description: Links to official reports, operator websites or public datasets that back this up.
+    validations:
+      required: true
+  - type: textarea
+    id: geojson
+    attributes:
+      label: GeoJSON (optional)
+      render: json

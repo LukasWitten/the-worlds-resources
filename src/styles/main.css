@@ -6,18 +6,8 @@
   --bg-primary: #0b0f19;
   --bg-card: #131b2e;
   --border-subtle: #1e293b;
-  
-  /* Crude Oil (Amber) */
-  --accent-oil: #f59e0b;
-  --accent-oil-glow: rgba(245, 158, 11, 0.45);
 
-  /* Natural Gas (Emerald) */
-  --accent-gas: #10b981;
-  --accent-gas-glow: rgba(16, 185, 129, 0.45);
-
-  /* Lithium (Vibrant Purple / Magenta) */
-  --accent-lithium: #c084fc;
-  --accent-lithium-glow: rgba(192, 132, 252, 0.5);
+  /* Colours of the goods (oil, gas, lithium …) come from public/data/reference/goods.json */
 
   /* Ports & Shipping (Cyan / Sky) */
   --accent-port: #38bdf8;
@@ -49,34 +39,26 @@ body {
   }
 }
 
-.pipeline-glow-oil {
-  filter: drop-shadow(0 0 6px var(--accent-oil-glow));
-  stroke-dasharray: 8, 8;
-  animation: dashAnimation 24s linear infinite;
+/* Every route glows in its own colour (--route-glow is set per line by map.js);
+   the dash pattern and speed show the transport type. */
+.route-glow {
+  filter: drop-shadow(0 0 6px var(--route-glow, rgba(148, 163, 184, 0.45)));
+  animation: dashAnimation var(--route-speed, 24s) linear infinite;
 }
 
-.pipeline-glow-gas {
-  filter: drop-shadow(0 0 6px var(--accent-gas-glow));
+.pipeline-glow {
   stroke-dasharray: 8, 8;
-  animation: dashAnimation 20s linear infinite;
-}
-
-.shipping-glow-ocean {
-  filter: drop-shadow(0 0 7px var(--accent-lithium-glow));
-  stroke-dasharray: 10, 12;
-  animation: dashAnimation 36s linear infinite;
+  --route-speed: 22s;
 }
 
 .shipping-glow {
-  filter: drop-shadow(0 0 5px rgba(56, 189, 248, 0.45));
   stroke-dasharray: 6, 10;
-  animation: dashAnimation 30s linear infinite;
+  --route-speed: 30s;
 }
 
 .rail-glow {
-  filter: drop-shadow(0 0 5px rgba(234, 179, 8, 0.4));
   stroke-dasharray: 4, 6;
-  animation: dashAnimation 18s linear infinite;
+  --route-speed: 18s;
 }
 
 /* Pulse animation for node markers */
@@ -205,11 +187,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-route,
-  .pipeline-glow-oil,
-  .pipeline-glow-gas,
-  .shipping-glow,
-  .shipping-glow-ocean,
-  .rail-glow,
+  .route-glow,
   .pulse-marker {
     animation: none !important;
   }

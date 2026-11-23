@@ -11,7 +11,8 @@ class DataService {
     this.datasets = new Map();
     this.viewMode = 'overview';
     this.activeFilters = {
-      resources: new Set(['crude_oil', 'natural_gas', 'lithium']),
+      // Goods switched off in the overview; everything else is shown, so new goods appear by default
+      hiddenResources: new Set(),
       categories: new Set([
         'extraction_site',
         'import_hub',
@@ -79,7 +80,7 @@ class DataService {
         if (!isOilField && !isCrudeChain) return false;
       } else {
         // Overview: respect resource + category toggles
-        if (!this.activeFilters.resources.has(p.resource)) return false;
+        if (this.activeFilters.hiddenResources.has(p.resource)) return false;
         if (!this.activeFilters.categories.has(p.type)) return false;
       }
 
@@ -107,8 +108,8 @@ class DataService {
 
   setFilter(type, key, enabled) {
     if (type === 'resources') {
-      if (enabled) this.activeFilters.resources.add(key);
-      else this.activeFilters.resources.delete(key);
+      if (enabled) this.activeFilters.hiddenResources.delete(key);
+      else this.activeFilters.hiddenResources.add(key);
     } else if (type === 'categories') {
       if (enabled) this.activeFilters.categories.add(key);
       else this.activeFilters.categories.delete(key);

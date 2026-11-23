@@ -4,6 +4,8 @@
 
 import { mapController } from './map.js';
 import { dataService } from './dataService.js';
+import { goods } from './goods.js';
+import { escapeHtml } from './html.js';
 
 class UIController {
   constructor() {
@@ -191,15 +193,28 @@ class UIController {
   }
 
   setupFilters() {
-    const filterInputs = document.querySelectorAll('[data-filter-type]');
-    filterInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        const type = input.getAttribute('data-filter-type');
-        const key = input.getAttribute('data-filter-key');
-        dataService.setFilter(type, key, input.checked);
-        this.refreshMap();
-      });
+    // Delegated, so the resource checkboxes rendered from the goods catalogue are covered too
+    document.getElementById('map-sidebar')?.addEventListener('change', (e) => {
+      const input = e.target.closest('[data-filter-type]');
+      if (!input) return;
+      dataService.setFilter(input.dataset.filterType, input.dataset.filterKey, input.checked);
+      this.refreshMap();
     });
+  }
+
+  /** One checkbox per raw good in the catalogue (call once the catalogue is loaded). */
+  renderResourceFilters() {
+    const list = document.getElementById('resource-filter-list');
+    if (!list) return;
+    const hidden = dataService.activeFilters.hiddenResources;
+    list.innerHTML = goods.ids('raw').map(id => {
+      const color = goods.color(id);
+      return `
+        <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+          <input type="checkbox" ${hidden.has(id) ? '' : 'checked'} data-filter-type="resources" data-filter-key="${escapeHtml(id)}" class="rounded bg-slate-900 border-slate-700 h-4 w-4" style="accent-color:${color}">
+          <span class="text-xs font-medium" style="color:${color}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</span>
+        </label>`;
+    }).join('');
   }
 
   setupSearch() {

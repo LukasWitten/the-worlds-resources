@@ -4,6 +4,8 @@
  * Checks:
  *  - every file is valid JSON and a FeatureCollection (templates: a single Feature)
  *  - every feature matches public/data/schemas/resource-feature.schema.json
+ *  - the goods catalogue matches its schema, and every feature's "resource"
+ *    is a good from that catalogue
  *  - feature ids are unique across the whole project
  *  - every route names its start/end via from_node_id / to_node_id, the ids
  *    exist, and the first/last coordinate lies on that node (or inside that
@@ -23,6 +25,8 @@ const DATA_ROOT = 'public/data';
 const GEOJSON_DIR = path.join(DATA_ROOT, 'geojson');
 const TEMPLATES_DIR = path.join(DATA_ROOT, 'templates');
 const SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'resource-feature.schema.json');
+const GOODS_PATH = path.join(DATA_ROOT, 'reference', 'goods.json');
+const GOODS_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'goods.schema.json');
 
 // How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
@@ -82,7 +86,27 @@ const schema = readJson(SCHEMA_PATH);
 if (!schema) process.exit(1);
 const validateFeature = ajv.compile(schema);
 
+// 0. Goods catalogue ---------------------------------------------------------
+const goodsSchema = readJson(GOODS_SCHEMA_PATH);
+const goodsCatalogue = readJson(GOODS_PATH);
+if (!goodsSchema || !goodsCatalogue) process.exit(1);
+const validateGoods = ajv.compile(goodsSchema);
+if (!validateGoods(goodsCatalogue)) {
+  for (const msg of formatAjvErrors(validateGoods.errors)) fail(GOODS_PATH, msg);
+}
+const goodIds = new Set(Object.keys(goodsCatalogue.goods || {}));
+for (const [id, good] of Object.entries(goodsCatalogue.goods || {})) {
+  if (good.parent && !goodIds.has(good.parent)) {
+    fail(GOODS_PATH, `good "${id}" has unknown parent "${good.parent}"`);
+  }
+}
+console.log(`[checked] ${GOODS_PATH} (${goodIds.size} goods)`);
+
 function checkFeature(file, feature, index) {
+  const resource = feature?.properties?.resource;
+  if (resource && !goodIds.has(resource)) {
+    fail(file, `${label(feature, index)} /properties/resource "${resource}" is not a good in ${GOODS_PATH} (${[...goodIds].join(', ')})`);
+  }
   if (validateFeature(feature)) return true;
   for (const msg of formatAjvErrors(validateFeature.errors)) {
     fail(file, `${label(feature, index)} ${msg}`);

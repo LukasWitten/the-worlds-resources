@@ -79,7 +79,9 @@
         },
         "name": { "type": "string", "minLength": 1 },
         "resource": {
-          "enum": ["crude_oil", "natural_gas", "hydrogen", "copper", "lithium", "gold", "water"]
+          "description": "Id of a good in public/data/reference/goods.json (checked by scripts/validate-data.js).",
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
         },
         "category": {
           "enum": ["node", "edge"]

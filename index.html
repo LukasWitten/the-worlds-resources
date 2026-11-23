@@ -298,20 +298,8 @@
           <!-- Resource Selectors (Overview mode) -->
           <div id="panel-resources" class="mb-4">
             <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Resources</h3>
-            <div class="space-y-1.5">
-              <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
-                <input type="checkbox" checked data-filter-type="resources" data-filter-key="crude_oil" class="rounded bg-slate-900 border-slate-700 text-amber-500 focus:ring-amber-500 h-4 w-4">
-                <span class="text-xs font-medium text-amber-400">🛢️ Crude Oil & Fuels</span>
-              </label>
-              <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
-                <input type="checkbox" checked data-filter-type="resources" data-filter-key="natural_gas" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500 h-4 w-4">
-                <span class="text-xs font-medium text-emerald-400">🔥 Natural Gas & LNG</span>
-              </label>
-              <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
-                <input type="checkbox" checked data-filter-type="resources" data-filter-key="lithium" class="rounded bg-slate-900 border-slate-700 text-purple-500 focus:ring-purple-500 h-4 w-4">
-                <span class="text-xs font-medium text-purple-400">🔋 Lithium & Batteries</span>
-              </label>
-            </div>
+            <!-- Filled from the goods catalogue (public/data/reference/goods.json) by ui.js -->
+            <div id="resource-filter-list" class="space-y-1.5"></div>
           </div>
 
           <!-- Layer / Infrastructure Types -->

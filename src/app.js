@@ -6,6 +6,7 @@ import { mapController } from './modules/map.js';
 import { uiController } from './modules/ui.js';
 import { inspector } from './modules/inspector.js';
 import { dataService } from './modules/dataService.js';
+import { goods } from './modules/goods.js';
 import { supplyChain } from './modules/supplyChain.js';
 import { heroMap, FEATURED_CHAINS } from './modules/heroMap.js';
 import { inject as injectAnalytics } from '@vercel/analytics';
@@ -32,6 +33,7 @@ async function bootstrap() {
   // Use absolute paths from site root so this works both with Vite (public/ → /data/)
   // and with static hosts / GitHub Pages / Vercel after deployment.
   await Promise.all([
+    goods.load('/data/reference/goods.json'),
     dataService.loadDataset('germany_crude_oil', '/data/geojson/germany/crude_oil.geojson'),
     dataService.loadDataset('germany_natural_gas', '/data/geojson/germany/natural_gas.geojson'),
     dataService.loadDataset('global_lithium', '/data/geojson/global/lithium.geojson'),
@@ -40,6 +42,7 @@ async function bootstrap() {
   ]);
 
   // 4. Initial Render
+  uiController.renderResourceFilters();
   uiController.refreshMap();
   heroMap.render();
   fillHomeStats();

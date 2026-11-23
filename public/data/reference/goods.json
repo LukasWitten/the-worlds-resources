@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "description": "Catalogue of goods shown on the map. A good is a raw material, an intermediate or a final product. The resource views (export, import, resource) use the goods with stage \"raw\". Every \"resource\" value in the GeoJSON datasets must be an id from this file.",
+    "license": "CC-BY-4.0",
+    "version": "1.0.0",
+    "last_updated": "2026-11-23",
+    "notes": {
+      "stage": "raw = extracted or first-processed commodity as counted by USGS (crude oil, ore concentrate, lithium carbonate); intermediate = input for further production; final = product for end use.",
+      "hs": "Harmonized System codes used to match trade statistics. precision: exact = the codes cover the good and nothing else; partial = some trade of the good is missing or mixed with other goods; none = no HS code isolates the good.",
+      "style": "color = main map colour of the good; icon = emoji in badges; processing_icon = emoji on processing plants (defaults to icon); route_colors = colour overrides per route type (defaults to color)."
+    }
+  },
+  "goods": {
+    "crude_oil": {
+      "label": "Crude Oil",
+      "stage": "raw",
+      "category": "energy",
+      "hs": { "rev": "HS17", "codes": ["2709"], "precision": "exact" },
+      "unit": "t",
+      "style": {
+        "color": "#fbbf24",
+        "icon": "🛢️",
+        "processing_icon": "🏭",
+        "route_colors": { "shipping_route": "#2dd4bf" }
+      }
+    },
+    "natural_gas": {
+      "label": "Natural Gas & LNG",
+      "stage": "raw",
+      "category": "energy",
+      "hs": { "rev": "HS17", "codes": ["271111", "271121"], "precision": "exact" },
+      "unit": "t",
+      "style": {
+        "color": "#10b981",
+        "icon": "🔥",
+        "route_colors": { "shipping_route": "#2dd4bf" }
+      }
+    },
+    "lithium": {
+      "label": "Lithium",
+      "stage": "raw",
+      "category": "critical_mineral",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["283691", "282520"],
+        "precision": "partial",
+        "note": "Lithium carbonate and lithium hydroxide. Spodumene concentrate is traded under the residual heading 253090 together with other minerals and is not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#c084fc",
+        "icon": "🔋"
+      }
+    }
+  }
+}

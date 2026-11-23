@@ -4,6 +4,24 @@
 
 import { mapController } from './map.js';
 import { dataService } from './dataService.js';
+import { goods } from './goods.js';
+import { escapeHtml } from './html.js';
+import { mapState } from './mapState.js';
+import { supplyChain } from './supplyChain.js';
+import { RAIL_COLOR } from './colors.js';
+
+const regionNames = typeof Intl !== 'undefined' && Intl.DisplayNames
+  ? new Intl.DisplayNames(['en'], { type: 'region' })
+  : null;
+
+/** "CL" → "Chile" (falls back to the code). */
+export function countryName(code) {
+  try {
+    return regionNames?.of(code) || code;
+  } catch {
+    return code;
+  }
+}
 
 class UIController {
   constructor() {
@@ -88,8 +106,9 @@ class UIController {
       }
     }
 
-    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …)
-    const desiredHash = `#${sectionId}`;
+    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …);
+    // the map keeps its own state (#map/<feature>?view=…)
+    const desiredHash = sectionId === 'map' ? mapState.href() : `#${sectionId}`;
     if (window.location.hash !== desiredHash) {
       history.replaceState(null, '', desiredHash);
     }
@@ -191,15 +210,28 @@ class UIController {
   }
 
   setupFilters() {
-    const filterInputs = document.querySelectorAll('[data-filter-type]');
-    filterInputs.forEach(input => {
-      input.addEventListener('change', () => {
-        const type = input.getAttribute('data-filter-type');
-        const key = input.getAttribute('data-filter-key');
-        dataService.setFilter(type, key, input.checked);
-        this.refreshMap();
-      });
+    // Delegated, so the resource checkboxes rendered from the goods catalogue are covered too
+    document.getElementById('map-sidebar')?.addEventListener('change', (e) => {
+      const input = e.target.closest('[data-filter-type]');
+      if (!input) return;
+      dataService.setFilter(input.dataset.filterType, input.dataset.filterKey, input.checked);
+      this.refreshMap();
     });
+  }
+
+  /** One checkbox per raw good in the catalogue (call once the catalogue is loaded). */
+  renderResourceFilters() {
+    const list = document.getElementById('resource-filter-list');
+    if (!list) return;
+    const hidden = dataService.activeFilters.hiddenResources;
+    list.innerHTML = goods.ids('raw').map(id => {
+      const color = goods.color(id);
+      return `
+        <label class="flex items-center space-x-2.5 p-2 rounded-xl bg-slate-800/60 hover:bg-slate-800 cursor-pointer transition border border-slate-700/50">
+          <input type="checkbox" ${hidden.has(id) ? '' : 'checked'} data-filter-type="resources" data-filter-key="${escapeHtml(id)}" class="rounded bg-slate-900 border-slate-700 h-4 w-4" style="accent-color:${color}">
+          <span class="text-xs font-medium" style="color:${color}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</span>
+        </label>`;
+    }).join('');
   }
 
   setupSearch() {
@@ -252,45 +284,208 @@ class UIController {
     this.setupViewModeButtons();
   }
 
+  /** View buttons and selects only change the map state; syncMapControls() reflects it in the sidebar. */
   setupViewModeButtons() {
-    const btnOverview = document.getElementById('btn-view-overview');
-    const btnOil = document.getElementById('btn-view-oil-fields');
+    document.querySelectorAll('[data-map-view]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.mapView;
+        // "Resource" keeps the last chosen resource, or starts with the first one
+        const good = view === 'good' ? (this.lastGood || goods.ids('raw')[0]) : null;
+        mapState.set({ view, good });
+      });
+    });
+    document.getElementById('good-select')?.addEventListener('change', (e) => {
+      mapState.set({ view: 'good', good: e.target.value });
+    });
+    document.getElementById('country-select')?.addEventListener('change', (e) => {
+      mapState.set({ country: e.target.value || null });
+    });
+    document.getElementById('country-corridors')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-corridor]');
+      if (!btn) return;
+      const corridor = this.shownCorridors?.[Number(btn.dataset.corridor)];
+      if (!corridor) return;
+      const features = [...corridor.ids].map(id => dataService.getFeatureById(id)).filter(Boolean);
+      mapController.highlightChain(corridor.ids);
+      mapController.fitFeatures(features);
+    });
+    document.getElementById('map-view-chip-reset')?.addEventListener('click', () => {
+      mapState.set({ view: 'overview', good: null, country: null });
+    });
+    this.syncMapControls(mapState.get());
+  }
+
+  /** Options of the resource and country selects (call once catalogue and data are loaded). */
+  renderMapSelects() {
+    const goodSelect = document.getElementById('good-select');
+    if (goodSelect) {
+      goodSelect.innerHTML = goods.ids('raw')
+        .map(id => `<option value="${escapeHtml(id)}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</option>`)
+        .join('');
+    }
+    const countrySelect = document.getElementById('country-select');
+    if (countrySelect) {
+      const countries = dataService.getCountries()
+        .map(code => ({ code, name: countryName(code) }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      countrySelect.innerHTML = '<option value="">All countries</option>' + countries
+        .map(({ code, name }) => `<option value="${escapeHtml(code)}">${escapeHtml(name)}</option>`)
+        .join('');
+    }
+    this.syncMapControls(mapState.get());
+  }
+
+  /** Bring the sidebar controls in line with the map state (called on every state change). */
+  syncMapControls(state) {
+    const active = 'px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer';
+    const idle = 'px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer';
+    document.querySelectorAll('[data-map-view]').forEach(btn => {
+      const on = btn.dataset.mapView === state.view;
+      btn.className = on ? active : idle;
+      btn.setAttribute('aria-pressed', String(on));
+    });
+
+    if (state.good) this.lastGood = state.good;
+    document.getElementById('good-select-wrap')?.classList.toggle('hidden', state.view !== 'good');
+    const goodSelect = document.getElementById('good-select');
+    if (goodSelect && state.good) goodSelect.value = state.good;
+    const countrySelect = document.getElementById('country-select');
+    if (countrySelect) countrySelect.value = state.country || '';
+
+    // The isolated oil view is global; a country filter doesn't apply there
+    const panelCountry = document.getElementById('panel-country');
+    if (panelCountry) {
+      const off = state.view === 'oil_fields';
+      panelCountry.style.opacity = off ? '0.45' : '1';
+      panelCountry.style.pointerEvents = off ? 'none' : '';
+    }
+
+    this.renderCorridors(state);
+
     const hint = document.getElementById('view-mode-hint');
+    if (hint) {
+      const where = state.country ? ` touching ${countryName(state.country)}` : '';
+      hint.textContent = {
+        oil_fields: 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.',
+        good: `All sources, routes and destinations of ${goods.label(state.good)}${where}.`
+      }[state.view] || (state.country
+        ? `All resources in ${countryName(state.country)} and the supply chains that touch it.`
+        : 'Overview shows all active resources. Resource focuses on one of them. Oil Fields isolates major global deposits and the crude supply chain.');
+    }
+
+    // The resource checkboxes only apply to the overview – dim them otherwise
     const panelResources = document.getElementById('panel-resources');
+    if (panelResources) {
+      const off = state.view !== 'overview';
+      panelResources.style.opacity = off ? '0.45' : '1';
+      panelResources.style.pointerEvents = off ? 'none' : '';
+    }
+  }
 
-    const setActiveStyles = (mode) => {
-      const active = 'px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer';
-      const idle = 'px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer';
-      if (btnOverview) btnOverview.className = mode === 'overview' ? active : idle;
-      if (btnOil) btnOil.className = mode === 'oil_fields' ? active : idle;
+  /**
+   * Corridors of the chosen country (e.g. "Chile → Germany · Lithium"), split into
+   * outgoing, incoming and domestic. A click highlights the whole corridor on the map.
+   */
+  renderCorridors(state) {
+    const box = document.getElementById('country-corridors');
+    if (!box) return;
+    if (!state.country || state.view === 'oil_fields') {
+      box.innerHTML = '';
+      this.shownCorridors = [];
+      return;
+    }
+    const { outgoing, incoming, domestic } = supplyChain.corridorsOf(state.country, state.view === 'good' ? state.good : null);
+    this.shownCorridors = [...outgoing, ...incoming, ...domestic];
+    if (!this.shownCorridors.length) {
+      box.innerHTML = '<p class="text-[10px] text-slate-500">No supply corridors recorded for this country yet.</p>';
+      return;
+    }
+    const e = escapeHtml;
+    let index = 0;
+    const item = (c) => {
+      const color = goods.color(c.good);
+      const route = c.from === c.to ? `Within ${countryName(c.from)}` : `${countryName(c.from)} → ${countryName(c.to)}`;
+      return `
+        <li>
+          <button type="button" data-corridor="${index++}" class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left text-[11px] text-slate-200 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition cursor-pointer">
+            <span class="inline-block w-3.5 h-[3px] rounded-full shrink-0" style="background:${color}"></span>
+            <span class="truncate">${e(route)}</span>
+            <span class="ml-auto shrink-0 text-[10px] text-slate-500">${e(goods.label(c.good))}</span>
+          </button>
+        </li>`;
     };
+    const group = (title, list) => list.length
+      ? `<h4 class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-2 mb-1">${e(title)}</h4><ul>${list.map(item).join('')}</ul>`
+      : '';
+    box.innerHTML =
+      group('Leaving the country', outgoing) +
+      group('Arriving in the country', incoming) +
+      group('Within the country', domestic);
+  }
 
-    const applyMode = (mode) => {
-      dataService.setViewMode(mode);
-      setActiveStyles(mode);
+  /** Collapsible legend on the map: route colours per resource, place types, marker rings. */
+  renderLegend() {
+    const body = document.getElementById('map-legend-body');
+    const toggle = document.getElementById('map-legend-toggle');
+    if (!body || !toggle) return;
+    const e = escapeHtml;
+    const line = (color) => `<span class="inline-block w-5 h-[3px] rounded-full shrink-0" style="background:${color}"></span>`;
+    const row = (symbol, label) => `<li class="flex items-center gap-2">${symbol}<span>${e(label)}</span></li>`;
+    const icon = (emoji) => `<span class="w-5 text-center shrink-0" aria-hidden="true">${e(emoji)}</span>`;
 
-      if (hint) {
-        hint.textContent = mode === 'oil_fields'
-          ? 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.'
-          : 'Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.';
-      }
+    // Pipelines in the colour of the resource, sea routes may have their own colour, rail is one colour
+    const raw = goods.ids('raw');
+    const routes = raw.map(id => row(line(goods.color(id)), `${goods.label(id)}`));
+    const shippingColors = new Map();
+    for (const id of raw) {
+      const color = goods.routeColor(id, 'shipping_route');
+      if (color !== goods.color(id)) shippingColors.set(color, [...(shippingColors.get(color) || []), goods.label(id)]);
+    }
+    for (const [color, labels] of shippingColors) routes.push(row(line(color), `Sea route (${labels.join(', ')})`));
+    routes.push(row(line(RAIL_COLOR), 'Rail corridor'));
 
-      // In isolated oil mode, resource toggles are less relevant – dim the panel slightly
-      if (panelResources) {
-        panelResources.style.opacity = mode === 'oil_fields' ? '0.45' : '1';
-        panelResources.style.pointerEvents = mode === 'oil_fields' ? 'none' : '';
-      }
+    const places = [
+      row(icon('⛏️'), 'Extraction site'),
+      row(`<span class="w-5 h-3 rounded-sm shrink-0 border" style="background:rgba(245,158,11,0.3); border-color:#f59e0b"></span>`, 'Oil field (shape is illustrative)'),
+      row(icon('⚓'), 'Port or import terminal'),
+      ...raw.map(id => row(icon(goods.processingIcon(id)), `Processing: ${goods.label(id)}`)),
+      row(icon('🏬'), 'Storage'),
+      row(icon('🧭'), 'Shipping approach')
+    ];
 
-      this.refreshMap();
+    const heading = (text) => `<h4 class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">${e(text)}</h4>`;
+    body.innerHTML = `
+      <div>${heading('Routes')}<ul class="space-y-1">${routes.join('')}</ul></div>
+      <div>${heading('Places')}<ul class="space-y-1">${places.join('')}</ul></div>
+      <p class="text-[10px] text-slate-400 leading-relaxed">The ring around a place shows the colours of the routes connected to it. Click a place or route to see its whole supply chain.</p>`;
 
-      if (mode === 'oil_fields') {
-        mapController.focusOilFields();
-      }
-    };
+    if (!toggle.dataset.bound) {
+      toggle.dataset.bound = 'true';
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        body.classList.toggle('hidden', !open);
+        const iconEl = document.getElementById('map-legend-icon');
+        if (iconEl) iconEl.textContent = open ? '▴' : '▾';
+      });
+    }
+  }
 
-    btnOverview?.addEventListener('click', () => applyMode('overview'));
-    btnOil?.addEventListener('click', () => applyMode('oil_fields'));
-    setActiveStyles(dataService.getViewMode());
+  /** Chip on the map naming the active resource / country filter, with a reset button. */
+  updateViewChip(state, visibleCount) {
+    const chip = document.getElementById('map-view-chip');
+    const text = document.getElementById('map-view-chip-text');
+    if (!chip || !text) return;
+    const parts = [];
+    if (state.view === 'good') parts.push(`${goods.icon(state.good)} ${goods.label(state.good)}`);
+    if (state.country) parts.push(countryName(state.country));
+    const show = parts.length > 0;
+    chip.classList.toggle('hidden', !show);
+    chip.classList.toggle('flex', show);
+    if (!show) return;
+    text.textContent = visibleCount > 0
+      ? parts.join(' · ')
+      : `${parts.join(' · ')}: nothing recorded yet`;
   }
 
   setupApiKeyModal() {
@@ -364,9 +559,17 @@ class UIController {
     });
   }
 
+  /** Features the current map state + sidebar filters show. */
+  visibleFeatures(state = mapState.get()) {
+    const scopeIds = state.country ? supplyChain.countryScope(state.country) : null;
+    return dataService.getFilteredFeatures({ view: state.view, good: state.good, scopeIds });
+  }
+
   refreshMap() {
-    const filtered = dataService.getFilteredFeatures();
+    const state = mapState.get();
+    const filtered = this.visibleFeatures(state);
     mapController.renderFeatures(filtered);
+    this.updateViewChip(state, filtered.length);
 
     const counter = document.getElementById('active-elements-count');
     if (counter) {

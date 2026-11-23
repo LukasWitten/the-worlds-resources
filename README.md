@@ -12,7 +12,8 @@ The World's Resources is an open-source, interactive map of global resource flow
 
 - **Follow a supply chain.** Click a refinery, port, pipeline or oil field and the map highlights its whole chain – where the resource comes from and where it goes. The inspector lists every step; each one is clickable.
 - **Find the "aha moment".** Every place explains why it matters in everyday life: the jet fuel for Frankfurt Airport, the lithium for EV batteries, the gas for your heating.
-- **Share a place.** Every node and route has its own link, e.g. [`#map/refinery-schwedt`](https://www.theworldsresources.org/#map/refinery-schwedt).
+- **Focus on one resource or country.** Show only lithium, or everything that touches Chile, and see the country's supply corridors (e.g. Chile → Germany).
+- **Share what you see.** Every node, route and view has its own link, e.g. [`#map/refinery-schwedt`](https://www.theworldsresources.org/#map/refinery-schwedt) or [`#map?view=good&good=lithium&country=CL`](https://www.theworldsresources.org/#map?view=good&good=lithium&country=CL).
 - **Check the sources.** Every feature names its source and links to it.
 
 ### Current coverage
@@ -67,6 +68,7 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 ```
 ├── public/
 │   ├── data/                        # The only data source, served as-is under /data/
+│   │   ├── reference/goods.json     # Goods catalogue: label, colour, icon, HS codes per resource
 │   │   ├── geojson/
 │   │   │   ├── germany/             # crude_oil, natural_gas
 │   │   │   └── global/              # lithium, oil_fields, oil_export_corridors
@@ -78,7 +80,9 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 │   ├── app.js                       # Entry point, URL routing (#map/<id>)
 │   ├── modules/
 │   │   ├── dataService.js           # Loading and filtering the datasets
-│   │   ├── supplyChain.js           # Graph of nodes and routes, upstream/downstream chains
+│   │   ├── mapState.js              # Central map state (view, resource, country, open feature) ↔ URL
+│   │   ├── goods.js                 # Goods catalogue (labels, colours, icons)
+│   │   ├── supplyChain.js           # Graph of nodes and routes, upstream/downstream chains, corridors
 │   │   ├── map.js                   # Leaflet map, markers, routes, chain highlight
 │   │   ├── inspector.js             # Detail drawer, aha moment, supply-chain timeline
 │   │   ├── ui.js                    # Navigation, search, filters, dialogs

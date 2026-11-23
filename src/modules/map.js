@@ -5,7 +5,8 @@
 import L from 'leaflet';
 import { inspector } from './inspector.js';
 import { escapeHtml } from './html.js';
-import { getEdgeColor } from './colors.js';
+import { getEdgeColor, routeColorOrder } from './colors.js';
+import { goods, withAlpha } from './goods.js';
 
 // =========================================================================
 // Project CARTO basemap keys. They are public by nature (sent with every tile
@@ -149,20 +150,9 @@ class MapController {
   }
 
   /**
-   * Fixed color order for multi-color node borders.
-   * Always the same sequence so the visual language stays consistent.
-   */
-  static ROUTE_COLOR_ORDER = [
-    '#fbbf24', // crude oil pipelines (amber)
-    '#10b981', // natural gas pipelines (emerald)
-    '#c084fc', // lithium shipping / extraction (purple)
-    '#2dd4bf', // other shipping routes (teal)
-    '#eab308'  // rail corridors (yellow)
-  ];
-
-  /**
    * Collect the colors of all routes that start or end at the given node id
-   * (via from_node_id / to_node_id). Returns colors in the global fixed order.
+   * (via from_node_id / to_node_id). Returns colors in the global fixed order,
+   * so the visual language stays consistent.
    */
   getConnectedRouteColors(nodeId, edges) {
     const found = new Set();
@@ -175,7 +165,7 @@ class MapController {
       }
     }
 
-    return MapController.ROUTE_COLOR_ORDER.filter(c => found.has(c));
+    return routeColorOrder().filter(c => found.has(c));
   }
 
   /**
@@ -334,19 +324,10 @@ class MapController {
       glowColor = 'rgba(16, 185, 129, 0.5)';
       iconSymbol = '🏬';
     } else if (p.type === 'processing_hub') {
-      if (p.resource === 'natural_gas') {
-        mainColor = '#10b981';
-        glowColor = 'rgba(16, 185, 129, 0.5)';
-        iconSymbol = '🔥';
-      } else if (p.resource === 'lithium') {
-        mainColor = '#c084fc';
-        glowColor = 'rgba(192, 132, 252, 0.55)';
-        iconSymbol = '🔋';
-      } else {
-        mainColor = '#f59e0b';
-        glowColor = 'rgba(245, 158, 11, 0.45)';
-        iconSymbol = '🏭';
-      }
+      // Refinery 🏭, gas hub 🔥, cathode plant 🔋 … in the colour of the good it processes
+      mainColor = goods.color(p.resource);
+      glowColor = withAlpha(mainColor, 0.5);
+      iconSymbol = goods.processingIcon(p.resource);
     }
 
     // Multi-color border from all connected routes (fixed color order)
@@ -397,28 +378,22 @@ class MapController {
     const latLngs = coords.map(c => [c[1], c[0]]);
 
     const color = getEdgeColor(feature);
-    let className = 'pipeline-glow-oil';
-    let weight = 4;
-
-    if (p.type === 'rail_corridor') {
-      className = 'rail-glow';
-      weight = 3.5;
-    } else if (p.type === 'shipping_route') {
-      className = p.resource === 'lithium' ? 'shipping-glow-ocean' : 'shipping-glow';
-      weight = p.resource === 'lithium' ? 3.5 : 3;
-    } else if (p.type === 'pipeline') {
-      className = p.resource === 'natural_gas' ? 'pipeline-glow-gas' : 'pipeline-glow-oil';
-      weight = 4;
-    }
+    const style = {
+      pipeline: { className: 'pipeline-glow', weight: 4 },
+      shipping_route: { className: 'shipping-glow', weight: 3 },
+      rail_corridor: { className: 'rail-glow', weight: 3.5 }
+    }[p.type] || { className: 'pipeline-glow', weight: 4 };
 
     const polyline = L.polyline(latLngs, {
       color: color,
-      weight: weight,
+      weight: style.weight,
       opacity: 0.9,
-      className: className,
+      className: `route-glow ${style.className}`,
       lineCap: 'round',
       lineJoin: 'round'
     });
+    // The glow takes the route's colour (CSS can't read the stroke colour itself)
+    polyline.on('add', () => polyline.getElement()?.style.setProperty('--route-glow', withAlpha(color, 0.45)));
 
     polyline.bindTooltip(`
       <div class="text-xs font-sans">

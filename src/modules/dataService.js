@@ -1,17 +1,19 @@
 /**
  * Data Service - Handles loading, caching, and filtering of resource GeoJSON datasets.
  *
- * viewMode:
- *  - 'overview'   → normal multi-resource map
- *  - 'oil_fields' → isolated oil view (field lakes + crude oil chain only)
+ * Which features are shown depends on the map state (see mapState.js):
+ *  - view 'overview'   → all resources, minus the ones switched off in the sidebar
+ *  - view 'good'       → one good (resource) with all its sources, routes and destinations
+ *  - view 'oil_fields' → isolated oil view (field lakes + crude oil chain only)
+ *  - country           → only what lies in that country or belongs to a supply chain touching it
  */
 
 class DataService {
   constructor() {
     this.datasets = new Map();
-    this.viewMode = 'overview';
     this.activeFilters = {
-      resources: new Set(['crude_oil', 'natural_gas', 'lithium']),
+      // Goods switched off in the overview; everything else is shown, so new goods appear by default
+      hiddenResources: new Set(),
       categories: new Set([
         'extraction_site',
         'import_hub',
@@ -52,34 +54,39 @@ class DataService {
     return all;
   }
 
-  setViewMode(mode) {
-    this.viewMode = mode || 'overview';
-  }
-
-  getViewMode() {
-    return this.viewMode;
+  /** Country codes (ISO alpha-2) that occur in the data; "INT" (international waters) is left out. */
+  getCountries() {
+    const codes = this.getAllFeatures().map(f => f.properties?.country).filter(c => c && c !== 'INT');
+    return [...new Set(codes)];
   }
 
   /**
-   * Returns features that match the active view mode + filter criteria.
+   * Returns the features that match the map state + sidebar filters.
+   * view, good: from the map state. scopeIds: Set of feature ids to limit to (country filter) or null.
    */
-  getFilteredFeatures() {
+  getFilteredFeatures({ view = 'overview', good = null, scopeIds = null } = {}) {
     const all = this.getAllFeatures();
     const query = this.activeFilters.searchQuery.toLowerCase().trim();
 
     return all.filter(feature => {
       const p = feature.properties || {};
 
+      if (scopeIds && !scopeIds.has(p.id)) return false;
+
       // --- Isolated oil-fields mode ---
-      if (this.viewMode === 'oil_fields') {
+      if (view === 'oil_fields') {
         // Show major oil-field polygons always (unless search excludes them)
         // Plus the full crude_oil infrastructure chain (nodes + routes)
         const isOilField = p.type === 'oil_field';
         const isCrudeChain = p.resource === 'crude_oil';
         if (!isOilField && !isCrudeChain) return false;
+      } else if (view === 'good') {
+        // One good: everything that carries it, still respecting the layer toggles
+        if (p.resource !== good) return false;
+        if (!this.activeFilters.categories.has(p.type)) return false;
       } else {
         // Overview: respect resource + category toggles
-        if (!this.activeFilters.resources.has(p.resource)) return false;
+        if (this.activeFilters.hiddenResources.has(p.resource)) return false;
         if (!this.activeFilters.categories.has(p.type)) return false;
       }
 
@@ -107,8 +114,8 @@ class DataService {
 
   setFilter(type, key, enabled) {
     if (type === 'resources') {
-      if (enabled) this.activeFilters.resources.add(key);
-      else this.activeFilters.resources.delete(key);
+      if (enabled) this.activeFilters.hiddenResources.delete(key);
+      else this.activeFilters.hiddenResources.add(key);
     } else if (type === 'categories') {
       if (enabled) this.activeFilters.categories.add(key);
       else this.activeFilters.categories.delete(key);

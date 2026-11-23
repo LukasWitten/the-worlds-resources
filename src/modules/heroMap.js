@@ -9,6 +9,7 @@ import { dataService } from './dataService.js';
 import { supplyChain } from './supplyChain.js';
 import { getEdgeColor } from './colors.js';
 import { escapeHtml } from './html.js';
+import { goods } from './goods.js';
 
 /** Chains shown on the homepage, by the id of the feature they end at. */
 export const FEATURED_CHAINS = [
@@ -17,7 +18,6 @@ export const FEATURED_CHAINS = [
   { id: 'refinery-bayernoil', title: 'Diesel and petrol for Bavaria' }
 ];
 
-const RESOURCE_COLORS = { crude_oil: '#fbbf24', natural_gas: '#10b981', lithium: '#c084fc' };
 const CYCLE_MS = 8000;
 
 class HeroMap {
@@ -88,7 +88,7 @@ class HeroMap {
         const [lon, lat] = f.geometry.coordinates;
         layer = L.circleMarker([lat, lon], {
           radius: 4,
-          color: RESOURCE_COLORS[p.resource] || '#94a3b8',
+          color: goods.color(p.resource),
           weight: 2,
           fillColor: '#0b0f19'
         });

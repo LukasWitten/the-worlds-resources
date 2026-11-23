@@ -89,6 +89,86 @@ class SupplyChain {
     return { upstream, selected, downstream, ids };
   }
 
+  /**
+   * Ids of everything in a country plus every supply chain that touches it
+   * (e.g. Chile → the lithium chain to Schwarzheide). Used by the country filter.
+   */
+  countryScope(country) {
+    this.ensureGraph();
+    const ids = new Set();
+    for (const f of this.byId.values()) {
+      if (f.properties.country !== country) continue;
+      const chain = this.getChain(f.properties.id);
+      chain?.ids.forEach(id => ids.add(id));
+    }
+    return ids;
+  }
+
+  /**
+   * Corridors: every path from a starting point (oil field, mine, export terminal …
+   * anything without incoming routes) to an end point (refinery, plant … without
+   * outgoing routes), grouped by good and by the first and last country on the way.
+   * Transit points in international waters ("INT") are skipped.
+   *
+   * Returns [{ good, from, to, ids: Set<string>, paths }], e.g.
+   * { good: 'lithium', from: 'CL', to: 'DE', ids: {Atacama, …, Schwarzheide}, paths: 1 }.
+   * This links the curated infrastructure to country-level trade flows later on.
+   */
+  corridors() {
+    this.ensureGraph();
+    if (this.corridorCache?.builtFrom === this.builtFrom) return this.corridorCache.list;
+
+    const isRoute = (f) => Boolean(f.properties.from_node_id && f.properties.to_node_id);
+    const hasOut = (id) => (this.edgesOutOf.get(id) || []).length > 0;
+    const hasIn = (id) => (this.edgesInto.get(id) || []).length > 0;
+    const groups = new Map();
+
+    const record = (path) => {
+      const countries = path.map(f => f.properties.country).filter(c => c && c !== 'INT');
+      if (!countries.length) return;
+      const good = path.find(isRoute)?.properties.resource || path[0].properties.resource;
+      const from = countries[0];
+      const to = countries[countries.length - 1];
+      const key = `${good}|${from}|${to}`;
+      if (!groups.has(key)) groups.set(key, { good, from, to, ids: new Set(), paths: 0 });
+      const group = groups.get(key);
+      path.forEach(f => group.ids.add(f.properties.id));
+      group.paths += 1;
+    };
+
+    const walk = (node, path) => {
+      const out = this.edgesOutOf.get(node.properties.id) || [];
+      if (!out.length) {
+        record(path);
+        return;
+      }
+      for (const edge of out) {
+        const next = this.byId.get(edge.properties.to_node_id);
+        if (!next || path.includes(next)) continue; // unknown node or a cycle
+        walk(next, [...path, edge, next]);
+      }
+    };
+
+    for (const f of this.byId.values()) {
+      const id = f.properties.id;
+      if (!isRoute(f) && hasOut(id) && !hasIn(id)) walk(f, [f]);
+    }
+
+    const list = [...groups.values()];
+    this.corridorCache = { builtFrom: this.builtFrom, list };
+    return list;
+  }
+
+  /** Corridors of one country: leaving it, arriving in it, or running within it. */
+  corridorsOf(country, good = null) {
+    const list = this.corridors().filter(c => !good || c.good === good);
+    return {
+      outgoing: list.filter(c => c.from === country && c.to !== country),
+      incoming: list.filter(c => c.to === country && c.from !== country),
+      domestic: list.filter(c => c.from === country && c.to === country)
+    };
+  }
+
   /** All features of a chain, from the furthest source to the furthest destination. */
   features(chain) {
     if (!chain) return [];

@@ -6,6 +6,8 @@ import L from 'leaflet';
 import { escapeHtml, safeHttpUrl } from './html.js';
 import { supplyChain } from './supplyChain.js';
 import { getEdgeColor } from './colors.js';
+import { goods, withAlpha } from './goods.js';
+import { mapState } from './mapState.js';
 
 const TYPE_ICONS = {
   oil_field: '🛢️',
@@ -29,9 +31,15 @@ function chainIcon(feature) {
 }
 
 function typeIcon(p) {
-  if (p.type === 'processing_hub' && p.resource === 'natural_gas') return '🔥';
-  if (p.type === 'processing_hub' && p.resource === 'lithium') return '🔋';
+  if (p.type === 'processing_hub') return goods.processingIcon(p.resource);
   return TYPE_ICONS[p.type] || '📍';
+}
+
+/** Badge with the good's icon and label, coloured from the goods catalogue. */
+function goodBadge(id) {
+  if (!goods.has(id)) return '';
+  const color = goods.color(id);
+  return `<span class="text-xs font-semibold px-2 py-0.5 rounded border" style="color:${color}; background:${withAlpha(color, 0.12)}; border-color:${withAlpha(color, 0.4)}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</span>`;
 }
 
 class Inspector {
@@ -90,11 +98,7 @@ class Inspector {
       shipping_route: '<span class="px-2.5 py-1 text-xs rounded-full bg-teal-950 text-teal-400 border border-teal-800">🚢 Ocean Shipping Route</span>'
     }[p.type] || '<span class="px-2.5 py-1 text-xs rounded-full bg-slate-800 text-slate-300">Infrastructure</span>';
 
-    const resourceBadge = {
-      crude_oil: '<span class="text-amber-400 text-xs font-semibold px-2 py-0.5 rounded bg-amber-950/60 border border-amber-800/60">🛢️ Crude Oil</span>',
-      natural_gas: '<span class="text-emerald-400 text-xs font-semibold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-800/60">🔥 Natural Gas & LNG</span>',
-      lithium: '<span class="text-purple-400 text-xs font-semibold px-2 py-0.5 rounded bg-purple-950/60 border border-purple-800/60">🔋 Lithium</span>'
-    }[p.resource] || '';
+    const resourceBadge = goodBadge(p.resource);
 
     const productsHtml = products.length > 0 
       ? products.map(prod => `
@@ -249,7 +253,7 @@ class Inspector {
 
   /**
    * Vertical timeline: where the resource comes from, this feature, where it goes.
-   * Each entry links to #map/<id>, so the browser's back button walks the chain back.
+   * Each entry links to #map/<id> (keeping the current view), so the browser's back button walks the chain back.
    */
   renderChain(chain) {
     const e = escapeHtml;
@@ -266,7 +270,7 @@ class Inspector {
     const chip = (f) => {
       const fp = f.properties;
       return `
-        <a href="#map/${encodeURIComponent(fp.id)}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs bg-slate-800/80 text-slate-200 border border-slate-700/70 hover:border-indigo-400 hover:text-white transition" title="${e(fp.summary || fp.name)}">
+        <a href="${e(mapState.href({ feature: fp.id }))}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs bg-slate-800/80 text-slate-200 border border-slate-700/70 hover:border-indigo-400 hover:text-white transition" title="${e(fp.summary || fp.name)}">
           <span aria-hidden="true" class="inline-flex items-center gap-1">${chainIcon(f)}</span><span>${e(fp.name)}</span>
         </a>`;
     };
@@ -306,11 +310,9 @@ class Inspector {
       </div>`;
   }
 
-  /** Link that opens the map directly on the current feature. */
+  /** Link that opens the map directly on the current feature, in the current view. */
   getShareUrl(feature = this.currentFeature) {
-    const id = feature?.properties?.id;
-    const base = `${window.location.origin}${window.location.pathname}`;
-    return id ? `${base}#map/${encodeURIComponent(id)}` : `${base}#map`;
+    return mapState.shareUrl({ feature: feature?.properties?.id || null });
   }
 
   async shareCurrentFeature() {

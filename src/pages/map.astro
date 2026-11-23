@@ -5,16 +5,22 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 
-const title = 'Resource Map: Oil, Gas and Lithium Supply Chains';
+const title = 'Supply Chain Map: Oil, Gas, Lithium';
 const description = 'Explore oil fields, mines, ports, pipelines and refineries on an open map. Click any place to see its whole supply chain – every entry links to its source.';
 ---
-<BaseLayout title={title} description={description} bodyClass="map-mode" slimFooter mainClass="flex-grow flex flex-col">
+<BaseLayout title={title} description={description} bodyClass="map-mode" slimFooter navCollapsed mainClass="flex-grow flex flex-col">
+  <noscript slot="head"><style>
+    /* Without JavaScript the menu can't be opened: show it */
+    #top-navbar { transform: none !important; opacity: 1 !important; margin-bottom: 0 !important; pointer-events: auto !important; }
+    #navbar-toggle-btn, #sidebar-toggle-btn { display: none !important; }
+  </style></noscript>
   <Fragment slot="after-nav">
-  <!-- DEDICATED TOP NAVBAR TOGGLE ARROW (Floating above map at z-[1060]) -->
+  <!-- Top menu toggle, floating above the map. The page is delivered in the state ui.js
+       starts in (menu and sidebar collapsed), so nothing moves when the script runs. -->
   <button id="navbar-toggle-btn"
-    class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-[1060] bg-cardbg/95 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-b-xl border-b border-x border-slate-700/80 shadow-2xl backdrop-blur-md transition-all duration-300 flex items-center space-x-1.5 text-xs cursor-pointer group"
+    class="fixed top-0 left-1/2 -translate-x-1/2 z-[1060] bg-cardbg/95 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-b-xl border-b border-x border-slate-700/80 shadow-2xl backdrop-blur-md transition-all duration-300 flex items-center space-x-1.5 text-xs cursor-pointer group"
     title="Show / hide top menu">
-    <span id="navbar-toggle-icon" class="text-xs font-bold text-indigo-400 group-hover:text-indigo-300">▲</span>
+    <span id="navbar-toggle-icon" class="text-xs font-bold text-indigo-400 group-hover:text-indigo-300">▼</span>
     <span id="navbar-toggle-text" class="text-[11px] font-medium text-slate-300">Top menu</span>
   </button>
   </Fragment>
@@ -34,7 +40,7 @@ const description = 'Explore oil fields, mines, ports, pipelines and refineries 
     <section id="section-map" class="flex-grow min-h-0 relative flex overflow-hidden w-full">
       
       <!-- Collapsible Left Sidebar -->
-      <div id="map-sidebar" class="relative z-[1040] w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-5 flex flex-col justify-between transition-[margin] duration-300 ease-in-out shrink-0">
+      <div id="map-sidebar" class="-ml-80 relative z-[1040] w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-5 flex flex-col justify-between transition-[margin] duration-300 ease-in-out shrink-0">
         
         <div class="overflow-y-auto pr-1">
           
@@ -206,9 +212,9 @@ const description = 'Explore oil fields, mines, ports, pipelines and refineries 
 
       <!-- DEDICATED SIDEBAR TOGGLE BUTTON (Floating above Leaflet at z-[1050]) -->
       <button id="sidebar-toggle-btn"
-        class="absolute top-4 left-[20.5rem] z-[1050] bg-cardbg/95 hover:bg-slate-800 text-white px-3 py-2 rounded-xl shadow-2xl border border-slate-700/80 backdrop-blur-md transition-all duration-300 flex items-center space-x-2 text-xs cursor-pointer group"
-        title="Show / hide sidebar">
-        <span id="sidebar-toggle-icon" class="text-sm font-bold text-indigo-400 group-hover:text-indigo-300 transition">◀</span>
+        class="absolute top-4 left-4 z-[1050] bg-cardbg/95 hover:bg-slate-800 text-white px-3 py-2 rounded-xl shadow-2xl border border-slate-700/80 backdrop-blur-md transition-all duration-300 flex items-center space-x-2 text-xs cursor-pointer group"
+        title="Show sidebar">
+        <span id="sidebar-toggle-icon" class="text-sm font-bold text-indigo-400 group-hover:text-indigo-300 transition">▶</span>
         <span id="sidebar-toggle-text" class="text-[11px] font-medium hidden sm:inline text-slate-300">Filter & Layer</span>
       </button>
 

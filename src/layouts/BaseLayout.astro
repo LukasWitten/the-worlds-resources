@@ -21,6 +21,7 @@ const {
   ogType = 'website',
   bodyClass = '',
   slimFooter = false,
+  navCollapsed = false,
   mainClass = 'flex-grow',
   lang = 'en',
   // Same page in other languages: [{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }]
@@ -72,7 +73,7 @@ const defaultAlternate = alternates.find(a => a.lang === 'en');
 </head>
 <body class:list={['bg-darkbg text-slate-100 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white', bodyClass]}>
   <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[3000] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-slate-900">Skip to content</a>
-  <Nav lang={lang === 'en' ? undefined : 'en'} />
+  <Nav lang={lang === 'en' ? undefined : 'en'} collapsed={navCollapsed} />
   <slot name="after-nav" />
   <main id="content" class={mainClass}>
     {breadcrumbs && (

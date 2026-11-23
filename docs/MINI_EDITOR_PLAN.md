@@ -1,5 +1,7 @@
 # Mini Route Editor – Plan (Stage 2)
 
+> **Superseded (2026-11-23).** This plan is replaced by the editor in [vision-assessment.md](vision-assessment.md) (stages C2 and C4): same idea (draw nodes and routes, export, contribute via PR/issue), but on the shared project format `*.twr.json`, with stories, sources and a reliability level per element. The success criteria in section 7 still apply. Kept for reference.
+
 Goal: let domain experts **sketch nodes and routes on the map** and export valid GeoJSON, without using Git or hand-writing coordinates.
 
 This is **not** a full CMS and **not** a backend.  

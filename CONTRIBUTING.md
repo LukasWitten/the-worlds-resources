@@ -57,6 +57,8 @@ A few rules that keep the site fast and safe:
 - **No third-party CDNs.** Install libraries via npm so Vite bundles them. The Content-Security-Policy in `vercel.json` blocks external scripts.
 - **Escape data before it goes into HTML.** Use `escapeHtml()` and `safeHttpUrl()` from `src/modules/html.js` for every value that comes from the GeoJSON.
 - **No inline `<script>` or `onclick` attributes** – they are blocked by the CSP as well. Attach event listeners in the modules.
+- **Map content that changes over time comes from a time value.** A route that grows, a story step that appears or a flow animation must be computed from a time `t`, not driven by CSS animations or timers. Otherwise image and video exports would differ from the live map. Hover effects and pure decoration are fine.
+- **Keep OpenStreetMap data separate.** Data derived from OpenStreetMap (ODbL) goes only into its own files with its own license note, never into the CC BY datasets.
 - **Keep the build passing:** `npm run build`, and `npm run preview` to test with the production headers.
 
 Where things live:

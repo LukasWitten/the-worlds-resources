@@ -28,6 +28,7 @@
     "vite": "^6.0.0"
   },
   "dependencies": {
+    "@vercel/analytics": "2.0.1",
     "leaflet": "^1.9.4"
   },
   "engines": {

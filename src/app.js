@@ -8,6 +8,14 @@ import { inspector } from './modules/inspector.js';
 import { dataService } from './modules/dataService.js';
 import { supplyChain } from './modules/supplyChain.js';
 import { heroMap, FEATURED_CHAINS } from './modules/heroMap.js';
+import { inject as injectAnalytics } from '@vercel/analytics';
+
+// Cookieless page-view statistics (Vercel Web Analytics), only on the live site:
+// local development and preview deployments are not counted.
+const PRODUCTION_HOSTS = new Set(['www.theworldsresources.org', 'theworldsresources.org']);
+if (PRODUCTION_HOSTS.has(window.location.hostname)) {
+  injectAnalytics({ mode: 'production' });
+}
 
 async function bootstrap() {
   console.log('[App] Initializing "The World\'s Resources" WebApp...');

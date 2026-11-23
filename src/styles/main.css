@@ -155,3 +155,31 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Supply chain view: fade everything outside the selected chain */
+.leaflet-overlay-pane path,
+.custom-node-icon {
+  transition: opacity 0.35s ease;
+}
+
+.chain-active .leaflet-overlay-pane path:not(.in-chain) {
+  opacity: 0.12;
+  filter: none;
+}
+
+.chain-active .custom-node-icon:not(.in-chain) {
+  opacity: 0.22 !important;
+}
+
+.chain-active .custom-node-icon:not(.in-chain) .pulse-marker {
+  animation: none;
+}
+
+.chain-active .leaflet-overlay-pane path.in-chain:not(.oil-field-lake) {
+  stroke-width: 5px;
+}
+
+.custom-node-icon.chain-selected > div {
+  transform: scale(1.25);
+  transition: transform 0.3s ease;
+}

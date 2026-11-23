@@ -4,6 +4,34 @@
 
 import L from 'leaflet';
 import { escapeHtml, safeHttpUrl } from './html.js';
+import { supplyChain } from './supplyChain.js';
+import { getEdgeColor } from './colors.js';
+
+const TYPE_ICONS = {
+  oil_field: '🛢️',
+  extraction_site: '⛏️',
+  import_hub: '⚓',
+  processing_hub: '🏭',
+  storage_hub: '🏬',
+  rail_corridor: '🚂',
+  shipping_route: '🚢'
+};
+
+const ROUTE_TYPES = new Set(['pipeline', 'rail_corridor', 'shipping_route']);
+
+/** Icon for a node; for routes a short line in the route's map color (plus 🚢/🚂). */
+function chainIcon(feature) {
+  const p = feature.properties || {};
+  if (!ROUTE_TYPES.has(p.type)) return typeIcon(p);
+  const line = `<span class="inline-block w-3.5 h-[3px] rounded-full" style="background:${getEdgeColor(feature)}"></span>`;
+  return p.type === 'pipeline' ? line : `${line}<span>${TYPE_ICONS[p.type]}</span>`;
+}
+
+function typeIcon(p) {
+  if (p.type === 'processing_hub' && p.resource === 'natural_gas') return '🔥';
+  if (p.type === 'processing_hub' && p.resource === 'lithium') return '🔋';
+  return TYPE_ICONS[p.type] || '📍';
+}
 
 class Inspector {
   constructor() {
@@ -13,6 +41,9 @@ class Inspector {
     this.currentFeature = null;
     /** Called with the shown feature, or null when the inspector closes. */
     this.onFeatureChange = null;
+    /** Called with the features of the shown supply chain ("Show on map"). */
+    this.onShowChain = null;
+    this.currentChain = null;
   }
 
   init(containerId) {
@@ -44,6 +75,7 @@ class Inspector {
     const source = p.source || {};
     const sourceUrl = safeHttpUrl(source.url);
     const e = escapeHtml;
+    this.currentChain = supplyChain.getChain(p.id);
 
     const typeBadge = {
       oil_field: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-300 border border-amber-700">🛢️ Major Oil Field</span>',
@@ -147,6 +179,8 @@ class Inspector {
             </div>
           ` : ''}
 
+          ${this.renderChain(this.currentChain)}
+
           <!-- Detailed Extended Description (Can be arbitrarily long) -->
           <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 space-y-3">
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Technical Documentation & Geopolitics</h4>
@@ -192,6 +226,10 @@ class Inspector {
       this.shareCurrentFeature();
     });
 
+    document.getElementById('show-chain-btn')?.addEventListener('click', () => {
+      this.onShowChain?.(this.chainFeatures());
+    });
+
     document.getElementById('toggle-fullscreen-btn')?.addEventListener('click', () => {
       this.toggleFullscreen();
     });
@@ -200,6 +238,71 @@ class Inspector {
     this.container.classList.add('translate-x-0');
     this.isOpen = true;
     this.onFeatureChange?.(feature);
+  }
+
+  /** All features of the current supply chain, including the shown one. */
+  chainFeatures(chain = this.currentChain) {
+    if (!chain) return [];
+    return [...chain.upstream.flat(), chain.selected, ...chain.downstream.flat()];
+  }
+
+  /**
+   * Vertical timeline: where the resource comes from, this feature, where it goes.
+   * Each entry links to #map/<id>, so the browser's back button walks the chain back.
+   */
+  renderChain(chain) {
+    const e = escapeHtml;
+    if (!chain) return '';
+    const hasLinks = chain.upstream.length > 0 || chain.downstream.length > 0;
+    if (!hasLinks) {
+      return `
+        <div class="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400">
+          <span class="font-bold uppercase tracking-wider text-slate-400">Supply chain</span>
+          <p class="mt-1.5">No connected routes are recorded for this place yet.</p>
+        </div>`;
+    }
+
+    const chip = (f) => {
+      const fp = f.properties;
+      return `
+        <a href="#map/${encodeURIComponent(fp.id)}" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs bg-slate-800/80 text-slate-200 border border-slate-700/70 hover:border-indigo-400 hover:text-white transition" title="${e(fp.summary || fp.name)}">
+          <span aria-hidden="true" class="inline-flex items-center gap-1">${chainIcon(f)}</span><span>${e(fp.name)}</span>
+        </a>`;
+    };
+
+    const row = (level, kind) => `
+      <li class="relative pl-6">
+        <span class="absolute left-0 top-2 w-2.5 h-2.5 rounded-full ${kind === 'up' ? 'bg-sky-400' : 'bg-amber-400'}"></span>
+        <div class="flex flex-wrap gap-1.5">${level.map(chip).join('')}</div>
+      </li>`;
+
+    const p = chain.selected.properties;
+    const steps = chain.upstream.length + chain.downstream.length + 1;
+    const countries = new Set(this.chainFeatures(chain).map(f => f.properties.country).filter(Boolean));
+
+    return `
+      <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Supply chain</h4>
+            <p class="text-xs text-slate-500 mt-1">${steps} steps${countries.size > 1 ? ` · ${countries.size} countries` : ''}</p>
+          </div>
+          <button id="show-chain-btn" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600/80 hover:bg-indigo-500 text-white transition cursor-pointer">🗺️ Show on map</button>
+        </div>
+        <ol class="relative space-y-3 before:absolute before:left-[4px] before:top-2 before:bottom-2 before:w-px before:bg-slate-700">
+          ${chain.upstream.length ? `<li class="pl-6 text-[11px] uppercase tracking-wider text-sky-400/80 font-semibold">Where it comes from</li>` : ''}
+          ${[...chain.upstream].reverse().map(level => row(level, 'up')).join('')}
+          <li class="relative pl-6">
+            <span class="absolute -left-[3px] top-1 w-4 h-4 rounded-full bg-indigo-500 ring-4 ring-indigo-500/25"></span>
+            <span class="block text-[11px] uppercase tracking-wider text-indigo-300 font-semibold mb-1">You are here</span>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-indigo-950 text-indigo-200 border border-indigo-500/60">
+              <span aria-hidden="true" class="inline-flex items-center gap-1">${chainIcon(chain.selected)}</span><span>${e(p.name)}</span>
+            </div>
+          </li>
+          ${chain.downstream.length ? `<li class="pl-6 text-[11px] uppercase tracking-wider text-amber-400/80 font-semibold">Where it goes</li>` : ''}
+          ${chain.downstream.map(level => row(level, 'down')).join('')}
+        </ol>
+      </div>`;
   }
 
   /** Link that opens the map directly on the current feature. */

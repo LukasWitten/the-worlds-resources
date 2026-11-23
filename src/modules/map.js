@@ -5,6 +5,7 @@
 import L from 'leaflet';
 import { inspector } from './inspector.js';
 import { escapeHtml } from './html.js';
+import { getEdgeColor } from './colors.js';
 
 // =========================================================================
 // Project CARTO basemap keys. They are public by nature (sent with every tile
@@ -38,6 +39,8 @@ class MapController {
     this.tileLayer = null;
     this.layersGroup = null;
     this.activeFeatures = [];
+    this.layersById = new Map();
+    this.highlight = null; // { ids: Set<string>, selectedId } while a supply chain is shown
 
     // A key the visitor saved in the basemap dialog wins over the project default
     this.cartoApiKey = readCustomCartoKey() || DEFAULT_CARTO_API_KEY || '';
@@ -77,6 +80,7 @@ class MapController {
     this.map.on('click', (e) => {
       if (!e.originalEvent._layerClicked) {
         inspector.hide();
+        this.highlightChain(null);
       }
     });
   }
@@ -164,18 +168,6 @@ class MapController {
     '#eab308'  // rail corridors (yellow)
   ];
 
-  getEdgeColor(feature) {
-    const p = feature.properties || {};
-    if (p.type === 'rail_corridor') return '#eab308';
-    if (p.type === 'shipping_route') {
-      return p.resource === 'lithium' ? '#c084fc' : '#2dd4bf';
-    }
-    if (p.type === 'pipeline') {
-      return p.resource === 'natural_gas' ? '#10b981' : '#fbbf24';
-    }
-    return '#fbbf24';
-  }
-
   /**
    * Collect the colors of all routes that start or end at the given node id
    * (via from_node_id / to_node_id). Returns colors in the global fixed order.
@@ -187,7 +179,7 @@ class MapController {
     for (const edge of edges) {
       const p = edge.properties || {};
       if (p.from_node_id === nodeId || p.to_node_id === nodeId) {
-        found.add(this.getEdgeColor(edge));
+        found.add(getEdgeColor(edge));
       }
     }
 
@@ -223,6 +215,7 @@ class MapController {
     if (!this.map || !this.layersGroup) return;
 
     this.layersGroup.clearLayers();
+    this.layersById.clear();
     this.activeFeatures = features;
 
     // Order: lakes (polygons) → routes (lines) → nodes (points)
@@ -233,6 +226,46 @@ class MapController {
     lakes.forEach(lake => this.renderOilField(lake));
     edges.forEach(edge => this.renderEdge(edge));
     nodes.forEach(node => this.renderNode(node, edges));
+
+    this.applyHighlight();
+  }
+
+  /**
+   * Emphasize one supply chain and fade everything else.
+   * ids: Set of feature ids in the chain, or null to show the full map again.
+   */
+  highlightChain(ids, selectedId = null) {
+    this.highlight = ids && ids.size > 1 ? { ids, selectedId } : null;
+    this.applyHighlight();
+  }
+
+  applyHighlight() {
+    if (!this.map) return;
+    const active = Boolean(this.highlight);
+    this.map.getContainer().classList.toggle('chain-active', active);
+    for (const [id, layer] of this.layersById) {
+      const inChain = active && this.highlight.ids.has(id);
+      const isSelected = active && id === this.highlight.selectedId;
+      for (const el of layerElements(layer)) {
+        el.classList.toggle('in-chain', inChain);
+        el.classList.toggle('chain-selected', isSelected);
+      }
+      // Keep chain markers above the faded ones
+      if (layer.setZIndexOffset) layer.setZIndexOffset(inChain ? 1000 : 0);
+    }
+  }
+
+  /** Fit a set of features (e.g. a whole supply chain) into view. */
+  fitFeatures(features, rightInset = 0) {
+    if (!this.hasSize() || !features?.length) return;
+    const bounds = L.geoJSON({ type: 'FeatureCollection', features }).getBounds();
+    if (!bounds.isValid()) return;
+    this.map.flyToBounds(bounds, {
+      paddingTopLeft: [60, 60],
+      paddingBottomRight: [60 + rightInset, 60],
+      maxZoom: 7,
+      duration: 1.4
+    });
   }
 
   /**
@@ -274,6 +307,7 @@ class MapController {
     });
 
     this.layersGroup.addLayer(layer);
+    this.layersById.set(p.id, layer);
   }
 
   focusOilFields() {
@@ -358,6 +392,7 @@ class MapController {
     });
 
     this.layersGroup.addLayer(marker);
+    this.layersById.set(p.id, marker);
   }
 
   renderEdge(feature) {
@@ -365,7 +400,7 @@ class MapController {
     const p = feature.properties || {};
     const latLngs = coords.map(c => [c[1], c[0]]);
 
-    const color = this.getEdgeColor(feature);
+    const color = getEdgeColor(feature);
     let className = 'pipeline-glow-oil';
     let weight = 4;
 
@@ -405,6 +440,7 @@ class MapController {
     });
 
     this.layersGroup.addLayer(polyline);
+    this.layersById.set(p.id, polyline);
   }
 
   /**
@@ -414,7 +450,7 @@ class MapController {
    * feature is centered in the part of the map that is still visible.
    */
   focusFeature(feature, rightInset = 0) {
-    if (!this.map || !feature?.geometry) return;
+    if (!this.hasSize() || !feature?.geometry) return;
     if (feature.geometry.type === 'Point') {
       const [lon, lat] = feature.geometry.coordinates;
       const zoom = Math.max(this.map.getZoom(), 7);
@@ -436,6 +472,18 @@ class MapController {
     }
   }
 
+  /**
+   * Leaflet computes NaN positions when it animates a map without a size
+   * (e.g. while its section is hidden or the viewport is changing), so
+   * camera moves are skipped in that case.
+   */
+  hasSize() {
+    if (!this.map) return false;
+    this.map.invalidateSize(false);
+    const size = this.map.getSize();
+    return size.x > 0 && size.y > 0;
+  }
+
   focusGermany() {
     if (this.map) {
       this.map.flyTo([51.1657, 10.4515], 6, { duration: 1.5 });
@@ -454,6 +502,17 @@ class MapController {
       setTimeout(() => this.map.invalidateSize(), 350);
     }
   }
+}
+
+/** DOM elements of a rendered layer (marker icon, SVG path, or all paths of a GeoJSON group). */
+function layerElements(layer) {
+  if (layer.eachLayer) {
+    const els = [];
+    layer.eachLayer(l => { const el = l.getElement?.(); if (el) els.push(el); });
+    return els;
+  }
+  const el = layer.getElement?.();
+  return el ? [el] : [];
 }
 
 export const mapController = new MapController();

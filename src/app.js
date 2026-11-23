@@ -31,14 +31,30 @@ async function bootstrap() {
   // 4. Initial Render
   uiController.refreshMap();
 
-  // 5. Keep the URL in sync with the open feature: #map/<feature-id>
+  // 5. Highlight the supply chain of the open feature and keep the URL in sync: #map/<feature-id>
   inspector.onFeatureChange = (feature) => {
+    mapController.highlightChain(feature ? inspector.currentChain?.ids : null, feature?.properties?.id);
     if (uiController.currentSection !== 'map') return;
     const id = feature?.properties?.id;
     const desired = id ? `#map/${encodeURIComponent(id)}` : '#map';
     if (window.location.hash !== desired) {
       history.replaceState(null, '', desired);
     }
+  };
+
+  inspector.onShowChain = (features) => {
+    // On phones the inspector covers the map: close it so the chain is visible
+    if (window.innerWidth < 640) {
+      inspector.hide();
+      mapController.highlightChain(new Set(features.map(f => f.properties.id)));
+    }
+    // Fullscreen reader: go back to the sidebar first and wait for its width
+    const wasFullscreen = inspector.isFullscreen;
+    if (wasFullscreen) inspector.toggleFullscreen();
+    setTimeout(() => {
+      mapController.invalidateSize();
+      mapController.fitFeatures(features, inspectorInset());
+    }, wasFullscreen ? 400 : 0);
   };
 
   // 6. Handle deep links: #home, #map, #sources, #contact, #map/<feature-id>
@@ -76,11 +92,14 @@ function route(hash) {
   inspector.show(feature);
   // Wait until the map has its final size after the section switch.
   // On wider screens the inspector covers the right side of the map.
-  setTimeout(() => {
-    const drawer = document.getElementById('inspector-drawer');
-    const covers = drawer && window.innerWidth >= 640 && drawer.offsetWidth < window.innerWidth;
-    mapController.focusFeature(feature, covers ? drawer.offsetWidth : 0);
-  }, 400);
+  setTimeout(() => mapController.focusFeature(feature, inspectorInset()), 400);
+}
+
+/** Width in px the open inspector covers on the right side of the map (0 on phones). */
+function inspectorInset() {
+  const drawer = document.getElementById('inspector-drawer');
+  if (!inspector.isOpen || !drawer || window.innerWidth < 640) return 0;
+  return drawer.offsetWidth < window.innerWidth ? drawer.offsetWidth : 0;
 }
 
 // Bootstrap once DOM is ready

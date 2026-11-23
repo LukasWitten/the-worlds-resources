@@ -300,6 +300,15 @@ class UIController {
     document.getElementById('country-select')?.addEventListener('change', (e) => {
       mapState.set({ country: e.target.value || null });
     });
+    document.getElementById('country-corridors')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-corridor]');
+      if (!btn) return;
+      const corridor = this.shownCorridors?.[Number(btn.dataset.corridor)];
+      if (!corridor) return;
+      const features = [...corridor.ids].map(id => dataService.getFeatureById(id)).filter(Boolean);
+      mapController.highlightChain(corridor.ids);
+      mapController.fitFeatures(features);
+    });
     document.getElementById('map-view-chip-reset')?.addEventListener('click', () => {
       mapState.set({ view: 'overview', good: null, country: null });
     });
@@ -351,6 +360,8 @@ class UIController {
       panelCountry.style.pointerEvents = off ? 'none' : '';
     }
 
+    this.renderCorridors(state);
+
     const hint = document.getElementById('view-mode-hint');
     if (hint) {
       const where = state.country ? ` touching ${countryName(state.country)}` : '';
@@ -369,6 +380,47 @@ class UIController {
       panelResources.style.opacity = off ? '0.45' : '1';
       panelResources.style.pointerEvents = off ? 'none' : '';
     }
+  }
+
+  /**
+   * Corridors of the chosen country (e.g. "Chile → Germany · Lithium"), split into
+   * outgoing, incoming and domestic. A click highlights the whole corridor on the map.
+   */
+  renderCorridors(state) {
+    const box = document.getElementById('country-corridors');
+    if (!box) return;
+    if (!state.country || state.view === 'oil_fields') {
+      box.innerHTML = '';
+      this.shownCorridors = [];
+      return;
+    }
+    const { outgoing, incoming, domestic } = supplyChain.corridorsOf(state.country, state.view === 'good' ? state.good : null);
+    this.shownCorridors = [...outgoing, ...incoming, ...domestic];
+    if (!this.shownCorridors.length) {
+      box.innerHTML = '<p class="text-[10px] text-slate-500">No supply corridors recorded for this country yet.</p>';
+      return;
+    }
+    const e = escapeHtml;
+    let index = 0;
+    const item = (c) => {
+      const color = goods.color(c.good);
+      const route = c.from === c.to ? `Within ${countryName(c.from)}` : `${countryName(c.from)} → ${countryName(c.to)}`;
+      return `
+        <li>
+          <button type="button" data-corridor="${index++}" class="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-left text-[11px] text-slate-200 hover:bg-slate-800 border border-transparent hover:border-slate-700 transition cursor-pointer">
+            <span class="inline-block w-3.5 h-[3px] rounded-full shrink-0" style="background:${color}"></span>
+            <span class="truncate">${e(route)}</span>
+            <span class="ml-auto shrink-0 text-[10px] text-slate-500">${e(goods.label(c.good))}</span>
+          </button>
+        </li>`;
+    };
+    const group = (title, list) => list.length
+      ? `<h4 class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mt-2 mb-1">${e(title)}</h4><ul>${list.map(item).join('')}</ul>`
+      : '';
+    box.innerHTML =
+      group('Leaving the country', outgoing) +
+      group('Arriving in the country', incoming) +
+      group('Within the country', domestic);
   }
 
   /** Collapsible legend on the map: route colours per resource, place types, marker rings. */

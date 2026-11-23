@@ -13,6 +13,8 @@
     "name": "Example Shipping Corridor",
     "resource": "crude_oil",
     "category": "edge",
+    "from_node_id": "example-start-port",
+    "to_node_id": "example-end-port",
     "type": "shipping_route",
     "status": "operational",
     "country": "INT",

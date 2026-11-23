@@ -14,7 +14,8 @@ This guide explains how to add or edit **visible nodes**, **invisible waypoints*
 | **Route (edge)** | Pipeline, shipping lane, rail corridor | Yes – colored line |
 | **Oil field polygon** | Stylized reserve “lake” | Yes – in Oil Fields view |
 
-**Rule:** Every route must start and end on a **visible node**.  
+**Rule:** Every route must start and end on a **visible node** and name both nodes by id
+(`from_node_id`, `to_node_id`). A route may also start inside an oil field (`from_node_id` = the field's id).  
 Invisible waypoints may only appear **between** start and end.
 
 ---
@@ -146,6 +147,8 @@ Keep bends minimal (usually 1–3) so routes stay readable.
     "name": "Nord-West Oelleitung (NWO Pipeline)",
     "resource": "crude_oil",
     "category": "edge",
+    "from_node_id": "wilhelmshaven-port",
+    "to_node_id": "refinery-rheinland",
     "type": "pipeline",
     "status": "operational",
     "country": "DE",
@@ -179,7 +182,7 @@ Keep bends minimal (usually 1–3) so routes stay readable.
 | `shipping_route` | Teal or purple (lithium) |
 | `rail_corridor` | Yellow |
 
-**Start/end coordinates must match an existing visible node** (within ~0.08°) or lie inside an oil-field area. `npm run validate:data` fails otherwise, because the multi-color node border and chain logic would not connect.
+**`from_node_id` / `to_node_id` are required.** They must be the ids of existing visible nodes (`from_node_id` may also be an oil field). The first coordinate must lie on the `from_node_id` node (within ~0.08°) or inside that oil field, the last coordinate on the `to_node_id` node. The map uses these ids to color each node's border by its connected routes, so nearby nodes (e.g. two terminals in the same port) can no longer be confused.
 
 ---
 
@@ -189,7 +192,7 @@ Keep bends minimal (usually 1–3) so routes stay readable.
 - [ ] `resource`, `category`, `type` use allowed values  
 - [ ] Visible nodes have: `name`, `summary`, `source` (with `url` whenever possible)  
 - [ ] Routes have a clear `flow_direction` (A → B)  
-- [ ] Route starts and ends on visible nodes  
+- [ ] Route has `from_node_id` / `to_node_id`, and its first / last coordinate sits on those nodes  
 - [ ] Coordinates are `[lon, lat]` (not lat, lon)  
 - [ ] Texts are in **English** (project UI language)  
 - [ ] Sources are named (link if possible)  
@@ -203,7 +206,7 @@ npm install
 npm run validate:data
 ```
 
-It checks the schema (allowed values, `[lon, lat]` ranges, required fields), unique ids across all files and that routes start and end on visible nodes. Missing source URLs are reported as warnings.
+It checks the schema (allowed values, `[lon, lat]` ranges, required fields), unique ids across all files and that every route's `from_node_id` / `to_node_id` exist and match its first / last coordinate. Missing source URLs are reported as warnings.
 
 ---
 

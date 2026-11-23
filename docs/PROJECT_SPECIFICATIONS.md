@@ -13,7 +13,7 @@ This document contains the complete project vision, concept, roadmap, and techni
   * **Minimalist Dark-Mode Design:** A deep, dark world map where neon-colored resource flows and locations stand out.
   * **Immersive UI:** A fully collapsible left menu (controlled via an arrow button) to enjoy the map in pure full-screen mode.
   * **The "Aha Moment" for Consumers:** Bridging the gap from the raw resource source (e.g., oil terminal) through the transport route (pipelines, shipping lanes) to the everyday consumer product.
-  * **Open Source:** Fully transparent, collaboratively expandable (under the MIT License).
+  * **Open Source:** Fully transparent, collaboratively expandable (code under the MIT License, datasets under CC BY 4.0).
 
 ### **Website Structure & Navigation**
 * **Top Navigation (English):**

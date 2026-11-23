@@ -2,6 +2,7 @@
   "type": "FeatureCollection",
   "name": "global_oil_export_corridors",
   "metadata": {
+    "license": "CC-BY-4.0",
     "resource": "crude_oil",
     "layer": "oil_export_corridors",
     "version": "0.1.0",
@@ -41,8 +42,9 @@
           "everyday_impact": "A large share of internationally traded Saudi crude leaves through this complex."
         },
         "source": {
-          "name": "Saudi Aramco / public port data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Saudi Arabia",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/SAU"
         }
       }
     },
@@ -78,8 +80,9 @@
           "everyday_impact": "Kuwaiti barrels in European and Asian refineries typically left via this coast."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Kuwait",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/KWT"
         }
       }
     },
@@ -115,8 +118,9 @@
           "everyday_impact": "Iraqi crude arriving in Europe or Asia has almost always passed through this southern corridor."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Iraq",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/IRQ"
         }
       }
     },
@@ -152,8 +156,9 @@
           "everyday_impact": "UAE grades in the seaborne market are tied to this export system."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: United Arab Emirates",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/ARE"
         }
       }
     },
@@ -189,8 +194,9 @@
           "everyday_impact": "When Venezuelan exports flow, they typically leave through a small set of Caribbean terminals."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Venezuela",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/VEN"
         }
       }
     },
@@ -226,8 +232,9 @@
           "everyday_impact": "A growing share of Atlantic Basin crude supply is loaded in this region."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – U.S. Exports of Crude Oil",
+          "year": "2025",
+          "url": "https://www.eia.gov/dnav/pet/pet_move_exp_dc_NUS-Z00_mbblpd_a.htm"
         }
       }
     },
@@ -263,8 +270,9 @@
           "everyday_impact": "European refiners occasionally process Canadian grades that took this eastern path."
         },
         "source": {
-          "name": "Public trade & terminal data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Canada",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/CAN"
         }
       }
     },
@@ -288,6 +296,8 @@
         "name": "Ghawar → Ras Tanura Gathering Corridor",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-ghawar",
+        "to_node_id": "export-ras-tanura",
         "type": "pipeline",
         "status": "operational",
         "country": "SA",
@@ -302,8 +312,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Saudi Arabia",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/SAU"
         }
       }
     },
@@ -327,6 +338,8 @@
         "name": "Safaniya → Ras Tanura Offshore/Onshore Link",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-safaniya",
+        "to_node_id": "export-ras-tanura",
         "type": "pipeline",
         "status": "operational",
         "country": "SA",
@@ -341,8 +354,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Saudi Arabia",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/SAU"
         }
       }
     },
@@ -366,6 +380,8 @@
         "name": "Burgan → Mina Al-Ahmadi Corridor",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-burgan",
+        "to_node_id": "export-mina-ahmadi",
         "type": "pipeline",
         "status": "operational",
         "country": "KW",
@@ -380,8 +396,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Kuwait",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/KWT"
         }
       }
     },
@@ -405,6 +422,8 @@
         "name": "Rumaila → Basra Export Corridor",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-rumaila",
+        "to_node_id": "export-basra",
         "type": "pipeline",
         "status": "operational",
         "country": "IQ",
@@ -419,8 +438,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Iraq",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/IRQ"
         }
       }
     },
@@ -444,6 +464,8 @@
         "name": "Upper Zakum → Abu Dhabi Export Link",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-upper-zakum",
+        "to_node_id": "export-uae",
         "type": "pipeline",
         "status": "operational",
         "country": "AE",
@@ -458,8 +480,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: United Arab Emirates",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/ARE"
         }
       }
     },
@@ -483,6 +506,8 @@
         "name": "Orinoco Belt → Jose Export Corridor",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-orinoco",
+        "to_node_id": "export-jose-ve",
         "type": "pipeline",
         "status": "operational",
         "country": "VE",
@@ -497,8 +522,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Venezuela",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/VEN"
         }
       }
     },
@@ -522,6 +548,8 @@
         "name": "Permian → US Gulf Coast Corridor",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-permian",
+        "to_node_id": "export-us-gulf",
         "type": "pipeline",
         "status": "operational",
         "country": "US",
@@ -536,8 +564,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – U.S. Exports of Crude Oil",
+          "year": "2025",
+          "url": "https://www.eia.gov/dnav/pet/pet_move_exp_dc_NUS-Z00_mbblpd_a.htm"
         }
       }
     },
@@ -561,6 +590,8 @@
         "name": "Athabasca → Atlantic Export Direction",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "field-athabasca",
+        "to_node_id": "export-canada-atlantic",
         "type": "pipeline",
         "status": "operational",
         "country": "CA",
@@ -575,8 +606,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Canada",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/CAN"
         }
       }
     },
@@ -644,6 +676,8 @@
         "name": "Saudi Gulf → Eastern Mediterranean Long-Haul",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-ras-tanura",
+        "to_node_id": "crude-origin-mediterranean",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -662,8 +696,9 @@
           "everyday_impact": "Part of the diesel and gasoline used in southern Germany is linked to this long-haul path."
         },
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – World Oil Transit Chokepoints",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints"
         }
       }
     },
@@ -731,6 +766,8 @@
         "name": "Iraqi Gulf → Eastern Mediterranean Long-Haul",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-basra",
+        "to_node_id": "crude-origin-mediterranean",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -745,8 +782,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – World Oil Transit Chokepoints",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints"
         }
       }
     },
@@ -814,6 +852,8 @@
         "name": "Kuwait → Eastern Mediterranean Long-Haul",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-mina-ahmadi",
+        "to_node_id": "crude-origin-mediterranean",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -828,8 +868,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – World Oil Transit Chokepoints",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints"
         }
       }
     },
@@ -897,6 +938,8 @@
         "name": "UAE → Eastern Mediterranean Long-Haul",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-uae",
+        "to_node_id": "crude-origin-mediterranean",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -911,8 +954,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – World Oil Transit Chokepoints",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/special-topics/World_Oil_Transit_Chokepoints"
         }
       }
     },
@@ -960,6 +1004,8 @@
         "name": "Venezuela → North Atlantic / North Sea Approach",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-jose-ve",
+        "to_node_id": "crude-origin-north-sea",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -978,8 +1024,9 @@
           "everyday_impact": "When available, these barrels compete in the same Atlantic Basin market as North Sea and US grades."
         },
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Venezuela",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/VEN"
         }
       }
     },
@@ -1035,6 +1082,8 @@
         "name": "US Gulf → North Sea / North Atlantic Approach",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-us-gulf",
+        "to_node_id": "crude-origin-north-sea",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -1049,8 +1098,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – U.S. Exports of Crude Oil",
+          "year": "2025",
+          "url": "https://www.eia.gov/dnav/pet/pet_move_exp_dc_NUS-Z00_mbblpd_a.htm"
         }
       }
     },
@@ -1086,6 +1136,8 @@
         "name": "Canadian Atlantic → North Sea Approach",
         "resource": "crude_oil",
         "category": "edge",
+        "from_node_id": "export-canada-atlantic",
+        "to_node_id": "crude-origin-north-sea",
         "type": "shipping_route",
         "status": "operational",
         "country": "INT",
@@ -1100,8 +1152,9 @@
         ],
         "aha_moment": {},
         "source": {
-          "name": "Public shipping & pipeline data",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Canada",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/CAN"
         }
       }
     }

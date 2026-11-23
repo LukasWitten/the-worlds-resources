@@ -5,8 +5,9 @@
  *  - every file is valid JSON and a FeatureCollection (templates: a single Feature)
  *  - every feature matches public/data/schemas/resource-feature.schema.json
  *  - feature ids are unique across the whole project
- *  - every route starts and ends on a visible node (same tolerance as the map)
- *    or inside an oil-field area (field → export pipeline)
+ *  - every route names its start/end via from_node_id / to_node_id, the ids
+ *    exist, and the first/last coordinate lies on that node (or inside that
+ *    oil-field area for field → export pipelines)
  *
  * Warnings (do not fail the build): sources without a URL.
  *
@@ -23,7 +24,7 @@ const GEOJSON_DIR = path.join(DATA_ROOT, 'geojson');
 const TEMPLATES_DIR = path.join(DATA_ROOT, 'templates');
 const SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'resource-feature.schema.json');
 
-// Must match MapController.coordsMatch() in src/modules/map.js
+// How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
 
 const inCI = Boolean(process.env.GITHUB_ACTIONS);
@@ -126,14 +127,15 @@ for (const { file, features } of datasets) {
   }
 }
 
-// 4. Routes must start and end on a visible node or an oil-field area -----------
-const allFeatures = datasets.flatMap(d => d.features);
-const nodeCoords = allFeatures
-  .filter(f => f?.geometry?.type === 'Point' && f.properties?.visible !== false)
-  .map(f => f.geometry.coordinates);
-const areaRings = allFeatures
-  .filter(f => f?.geometry?.type === 'Polygon' && Array.isArray(f.geometry.coordinates))
-  .map(f => f.geometry.coordinates[0]);
+// 4. Routes must reference existing start/end nodes and touch them ----------------
+//    from_node_id → visible node or oil field; to_node_id → visible node.
+//    The first / last coordinate must lie on that node (tolerance) or inside that field.
+const featuresById = new Map();
+for (const { features } of datasets) {
+  for (const f of features) {
+    if (f?.properties?.id && !featuresById.has(f.properties.id)) featuresById.set(f.properties.id, f);
+  }
+}
 
 // Ray casting point-in-polygon on the outer ring ([lon, lat] pairs)
 function insideRing([x, y], ring) {
@@ -148,12 +150,36 @@ function insideRing([x, y], ring) {
   return inside;
 }
 
-const nearNode = coord =>
-  Array.isArray(coord) &&
-  (nodeCoords.some(n =>
-    Math.abs(n[0] - coord[0]) < NODE_MATCH_TOLERANCE_DEG &&
-    Math.abs(n[1] - coord[1]) < NODE_MATCH_TOLERANCE_DEG
-  ) || areaRings.some(ring => insideRing(coord, ring)));
+function touches(coord, target) {
+  if (!Array.isArray(coord) || !target?.geometry) return false;
+  const g = target.geometry;
+  if (g.type === 'Point') {
+    return Math.abs(g.coordinates[0] - coord[0]) < NODE_MATCH_TOLERANCE_DEG &&
+      Math.abs(g.coordinates[1] - coord[1]) < NODE_MATCH_TOLERANCE_DEG;
+  }
+  if (g.type === 'Polygon') return insideRing(coord, g.coordinates[0]);
+  return false;
+}
+
+function checkEndpoint(file, feature, i, key, coord, allowArea) {
+  const refId = feature.properties[key];
+  if (!refId) return; // missing field is already reported by the schema
+  const target = featuresById.get(refId);
+  const where = coord ? `[${coord}]` : '(no coordinate)';
+  if (!target) {
+    fail(file, `${label(feature, i)} ${key} "${refId}" does not exist`);
+    return;
+  }
+  const isNode = target.geometry?.type === 'Point' && target.properties?.visible !== false;
+  const isArea = target.geometry?.type === 'Polygon';
+  if (!isNode && !(allowArea && isArea)) {
+    fail(file, `${label(feature, i)} ${key} "${refId}" is not a visible node${allowArea ? ' or oil field' : ''}`);
+    return;
+  }
+  if (!touches(coord, target)) {
+    fail(file, `${label(feature, i)} ${key} "${refId}" does not match the route's ${key === 'from_node_id' ? 'first' : 'last'} coordinate ${where}`);
+  }
+}
 
 for (const { file, features } of datasets) {
   features.forEach((feature, i) => {
@@ -161,13 +187,16 @@ for (const { file, features } of datasets) {
     if (!geom || !Array.isArray(geom.coordinates)) return;
     const lines =
       geom.type === 'LineString' ? [geom.coordinates] :
-      geom.type === 'MultiLineString' ? geom.coordinates : [];
-    for (const line of lines) {
-      if (!Array.isArray(line) || line.length < 2) continue;
-      const start = line[0];
-      const end = line[line.length - 1];
-      if (!nearNode(start)) fail(file, `${label(feature, i)} starts at [${start}], which is not on a visible node or oil field`);
-      if (!nearNode(end)) fail(file, `${label(feature, i)} ends at [${end}], which is not on a visible node or oil field`);
+      geom.type === 'MultiLineString' ? geom.coordinates : null;
+    if (!lines || !lines.length) return;
+    const first = lines[0]?.[0];
+    const lastLine = lines[lines.length - 1] || [];
+    const last = lastLine[lastLine.length - 1];
+    checkEndpoint(file, feature, i, 'from_node_id', first, true);
+    checkEndpoint(file, feature, i, 'to_node_id', last, false);
+    const p = feature.properties || {};
+    if (p.from_node_id && p.from_node_id === p.to_node_id) {
+      fail(file, `${label(feature, i)} starts and ends at the same node "${p.from_node_id}"`);
     }
   });
 }

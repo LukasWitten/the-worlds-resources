@@ -177,44 +177,20 @@ class MapController {
   }
 
   /**
-   * Returns true if two [lon, lat] coordinates are close enough to be considered the same node.
+   * Collect the colors of all routes that start or end at the given node id
+   * (via from_node_id / to_node_id). Returns colors in the global fixed order.
    */
-  coordsMatch(a, b, tolerance = 0.08) {
-    if (!a || !b) return false;
-    return Math.abs(a[0] - b[0]) < tolerance && Math.abs(a[1] - b[1]) < tolerance;
-  }
-
-  /**
-   * Collect all route colors that touch a given node coordinate.
-   * Returns colors in the global fixed order.
-   */
-  getConnectedRouteColors(nodeCoords, edges) {
+  getConnectedRouteColors(nodeId, edges) {
     const found = new Set();
+    if (!nodeId) return [];
 
     for (const edge of edges) {
-      const geom = edge.geometry;
-      if (!geom) continue;
-
-      let endpoints = [];
-      if (geom.type === 'LineString') {
-        endpoints = [geom.coordinates[0], geom.coordinates[geom.coordinates.length - 1]];
-      } else if (geom.type === 'MultiLineString') {
-        for (const line of geom.coordinates) {
-          if (line.length) {
-            endpoints.push(line[0], line[line.length - 1]);
-          }
-        }
-      }
-
-      for (const ep of endpoints) {
-        if (this.coordsMatch(nodeCoords, ep)) {
-          found.add(this.getEdgeColor(edge));
-          break;
-        }
+      const p = edge.properties || {};
+      if (p.from_node_id === nodeId || p.to_node_id === nodeId) {
+        found.add(this.getEdgeColor(edge));
       }
     }
 
-    // Return in fixed global order
     return MapController.ROUTE_COLOR_ORDER.filter(c => found.has(c));
   }
 
@@ -344,7 +320,7 @@ class MapController {
     }
 
     // Multi-color border from all connected routes (fixed color order)
-    const routeColors = this.getConnectedRouteColors(coords, edges);
+    const routeColors = this.getConnectedRouteColors(p.id, edges);
     const borderStyle = this.buildMultiColorBorder(routeColors);
 
     const customIcon = L.divIcon({

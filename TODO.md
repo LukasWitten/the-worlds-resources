@@ -6,13 +6,14 @@ Diese Checkliste führt dich Schritt für Schritt von der lokalen Überprüfung 
 
 ## ⚠️ Offene Punkte (aus dem Tech-Review)
 
-- [ ] **Impressum ausfüllen:** Name und ladungsfähige Anschrift in `index.html` (Imprint-Modal) und `LEGAL_NOTICE.md` eintragen – die Platzhalter sind live sichtbar (§ 5 DDG).
+- [x] **Impressum ausfüllen:** Name und ladungsfähige Anschrift in `index.html` (Imprint-Modal) und `LEGAL_NOTICE.md` eintragen – die Platzhalter sind live sichtbar (§ 5 DDG).
 - [ ] **Datenschutzerklärung prüfen:** Abschnitte zu CARTO/Esri und Local Storage wurden ergänzt – bitte inhaltlich gegenlesen.
-- [ ] **GitHub Pages abschalten:** Repository → Settings → Pages → deaktivieren (die alte, fehlerhafte Kopie unter lukaswitten.github.io ist sonst weiter online).
-- [ ] **CARTO-Key absichern:** Im CARTO-Dashboard auf die Domains theworldsresources.org/.com beschränken.
-- [ ] **Quellen nachtragen:** 30 Features haben keine Quell-URL (`npm run validate:data` zeigt sie als Warnung).
-- [ ] **Datenlizenz festlegen:** z. B. ODbL (falls OSM-Daten) oder CC BY 4.0 für `public/data/`; MIT gilt nur für den Code.
-- [ ] **Routen per ID verknüpfen:** `from_node_id` / `to_node_id` statt Koordinaten-Nähe.
+- [x] **GitHub Pages abschalten:** Repository → Settings → Pages → deaktivieren (die alte, fehlerhafte Kopie unter lukaswitten.github.io ist sonst weiter online).
+- [x] **CARTO-Key absichern:** Produktions-Key auf theworldsresources.org/.com beschränkt, eigener Key für localhost.
+- [x] **Quellen nachtragen:** Alle Features haben eine Quell-URL (EIA-Länderanalysen, EIA-Chokepoints, AER, bp).
+- [x] **Datenlizenz festlegen:** CC BY 4.0 für die Datensätze (`public/data/LICENSE.md`); MIT gilt für den Code.
+- [x] **Routen per ID verknüpfen:** `from_node_id` / `to_node_id` sind Pflicht und werden vom Validator geprüft.
+- [ ] **Später:** Umstieg auf MapLibre GL + Vektor-Tiles, sobald die Datenmenge wächst.
 
 ---
 

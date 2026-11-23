@@ -6,7 +6,7 @@ The World's Resources is an open-source, interactive map of global resource flow
 
 🌍 **Live:** [theworldsresources.org](https://www.theworldsresources.org)
 
-![The World's Resources – map of Germany's crude oil, gas and lithium supply chains](public/og-image.jpg)
+![The World's Resources – tanker routes from Texas, Venezuela and Canada to Germany on a dark world map](public/og-image.jpg)
 
 ## What you can do
 

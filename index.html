@@ -237,7 +237,7 @@
     </section>
 
     <!-- 2. RESOURCE MAP SECTION -->
-    <section id="section-map" class="hidden flex-grow relative flex overflow-hidden w-full h-[calc(100vh-4rem)] transition-[height] duration-300">
+    <section id="section-map" class="hidden flex-grow min-h-0 relative flex overflow-hidden w-full">
       
       <!-- Collapsible Left Sidebar -->
       <div id="map-sidebar" class="relative z-[1040] w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-5 flex flex-col justify-between transition-[margin] duration-300 ease-in-out shrink-0">
@@ -480,13 +480,10 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800/80 py-6 px-4 sm:px-6 lg:px-8 bg-darkbg">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <div class="flex items-center gap-2">
-        <img src="/favicon.svg" alt="" class="w-4 h-4" width="16" height="16">
-        <span>© 2026 The World's Resources contributors · Code MIT · Data CC BY 4.0</span>
-      </div>
-      <div class="flex items-center space-x-4">
+  <footer class="border-t border-slate-800/80 py-2 px-4 sm:px-6 lg:px-8 bg-darkbg">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-[11px] leading-5 text-slate-500">
+      <span>© 2026 The World's Resources<span class="hidden sm:inline"> contributors · Code MIT · Data CC BY 4.0</span></span>
+      <div class="flex items-center gap-4">
         <button data-section-target="contact" class="hover:text-slate-300 transition">Contact</button>
         <button data-open-imprint class="hover:text-slate-300 transition">Legal Notice & Privacy</button>
         <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="hover:text-slate-300 transition">GitHub ↗</a>

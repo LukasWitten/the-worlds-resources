@@ -214,3 +214,13 @@ body {
     animation: none !important;
   }
 }
+
+/* Map view: body is exactly one viewport tall; the map section takes what navbar and footer leave */
+body.map-mode {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+body.map-mode main {
+  min-height: 0;
+}

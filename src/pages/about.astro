@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../lib/site.js';
+
+const ext = { target: '_blank', rel: 'noopener noreferrer' };
+---
+<BaseLayout
+  title="About"
+  description="The World's Resources is an independent, open-source project that makes supply chains visible: where oil, gas and lithium come from and how they reach us. How to contact us and contribute."
+  breadcrumbs={[{ name: 'About', path: '/about' }]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>About The World's Resources</h1>
+    <p class="lead">Fuel, heating gas and the lithium in a car battery travel thousands of kilometres before they reach us, through oil fields, mines, tankers, pipelines and refineries we never see. This project puts those chains on an open map.</p>
+
+    <h2 id="what">What it is</h2>
+    <p>An interactive map of where resources come from and how they reach the places that turn them into everyday products. Click any place and the whole supply chain behind it lights up, step by step. Every entry links to the public source it is based on.</p>
+
+    <h2 id="principles">Principles</h2>
+    <ul>
+      <li><strong>Open:</strong> the code is MIT-licensed, the data is free to reuse under CC BY 4.0.</li>
+      <li><strong>Sourced:</strong> no place, route or number without a public source, and estimates are marked as estimates. See the <a href="/methodology">methodology</a>.</li>
+      <li><strong>Independent and non-commercial:</strong> no ads, no cookies, no tracking across websites, no sponsored content.</li>
+    </ul>
+
+    <h2 id="who">Who is behind it</h2>
+    <p>The World's Resources is an independent open-source project from Karlsruhe, Germany, built and maintained by its contributors. The person responsible under German law is named in the <a href="/legal">legal notice</a>.</p>
+
+    <h2 id="contribute">Contribute</h2>
+    <p>Know a pipeline, a port or a mine better than the map does? Places and routes are plain data files, and you don't need to code to add or correct one. Start with the <a href={`${SITE.github}/blob/main/CONTRIBUTING.md`} {...ext}>contributor guide ↗</a> or open an <a href={`${SITE.github}/issues`} {...ext}>issue on GitHub ↗</a>.</p>
+
+    <h2 id="contact">Contact</h2>
+    <ul>
+      <li>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+      <li>GitHub: <a href={SITE.github} {...ext}>repository, issues and pull requests ↗</a></li>
+    </ul>
+    <p>Journalists, teachers and researchers are welcome to use the map and the data. Please credit “The World's Resources” and link to the page you used. A citation format is on the <a href="/sources#reuse">data sources</a> page.</p>
+  </article>
+</BaseLayout>

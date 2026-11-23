@@ -51,3 +51,36 @@ export function chainMeta(id) {
   const countries = supplyChain.countries(chain);
   return `${supplyChain.steps(chain)} steps · ${countries} ${countries === 1 ? 'country' : 'countries'}`;
 }
+
+/**
+ * Every source cited by a place or route, grouped by website (publisher),
+ * largest group first. Each entry links back to its feature on the map.
+ */
+export function featureSources() {
+  loadData();
+  const groups = new Map();
+  for (const f of dataService.getAllFeatures()) {
+    const p = f.properties || {};
+    const source = p.source;
+    if (!source?.url) continue;
+    const host = new URL(source.url).hostname.replace(/^www\./, '');
+    if (!groups.has(host)) groups.set(host, { host, entries: [] });
+    groups.get(host).entries.push({
+      id: p.id,
+      name: p.name,
+      resource: p.resource,
+      sourceName: source.name,
+      url: source.url,
+      year: source.year
+    });
+  }
+  return [...groups.values()]
+    .map(group => ({ ...group, entries: group.entries.sort((a, b) => a.name.localeCompare(b.name)) }))
+    .sort((a, b) => b.entries.length - a.entries.length || a.host.localeCompare(b.host));
+}
+
+/** External datasets the generated files are built from (public/data/reference/sources.json). */
+export function sourceRegister() {
+  return Object.entries(readPublicJson('/data/reference/sources.json').sources || {})
+    .map(([id, source]) => ({ id, ...source }));
+}

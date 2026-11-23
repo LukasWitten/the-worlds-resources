@@ -1,5 +1,6 @@
 /**
- * Main Application Entry Point
+ * Entry point of the map page (/map). The map state lives in the URL hash
+ * (#map/<feature-id>?view=…), so shared links and old /#map links keep working.
  */
 
 import { mapController } from './modules/map.js';
@@ -9,15 +10,7 @@ import { dataService } from './modules/dataService.js';
 import { goods } from './modules/goods.js';
 import { mapState } from './modules/mapState.js';
 import { supplyChain } from './modules/supplyChain.js';
-import { heroMap, FEATURED_CHAINS } from './modules/heroMap.js';
-import { inject as injectAnalytics } from '@vercel/analytics';
-
-// Cookieless page-view statistics (Vercel Web Analytics), only on the live site:
-// local development and preview deployments are not counted.
-const PRODUCTION_HOSTS = new Set(['www.theworldsresources.org', 'theworldsresources.org']);
-if (PRODUCTION_HOSTS.has(window.location.hostname)) {
-  injectAnalytics({ mode: 'production' });
-}
+import { DATASETS, GOODS_PATH } from './modules/datasets.js';
 
 async function bootstrap() {
   console.log('[App] Initializing "The World\'s Resources" WebApp...');
@@ -26,20 +19,14 @@ async function bootstrap() {
   uiController.init();
   inspector.init('inspector-drawer');
 
-  // 2. Initialize Leaflet maps (resource map + homepage hero)
+  // 2. Initialize the Leaflet map and open it in its clean fullscreen state
   mapController.init('leaflet-map');
-  heroMap.init('hero-map');
+  uiController.enterMap();
 
-  // 3. Load All Datasets (Crude Oil, Natural Gas, Lithium Intercontinental)
-  // Use absolute paths from site root so this works both with Vite (public/ → /data/)
-  // and with static hosts / GitHub Pages / Vercel after deployment.
+  // 3. Load the goods catalogue and all datasets (absolute paths from the site root)
   await Promise.all([
-    goods.load('/data/reference/goods.json'),
-    dataService.loadDataset('germany_crude_oil', '/data/geojson/germany/crude_oil.geojson'),
-    dataService.loadDataset('germany_natural_gas', '/data/geojson/germany/natural_gas.geojson'),
-    dataService.loadDataset('global_lithium', '/data/geojson/global/lithium.geojson'),
-    dataService.loadDataset('global_oil_fields', '/data/geojson/global/oil_fields.geojson'),
-    dataService.loadDataset('global_oil_export_corridors', '/data/geojson/global/oil_export_corridors.geojson')
+    goods.load(GOODS_PATH),
+    ...DATASETS.map(({ id, path }) => dataService.loadDataset(id, path))
   ]);
 
   // 4. Initial Render
@@ -49,13 +36,10 @@ async function bootstrap() {
   uiController.renderMapSelects();
   uiController.renderLegend();
   uiController.refreshMap();
-  heroMap.render();
-  fillHomeStats();
 
   // 5. Highlight the supply chain of the open feature and keep it in the map state (and URL)
   inspector.onFeatureChange = (feature) => {
     mapController.highlightChain(feature ? inspector.currentChain?.ids : null, feature?.properties?.id);
-    if (uiController.currentSection !== 'map') return;
     mapState.set({ feature: feature?.properties?.id || null }, { history: 'replace' });
   };
 
@@ -74,7 +58,7 @@ async function bootstrap() {
     }, wasFullscreen ? 400 : 0);
   };
 
-  // 6. Handle deep links: #home, #map, #sources, #contact, #map/<feature-id>?view=…
+  // 6. Handle deep links: #map, #map/<feature-id>?view=…
   route(window.location.hash);
   window.addEventListener('hashchange', () => route(window.location.hash));
   // Back/forward between entries created by mapState (pushState)
@@ -83,49 +67,14 @@ async function bootstrap() {
   console.log('[App] All datasets loaded and rendered successfully.');
 }
 
-/** Numbers on the homepage come from the loaded data, so they never go stale. */
-function fillHomeStats() {
-  const all = dataService.getAllFeatures();
-  const isRoute = (f) => f.geometry?.type?.includes('LineString');
-  const set = (key, value) => {
-    const el = document.querySelector(`[data-stat="${key}"]`);
-    if (el) el.textContent = value;
-  };
-  set('places', all.filter(f => !isRoute(f)).length);
-  set('routes', all.filter(isRoute).length);
-  const sourced = all.filter(f => f.properties?.source?.url).length;
-  set('sourced', `${Math.round((sourced / Math.max(all.length, 1)) * 100)}%`);
-
-  for (const { id } of FEATURED_CHAINS) {
-    const el = document.querySelector(`[data-chain-meta="${id}"]`);
-    const chain = supplyChain.getChain(id);
-    if (!el || !chain) continue;
-    const countries = supplyChain.countries(chain);
-    el.textContent = `${supplyChain.steps(chain)} steps · ${countries} ${countries === 1 ? 'country' : 'countries'}`;
-  }
-}
-
-const SECTIONS = ['home', 'map', 'sources', 'contact'];
 const MAP_VIEWS = ['overview', 'oil_fields', 'good'];
 
 /**
- * Show the section named in the URL hash. For #map URLs the map state is taken
- * over from the URL; onMapStateChange() then updates map, sidebar and inspector.
+ * Take over the map state from the URL; onMapStateChange() then updates map,
+ * sidebar and inspector. A plain /map (no hash) is the default overview.
  */
 function route(hash) {
-  const section = hash.replace(/^#/, '').split(/[/?]/)[0];
-  if (!SECTIONS.includes(section)) return;
-
-  const enteringMap = section === 'map' && uiController.currentSection !== 'map';
-  if (uiController.currentSection !== section) {
-    uiController.showSection(section);
-  }
-  if (section !== 'map') return;
-
-  const changed = mapState.applyHash(hash);
-  // Coming from another section with a feature in the URL: the state may be
-  // unchanged, but the map still has to fly to it once it has its size.
-  if (enteringMap && !changed.includes('feature')) focusOpenFeature();
+  mapState.applyHash(hash.startsWith('#map') ? hash : '#map');
 }
 
 /** Drop what the loaded data doesn't know (unknown view, good, country or feature). */

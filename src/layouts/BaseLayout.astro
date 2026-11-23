@@ -1,0 +1,83 @@
+---
+/**
+ * Shell of every page: meta tags (title, description, canonical, Open Graph,
+ * Twitter), structured data, navigation and footer.
+ *
+ * The page content is plain HTML; interactive parts (maps) are loaded by
+ * the page's own <script>, so everything readable is there without JavaScript.
+ */
+import '../styles/main.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SITE, absoluteUrl, breadcrumbJsonLd, pagePath } from '../lib/site.js';
+
+const {
+  title,
+  description = SITE.description,
+  breadcrumbs = null,
+  jsonLd = [],
+  noindex = false,
+  ogType = 'website',
+  bodyClass = '',
+  slimFooter = false,
+  mainClass = 'flex-grow'
+} = Astro.props;
+
+const path = pagePath(Astro.url);
+const canonical = absoluteUrl(path);
+const fullTitle = path === '/' ? title : `${title} – ${SITE.name}`;
+const ogImage = absoluteUrl(SITE.ogImage);
+const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs)] : jsonLd;
+---
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{fullTitle}</title>
+  <meta name="description" content={description}>
+  <meta name="theme-color" content="#0b0f19">
+  {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <meta property="og:type" content={ogType}>
+  <meta property="og:site_name" content={SITE.name}>
+  <meta property="og:url" content={canonical}>
+  <meta property="og:title" content={fullTitle}>
+  <meta property="og:description" content={description}>
+  <meta property="og:image" content={ogImage}>
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content={SITE.ogImageAlt}>
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content={fullTitle}>
+  <meta name="twitter:description" content={description}>
+  <meta name="twitter:image" content={ogImage}>
+  <meta name="twitter:image:alt" content={SITE.ogImageAlt}>
+
+  {structuredData.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+  <slot name="head" />
+</head>
+<body class:list={['bg-darkbg text-slate-100 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white', bodyClass]}>
+  <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[3000] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-slate-900">Skip to content</a>
+  <Nav />
+  <slot name="after-nav" />
+  <main id="content" class={mainClass}>
+    {breadcrumbs && (
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <Breadcrumbs crumbs={breadcrumbs} />
+      </div>
+    )}
+    <slot />
+  </main>
+  <Footer slim={slimFooter} />
+  <slot name="end" />
+  <script>
+    import '../scripts/site.js';
+  </script>
+</body>
+</html>

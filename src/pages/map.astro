@@ -1,0 +1,294 @@
+---
+/**
+ * The interactive map (Leaflet app). Its state lives in the URL hash, as before:
+ * /map#map/<feature-id>?view=good&good=lithium&country=CL
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const title = 'Resource Map: Oil, Gas and Lithium Supply Chains';
+const description = 'Explore oil fields, mines, ports, pipelines and refineries on an open map. Click any place to see its whole supply chain – every entry links to its source.';
+---
+<BaseLayout title={title} description={description} bodyClass="map-mode" slimFooter mainClass="flex-grow flex flex-col">
+  <Fragment slot="after-nav">
+  <!-- DEDICATED TOP NAVBAR TOGGLE ARROW (Floating above map at z-[1060]) -->
+  <button id="navbar-toggle-btn"
+    class="hidden fixed top-16 left-1/2 -translate-x-1/2 z-[1060] bg-cardbg/95 hover:bg-slate-800 text-white px-3.5 py-1.5 rounded-b-xl border-b border-x border-slate-700/80 shadow-2xl backdrop-blur-md transition-all duration-300 flex items-center space-x-1.5 text-xs cursor-pointer group"
+    title="Show / hide top menu">
+    <span id="navbar-toggle-icon" class="text-xs font-bold text-indigo-400 group-hover:text-indigo-300">▲</span>
+    <span id="navbar-toggle-text" class="text-[11px] font-medium text-slate-300">Top menu</span>
+  </button>
+  </Fragment>
+
+  <h1 class="sr-only">Interactive resource map</h1>
+  <noscript>
+    <div class="max-w-3xl mx-auto px-4 py-10 text-slate-300">
+      <p class="mb-3">The interactive map needs JavaScript. You can still read how the data is collected and where it comes from:</p>
+      <ul class="list-disc pl-5 space-y-1">
+        <li><a class="text-indigo-300 underline" href="/methodology">Methodology</a></li>
+        <li><a class="text-indigo-300 underline" href="/sources">Data sources</a></li>
+      </ul>
+    </div>
+  </noscript>
+
+    <!-- 2. RESOURCE MAP SECTION -->
+    <section id="section-map" class="flex-grow min-h-0 relative flex overflow-hidden w-full">
+      
+      <!-- Collapsible Left Sidebar -->
+      <div id="map-sidebar" class="relative z-[1040] w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-5 flex flex-col justify-between transition-[margin] duration-300 ease-in-out shrink-0">
+        
+        <div class="overflow-y-auto pr-1">
+          
+          <!-- Sidebar Header -->
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-bold flex items-center space-x-2 text-white">
+              <span>🎛️</span>
+              <span>Map Controls</span>
+            </h2>
+            <span id="active-elements-count" class="text-xs px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-400 border border-indigo-800 font-mono">
+              0 active
+            </span>
+          </div>
+
+          <!-- View: Overview, one resource, or isolated oil fields (state lives in mapState.js / the URL) -->
+          <div class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">View Mode</h3>
+            <div class="grid grid-cols-3 gap-2" role="group" aria-label="Map view">
+              <button id="btn-view-overview" data-map-view="overview"
+                class="px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer">
+                Overview
+              </button>
+              <button id="btn-view-good" data-map-view="good"
+                class="px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer">
+                Resource
+              </button>
+              <button id="btn-view-oil-fields" data-map-view="oil_fields"
+                class="px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer">
+                🛢️ Oil Fields
+              </button>
+            </div>
+            <div id="good-select-wrap" class="hidden mt-2">
+              <label for="good-select" class="sr-only">Resource</label>
+              <!-- Options are filled from the goods catalogue by ui.js -->
+              <select id="good-select"
+                class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition cursor-pointer"></select>
+            </div>
+            <p id="view-mode-hint" class="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
+              Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.
+            </p>
+          </div>
+
+          <!-- Country filter: places in the country plus every supply chain that touches it -->
+          <div id="panel-country" class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">
+              <label for="country-select">Country</label>
+            </h3>
+            <!-- Options are filled from the data by ui.js -->
+            <select id="country-select"
+              class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 transition cursor-pointer">
+              <option value="">All countries</option>
+            </select>
+            <!-- Supply corridors of the chosen country, derived from the routes (ui.js) -->
+            <div id="country-corridors" class="mt-2"></div>
+          </div>
+
+          <!-- Camera / Perspective -->
+          <div class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Camera</h3>
+            <div class="grid grid-cols-2 gap-2">
+              <button id="btn-focus-germany" class="px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition flex items-center justify-center space-x-1 cursor-pointer">
+                <span>🇩🇪 Germany</span>
+              </button>
+              <button id="btn-focus-global" class="px-2.5 py-1.5 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition flex items-center justify-center space-x-1 cursor-pointer">
+                <span>🌍 World</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search: name, country, resource -->
+          <div class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Search</h3>
+            <input id="map-search-input" type="text"
+              placeholder="Name, country, resource…"
+              class="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition">
+          </div>
+
+          <!-- Resource Selectors (Overview mode) -->
+          <div id="panel-resources" class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Resources</h3>
+            <!-- Filled from the goods catalogue (public/data/reference/goods.json) by ui.js -->
+            <div id="resource-filter-list" class="space-y-1.5"></div>
+          </div>
+
+          <!-- Layer / Infrastructure Types -->
+          <div id="panel-layers" class="mb-4">
+            <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Layers</h3>
+            <div class="space-y-1 text-xs">
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-amber-300">
+                  <span>🛢️</span>
+                  <span>Oil field deposits</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="oil_field" class="rounded bg-slate-900 border-slate-700 text-amber-500 focus:ring-amber-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-purple-300">
+                  <span>⛏️</span>
+                  <span>Extraction sites</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="extraction_site" class="rounded bg-slate-900 border-slate-700 text-purple-500 focus:ring-purple-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-sky-300">
+                  <span>⚓</span>
+                  <span>Import terminals & ports</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="import_hub" class="rounded bg-slate-900 border-slate-700 text-sky-500 focus:ring-sky-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-amber-300">
+                  <span>🏭</span>
+                  <span>Refineries & processing</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="processing_hub" class="rounded bg-slate-900 border-slate-700 text-amber-500 focus:ring-amber-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-emerald-300">
+                  <span>🏬</span>
+                  <span>Storage hubs</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="storage_hub" class="rounded bg-slate-900 border-slate-700 text-emerald-500 focus:ring-emerald-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-cyan-300">
+                  <span>🧭</span>
+                  <span>Shipping approaches</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="transit_point" class="rounded bg-slate-900 border-slate-700 text-cyan-500 focus:ring-cyan-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-indigo-300">
+                  <span>⚡</span>
+                  <span>Pipelines</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="pipeline" class="rounded bg-slate-900 border-slate-700 text-indigo-500 focus:ring-indigo-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-yellow-300">
+                  <span>🚂</span>
+                  <span>Rail corridors</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="rail_corridor" class="rounded bg-slate-900 border-slate-700 text-yellow-500 focus:ring-yellow-500 h-4 w-4">
+              </label>
+              <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-slate-800/60 cursor-pointer">
+                <span class="flex items-center space-x-2 text-teal-300">
+                  <span>🚢</span>
+                  <span>Shipping routes</span>
+                </span>
+                <input type="checkbox" checked data-filter-type="categories" data-filter-key="shipping_route" class="rounded bg-slate-900 border-slate-700 text-teal-500 focus:ring-teal-500 h-4 w-4">
+              </label>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar Footer & API Key Configuration -->
+        <div class="pt-3 border-t border-slate-800/80 text-[11px] text-slate-500 flex items-center justify-between">
+          <div>
+            <p>Data status: MVP 2026</p>
+            <p id="active-tile-source" class="text-[10px] text-slate-400">Map: CARTO Dark Matter (Active)</p>
+          </div>
+          <button id="open-apikey-modal-btn" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 hover:text-white border border-slate-700 text-[10px] flex items-center space-x-1 transition cursor-pointer" title="Configure map source or CARTO API Key">
+            <span>🔑</span>
+            <span>API Key</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- DEDICATED SIDEBAR TOGGLE BUTTON (Floating above Leaflet at z-[1050]) -->
+      <button id="sidebar-toggle-btn"
+        class="absolute top-4 left-[20.5rem] z-[1050] bg-cardbg/95 hover:bg-slate-800 text-white px-3 py-2 rounded-xl shadow-2xl border border-slate-700/80 backdrop-blur-md transition-all duration-300 flex items-center space-x-2 text-xs cursor-pointer group"
+        title="Show / hide sidebar">
+        <span id="sidebar-toggle-icon" class="text-sm font-bold text-indigo-400 group-hover:text-indigo-300 transition">◀</span>
+        <span id="sidebar-toggle-text" class="text-[11px] font-medium hidden sm:inline text-slate-300">Filter & Layer</span>
+      </button>
+
+      <!-- Map Display Container -->
+      <div class="flex-grow h-full relative z-0">
+        <!-- Leaflet Map Container -->
+        <div id="leaflet-map" class="w-full h-full"></div>
+
+        <!-- Map legend (body filled from the goods catalogue by ui.js) -->
+        <div id="map-legend" class="absolute top-14 sm:top-4 right-4 z-[1040] w-60 max-w-[calc(100%-2rem)] rounded-xl bg-cardbg/95 backdrop-blur-md border border-slate-700/80 shadow-2xl text-xs text-slate-200">
+          <button id="map-legend-toggle" type="button" aria-expanded="false" aria-controls="map-legend-body"
+            class="w-full flex items-center justify-between px-3.5 py-2 font-semibold uppercase tracking-wider text-[11px] text-slate-300 hover:text-white cursor-pointer">
+            <span>Legend</span>
+            <span id="map-legend-icon" aria-hidden="true">▾</span>
+          </button>
+          <div id="map-legend-body" class="hidden px-3.5 pb-3 space-y-3 max-h-[60vh] overflow-y-auto"></div>
+        </div>
+
+        <!-- Active view (filled by ui.js): visible even while the sidebar is collapsed, e.g. after opening a shared link -->
+        <div id="map-view-chip" role="status" aria-live="polite"
+          class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-[1040] max-w-[calc(100%-2rem)] items-center gap-2 pl-3.5 pr-1.5 py-1.5 rounded-full bg-cardbg/95 backdrop-blur-md border border-slate-700/80 shadow-2xl text-xs text-slate-200">
+          <span id="map-view-chip-text" class="truncate"></span>
+          <button id="map-view-chip-reset" type="button" class="shrink-0 w-6 h-6 rounded-full text-slate-400 hover:text-white hover:bg-slate-700 transition cursor-pointer" title="Back to the overview" aria-label="Back to the overview">✕</button>
+        </div>
+
+        <!-- Floating Inspector Drawer with Isolated Scroll & Fullscreen Reader Mode -->
+        <div id="inspector-drawer" class="absolute top-0 right-0 z-[1070] w-full sm:w-96 h-full bg-cardbg/95 backdrop-blur-xl border-l border-slate-800 shadow-2xl transform translate-x-full transition-[transform,width] duration-300 ease-in-out flex flex-col overflow-hidden">
+          <!-- Populated dynamically by inspector.js -->
+        </div>
+      </div>
+
+    </section>
+
+  <Fragment slot="end">
+  <!-- API KEY MODAL -->
+  <div id="apikey-modal" class="fixed inset-0 z-[2000] hidden items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div class="bg-cardbg border border-slate-700 rounded-2xl shadow-2xl max-w-md w-full p-5 text-sm">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-base font-bold text-white">🔑 Basemap & CARTO API Key</h3>
+        <button id="close-apikey-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer" aria-label="Close">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <p class="text-xs text-slate-400 mb-4">Choose your preferred basemap provider or enter your personal CARTO API Key to remove watermarks.</p>
+
+      <div class="space-y-2 mb-4">
+        <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700">
+          <input type="radio" name="tile-provider" value="carto" checked class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
+          <div>
+            <span class="font-semibold text-white block">CARTO Dark Matter (Active)</span>
+            <span class="text-[11px] text-slate-400">Uses your CARTO API Key.</span>
+          </div>
+        </label>
+        <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-900 border border-slate-800 cursor-pointer hover:border-slate-700">
+          <input type="radio" name="tile-provider" value="esri" class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
+          <div>
+            <span class="font-semibold text-white block">Esri Dark Canvas</span>
+            <span class="text-[11px] text-slate-400">100% free, no watermark, sharp contrast for fluorescent routes.</span>
+          </div>
+        </label>
+      </div>
+
+      <!-- CARTO Key Input Field -->
+      <div id="carto-key-field" class="mb-4 p-3 bg-slate-900/60 rounded-xl border border-slate-800">
+        <label class="block text-slate-300 font-semibold mb-1">Your CARTO API Key:</label>
+        <input id="carto-key-input" type="text" placeholder="Paste your key here..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white placeholder-slate-600 focus:outline-none focus:border-indigo-500">
+        <p class="text-[10px] text-slate-500 mt-1.5">
+          Available at <a href="https://carto.com/basemaps/apikey" target="_blank" rel="noopener noreferrer" class="text-indigo-400 hover:underline">carto.com/basemaps/apikey ↗</a>
+        </p>
+      </div>
+
+      <div class="flex justify-end space-x-2 pt-3 border-t border-slate-800">
+        <button id="cancel-apikey-btn" class="px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs cursor-pointer">Cancel</button>
+        <button id="save-apikey-btn" class="px-4 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-600/30 cursor-pointer">Save & Apply</button>
+      </div>
+    </div>
+  </div>
+  </Fragment>
+</BaseLayout>
+
+<script>
+  import '../app.js';
+</script>

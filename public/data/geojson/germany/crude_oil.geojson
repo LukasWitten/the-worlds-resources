@@ -764,20 +764,32 @@
         "type": "LineString",
         "coordinates": [
           [
-            2.5,
-            57.0
+            1.45,
+            51
           ],
           [
-            4.5,
-            55.8
+            2.6,
+            51.6
           ],
           [
-            6.8,
-            54.5
+            3.6,
+            52.6
           ],
           [
-            7.85,
-            53.9
+            4.4,
+            53.3
+          ],
+          [
+            6,
+            53.75
+          ],
+          [
+            7.5,
+            53.95
+          ],
+          [
+            8,
+            53.85
           ],
           [
             8.1402,
@@ -795,9 +807,9 @@
         "type": "shipping_route",
         "status": "operational",
         "operator": "International shipping companies",
-        "length_km": 680,
+        "length_km": 620,
         "capacity": "Permanent shipping corridor",
-        "flow_direction": "North Sea / North Atlantic Crude Approach → Wilhelmshaven Oil Hub",
+        "flow_direction": "Strait of Dover → Dutch and German coast → Wilhelmshaven Oil Hub",
         "summary": "Inbound tanker approach into Germany’s central crude oil hub at Wilhelmshaven.",
         "description": "This shipping corridor represents the final inbound leg of crude oil tankers heading for Wilhelmshaven – Germany’s only deep-water oil port. All of this flow converges on the oil pier before being redistributed by the NWO and NDO pipelines.",
         "supply_chain_stage": "transport",
@@ -822,16 +834,32 @@
         "type": "LineString",
         "coordinates": [
           [
-            19.0,
-            36.0
+            19,
+            36
           ],
           [
-            17.5,
-            39.5
+            18.85,
+            40.3
           ],
           [
-            15.5,
-            42.5
+            15.8,
+            42.6
+          ],
+          [
+            14,
+            43.8
+          ],
+          [
+            13.2,
+            45
+          ],
+          [
+            13.35,
+            45.55
+          ],
+          [
+            13.6,
+            45.66
           ],
           [
             13.78,
@@ -849,7 +877,7 @@
         "type": "shipping_route",
         "status": "operational",
         "operator": "International shipping companies",
-        "length_km": 1250,
+        "length_km": 1280,
         "capacity": "Permanent shipping corridor",
         "flow_direction": "Suez Canal / Mediterranean → Adriatic → Trieste",
         "summary": "Mediterranean shipping corridor for crude oil imports to Central Europe.",
@@ -915,22 +943,22 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          2.5,
-          57.0
+          1.45,
+          51
         ]
       },
       "properties": {
         "id": "crude-origin-north-sea",
-        "name": "North Sea / North Atlantic Crude Approach",
+        "name": "Strait of Dover (English Channel Approach)",
         "resource": "crude_oil",
         "category": "node",
         "type": "transit_point",
         "status": "operational",
         "country": "INT",
-        "operator": "Various (North Sea fields, Atlantic trades, global tankers)",
-        "capacity": "Major approach corridor for tankers to Wilhelmshaven",
-        "summary": "Shipping approach where tankers from the North Sea and the Atlantic converge before the final leg to Wilhelmshaven.",
-        "description": "Wilhelmshaven receives crude from North Sea production and from long-haul Atlantic and global trades. This node marks the northern approach corridor where tankers enter the final leg toward Germany’s only deep-water oil port.",
+        "operator": "Various (Atlantic trades, global tankers)",
+        "capacity": "One of the busiest shipping lanes in the world",
+        "summary": "Shipping approach where tankers from the Atlantic leave the English Channel for the final leg along the Dutch and German coast to Wilhelmshaven.",
+        "description": "Tankers from the US Gulf Coast, Venezuela and Canada cross the Atlantic, pass Brittany and run up the English Channel. At the Strait of Dover – only about 33 km wide – they enter the North Sea and follow the Dutch and German coast to Wilhelmshaven, Germany’s only deep-water oil port. Crude from North Sea fields reaches the port directly from the north and is not yet shown on the map.",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Gasoline",
@@ -940,16 +968,16 @@
           "Petrochemicals"
         ],
         "aha_moment": {
-          "title": "The North Sea gateway",
-          "explanation": "Supertankers use this approach to reach Wilhelmshaven – Germany’s only port that can handle the largest crude carriers. From the pier, pipelines distribute the oil to refineries across northern and western Germany.",
-          "everyday_impact": "A large share of the fuel used in northern and western Germany arrives via this North Sea approach and the Wilhelmshaven oil pier."
+          "title": "Through the English Channel",
+          "explanation": "Loaded supertankers bound for Wilhelmshaven share the Strait of Dover with ferries, container ships and fishing boats. Traffic runs in separate one-way lanes, like a motorway at sea.",
+          "everyday_impact": "Much of the fuel used in northern and western Germany has passed the Strait of Dover on its way to the Wilhelmshaven oil pier."
         },
         "source": {
           "name": "NWO / JadeWeserPort / shipping data",
           "year": "2025",
           "url": "https://www.nwo-gmbh.de"
         },
-        "flow_direction": "North Sea & Atlantic trades → Wilhelmshaven Oil Hub"
+        "flow_direction": "Atlantic trades → English Channel → Strait of Dover → Wilhelmshaven Oil Hub"
       }
     }
   ]

@@ -53,6 +53,8 @@ Then open the address shown in the terminal (usually `http://localhost:4321`).
 | `npm run validate:data` | Checks all data: GeoJSON (schema, unique ids, route endpoints), catalogues and the generated trade files (schemas, codes, sums) |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serves the build with the same security headers as the live site |
+| `npm run check:seo` | Checks the built pages without JavaScript: titles, descriptions, canonicals, JSON-LD, links, sitemap, robots.txt, llms.txt |
+| `npm run check:lighthouse` | Lighthouse budget for the main pages (needs `npm run preview` running and Chrome) |
 | `npm run data:countries` | Rebuilds `reference/countries.json` (needs the raw data, see below) |
 | `npm run data:trade` | Rebuilds `public/data/trade/` from CEPII BACI (needs the raw data, see below) |
 

@@ -1,6 +1,6 @@
 name: CI
 
-# Validates the datasets and checks that the site builds.
+# Validates the datasets, builds the site and checks the result (SEO, Lighthouse).
 # Deployment itself is done by Vercel (theworldsresources.org), not by this workflow.
 
 on:
@@ -34,3 +34,12 @@ jobs:
 
       - name: Build site
         run: npm run build
+
+      - name: SEO check (HTML without JavaScript, sitemap, JSON-LD, links)
+        run: npm run check:seo
+
+      - name: Lighthouse budget (accessibility, best practices, SEO)
+        run: |
+          npx astro preview --port 4321 &
+          for i in $(seq 1 30); do curl -sf http://localhost:4321/ > /dev/null && break; sleep 1; done
+          npm run check:lighthouse

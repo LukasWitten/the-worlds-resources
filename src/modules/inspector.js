@@ -13,6 +13,7 @@ const TYPE_ICONS = {
   import_hub: '⚓',
   processing_hub: '🏭',
   storage_hub: '🏬',
+  transit_point: '🧭',
   rail_corridor: '🚂',
   shipping_route: '🚢'
 };
@@ -83,6 +84,7 @@ class Inspector {
       import_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-sky-950 text-sky-400 border border-sky-800">⚓ Import Terminal / Port</span>',
       processing_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-amber-950 text-amber-400 border border-amber-800">🏭 Refinery / Processing</span>',
       storage_hub: '<span class="px-2.5 py-1 text-xs rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">🏬 Underground Storage</span>',
+      transit_point: '<span class="px-2.5 py-1 text-xs rounded-full bg-cyan-950 text-cyan-300 border border-cyan-800">🧭 Shipping Approach</span>',
       pipeline: '<span class="px-2.5 py-1 text-xs rounded-full bg-indigo-950 text-indigo-400 border border-indigo-800">⚡ Pipeline Corridor</span>',
       rail_corridor: '<span class="px-2.5 py-1 text-xs rounded-full bg-yellow-950 text-yellow-400 border border-yellow-800">🚂 Rail Freight Corridor</span>',
       shipping_route: '<span class="px-2.5 py-1 text-xs rounded-full bg-teal-950 text-teal-400 border border-teal-800">🚢 Ocean Shipping Route</span>'

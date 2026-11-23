@@ -1,6 +1,6 @@
 # Growth-Checkliste: Aufgaben außerhalb des Codes
 
-Stand: 23.11.2026 · Gehört zu [seo-geo-plan.md](seo-geo-plan.md)
+Stand: 23.11.2026, Rev. 2 (mit den Entscheidungen aus [vision-assessment.md](vision-assessment.md)) · Gehört zu [seo-geo-plan.md](seo-geo-plan.md)
 Für jeden Punkt steht dabei, **womit du heute anfangen kannst**. Fertige Post-Texte liegen in `LAUNCH_KIT.md`, die Datei ist lokal und nicht im Repo.
 
 ---
@@ -9,6 +9,22 @@ Für jeden Punkt steht dabei, **womit du heute anfangen kannst**. Fertige Post-T
 
 - [x] **CARTO-Status geklärt (23.11.2026): nicht-kommerziell.** Trotzdem monatlich die Nutzung im CARTO-Konto prüfen. Der Rest des Punktes bleibt als Hintergrund stehen. Ab 1.12.2026 gelten für Keys, die kommerziell genutzt werden, bezahlte Pläne. Nicht-kommerzielle Nutzung bleibt bis 5 Mio. Tile-Requests pro Monat frei. „Kommerziell“ heißt laut CARTO: Die Seite erzielt Einnahmen (auch Werbung), kostet Geld oder wird von einem Unternehmen betrieben.
   **Start:** Im CARTO-Konto nachsehen, wie der Key eingestuft ist, und die Nutzung prüfen. Falls unklar, CARTO kurz schreiben („open-source, non-commercial educational project, no revenue“). Bedingungen: carto.com/legal/basemap-terms
+
+- [ ] **Vercel-Tarif im Blick behalten** (Vision-Bewertung F11): Hobby ist nur für nicht-kommerzielle Nutzung gedacht. Das passt heute. Vor jeder Kommerzialisierung (Werbung, Bezahlfunktionen, Firmenkunden) auf Pro wechseln, und CARTO kommerziell lizenzieren oder auf den eigenen Basemap umstellen.
+  **Start:** nichts zu tun, solange das Projekt nicht-kommerziell bleibt. Checkliste in `docs/vision-assessment.md` 7.4.
+
+## 0a. Recht und Beitragende (vor dem ersten externen Pull Request)
+
+Aus der Vision-Bewertung (F1–F3, W8, Abschnitt 7.3). Diese Aufgaben liegen bei dir, die technischen Teile kann ich vorbereiten.
+
+- [ ] **CLA-Text** (Lizenzeinräumung, keine Übertragung; nur für Code, Daten bleiben CC BY 4.0) vom Anwalt anpassen lassen.
+  **Start:** Vorlage Apache Individual CLA oder Harmony-Vorlage an den Anwalt geben, mit dem Hinweis „MIT-Projekt, Lizenzeinräumung, keine Übertragung“.
+- [ ] **CLA Assistant** (kostenlose GitHub-App) für das Repo einrichten, sobald der Text steht.
+  **Start:** cla-assistant.io → mit GitHub anmelden → Repo wählen → CLA-Text als Gist verlinken.
+- [ ] **Copyright-Zeile in `LICENSE`** korrigieren (heute „the-worlds-resources“, keine Person) und den Abschnitt „Rights and licence“ in CONTRIBUTING, die PR-Vorlage und `CODE_OF_CONDUCT.md` freigeben. Den Code-Teil kann ich vorbereiten.
+  **Start:** Sag mir, welcher Name in die Copyright-Zeile soll.
+- [ ] **Hinweistexte zu Unternehmen** in der öffentlichen Karte (F10) anwaltlich prüfen lassen, bevor Firmen namentlich erscheinen.
+- [ ] **Wortmarke** „The World's Resources“: zurückgestellt (F12). Wiedervorlage vor den Trailern.
 
 ## 1. Suchmaschinen einrichten
 
@@ -101,6 +117,7 @@ Ziel: Wenn ein Thema in den Nachrichten ist, gibt es bei uns schon die passende 
 | Gaspreise, Speicherstände im Winter | Gasinfrastruktur, Speicher (heute) | Im Dezember/Januar Post zu Speichern und LNG-Terminals |
 | Raffinerie Schwedt / Druschba | Schwedt-Kette, Rostock–Schwedt (heute) | Bei jeder Nachricht: Post mit Link auf die Kette |
 | EU Critical Raw Materials Act, Batterieverordnung | Lithium, später Batterie (Phase 5) | Insight #4 vorbereiten |
+| **Advent / Weihnachten (Anfang Dezember 2026)** | **Lebkuchen-Story** (Vision-Bewertung F15): Bilder-Karussell + Zutaten mit BACI-Flüssen. Sobald B2 läuft, auch als Seite `/stories/lebkuchen` | Karussell auf LinkedIn, Instagram und Bluesky posten. Jedes Bild mit Quelle und `theworldsresources.org`, Link auf die Story bzw. die Kakao-, Honig- und Gewürzseiten |
 | Jahreszahlen (BACI im Januar, USGS MCS im Januar/Februar) | Daten-Update | Nach jedem Update Post „What changed in {year}“ |
 
 **Start:** Google Alerts (oder ein RSS-Feed) für „Hormus“, „Exportbeschränkung Rohstoffe“, „Lithium Lieferkette“, „Schwedt“, „LNG Terminal“ einrichten.

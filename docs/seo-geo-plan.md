@@ -1,7 +1,8 @@
 # SEO und GEO: Audit und Plan
 
-Stand: 23.11.2026 · Status: **Teil A (Audit und Plan)**. Am Code ist nichts geändert, die Umsetzung startet erst nach Freigabe.
-Geprüft: Live-Seite `www.theworldsresources.org` (`main` c344b00), Lighthouse 12 (mobil und Desktop), ausgeliefertes HTML per `curl`, Crawler-Zugriff mit 8 User-Agents. Grundlage ist außerdem [map-extension-analysis.md](map-extension-analysis.md) (Branch `claude/supply-chain-map-export-import-3a3401`, Phase 0 in Arbeit).
+Stand: 23.11.2026, Rev. 2 · Status: **Teil A (Audit und Plan), alle Entscheidungen getroffen.** Umsetzung (Teil B) noch nicht begonnen.
+Rev. 2 übernimmt die Entscheidungen aus [vision-assessment.md](vision-assessment.md) (Abschnitt 3 und 10, Branch `claude/vision-assessment`): Story-Seiten, Bild-Export in den Präsentationsmodus, MapLibre vor der Export-Ansicht, eigener Basemap für Exporte, gemeinsame Roadmap mit Stufen B1–B4. Siehe Abschnitt 12.
+Geprüft: Live-Seite `www.theworldsresources.org` (`main` c344b00), Lighthouse 12 (mobil und Desktop), ausgeliefertes HTML per `curl`, Crawler-Zugriff mit 8 User-Agents. Grundlage ist außerdem [map-extension-analysis.md](map-extension-analysis.md), kurz **EP**. Phase 0 und 1 sind auf `main` (PR #17, #19): Güterkatalog, Kartenzustand, Quellenregister, Länder-Stammdaten, BACI-Handelsdaten 2024.
 
 Ziel: Die Seite soll von Google und Bing sowie von KI-Assistenten und KI-Suchen (ChatGPT, Claude, Perplexity, Google AI Overviews) **gefunden, gelesen, zitiert und verlinkt** werden.
 Leitsatz: **Jede wichtige Information liegt als echtes HTML mit Text, Tabelle und Quelle vor, ohne dass JavaScript laufen muss.** Die Karte ist die Zugabe, nicht der Inhalt.
@@ -44,10 +45,11 @@ Aufwand in Personentagen (PT), geschätzt für die Umsetzung durch mich, ohne re
 
 | Punkt | Status | Datenlage | Aufwand | Prio |
 |---|---|---|---|---|
-| `/countries/[land]` | **fehlt** | Handelsdaten erst ab Phase 1 (BACI 202601, Jahre bis 2024). Heute hat nur DE genug Inhalt. | 3 PT Vorlage + Pipeline-Anbindung | P2 (nach Phase 1) |
+| `/countries/[land]` | **fehlt** | **Daten vorhanden** seit EP Phase 1: `reference/countries.json` und `trade/2024/by-country/*` (BACI 202601). | 3 PT Vorlage | P2 |
 | `/resources/[ressource]` | **fehlt** | Infrastruktur für 3 Güter vorhanden. Förderländer aus USGS (Public Domain) und Export/Abnehmer aus BACI fehlen. | 2 PT Vorlage, +1 PT USGS-Import | P2 |
 | `/products/[produkt]` | **fehlt** | Lithium-Ionen-Batterie erst in Phase 5 (Rezept, Handel). | 2 PT, wenn Daten da sind | P3 |
 | `/routes/[herkunft]-[ziel]-[gut]` | **fehlt** | Kuratierte Korridore für SA/KW/IQ/AE/US/CA/VE → DE (Öl) und CL → DE (Lithium) lassen sich heute ableiten (`supplyChain.corridors()` aus Phase 0). Mengen kommen aus BACI. | 1,5 PT | P2 |
+| *Zusatz:* `/stories/[id]` (kuratierte Stories, Rev. 2) | **fehlt** | Story-Format `*.twr.json` existiert (W1), erste Story „Lebkuchen“ (EN + DE). Abspiel-UI kommt mit C1. | 1 PT (Text- und Bildfassung ohne JS) | P2 |
 | *Zusatz:* `/infrastructure/[id]` (Orte, Pipelines, Tankerrouten) | **fehlt** | **69 kuratierte Features mit Text, Betreiber, Kapazität, Aha-Moment und Quelle, sofort nutzbar.** Das ist heute unser einzigartigster Inhalt (→ E4). | 1,5 PT | P1/P2 |
 | Title, Description, H1, Einordnung, Kennzahlen, Datenjahr, Quelle, Aktualisierungsdatum, interne Links | **fehlt** | Ein globaler Title und eine globale Description | in den Vorlagen | P1 |
 | Kartenzustände ↔ Seiten | **fehlt** | `mapState` (Phase 0) modelliert den Zustand im Hash (`#map?view=…`) und ist damit unsichtbar für Crawler. Das ist günstig: Filterkombinationen erzeugen **keinen** Duplicate Content (siehe 3.3). | 1 PT | P1 |
@@ -101,7 +103,7 @@ Aufwand in Personentagen (PT), geschätzt für die Umsetzung durch mich, ohne re
 | Einbettbare Karten | **fehlt** | CSP `frame-ancestors 'none'` und `X-Frame-Options: DENY` gelten für alle Pfade. Für `/embed/*` gezielt öffnen. CARTO: Einbettung der eigenen Seite mit eigenem Key ist mit den Bedingungen vereinbar (Tiles direkt vom Browser, kein Proxy). | 2 PT | P3 |
 | Daten-Download CSV/JSON | **teilweise** | GeoJSON ist frei abrufbar, aber nicht als Download angeboten. Lizenzen siehe 6.2. | 1,5 PT | P3 |
 | Teilen ohne Tracking | **teilweise** | „Copy link“ im Inspector. Keine Plattform-Links, kein Web Share API. | 0,5 PT | P3 |
-| Kartenansicht als Bild exportieren | **fehlt** | Siehe 6.3 (Tiles vs. Vektor) | 1,5 PT | P3 |
+| Kartenansicht als Bild exportieren | **fehlt** | **Rev. 2: wandert in Stufe C1** (Story-Engine und Präsentationsmodus, PNG pro Schritt, später PPTX, MP4, GIF). Nicht mehr Teil dieses Plans. | – | – |
 
 ### 1.8 Insights
 
@@ -193,9 +195,10 @@ Aufbau jeder Datenseite (**Text zuerst, Karte danach**):
 | Infrastruktur | `/infrastructure/tal-pipeline`, `/infrastructure/refinery-rheinland` | GeoJSON (69 Features) | Phase 2a |
 | Lieferkette (kuratiert) | `/supply-chains/jet-fuel-frankfurt-airport` | Graph + kuratierter Titel | Phase 2a |
 | Ressource | `/resources/lithium` | `goods.json`, USGS, BACI, GeoJSON | Phase 2a (Gerüst), 2b (Zahlen) |
-| Land | `/countries/germany` | `trade/<jahr>/by-country`, `countries.json` | Phase 2b |
+| Land | `/countries/germany` | `trade/<jahr>/by-country`, `countries.json` (vorhanden) | Phase 2b |
 | Route / Korridor | `/routes/chile-germany-lithium` | BACI-Fluss + kuratierter Korridor | Phase 2b |
 | Produkt | `/products/lithium-ion-battery` | `recipes.json`, BACI | mit Phase 5 der Karte |
+| Story (kuratiert) | `/stories/lebkuchen` (+ `/de/geschichten/lebkuchen`) | `public/data/stories/*.twr.json` | Phase 2 (B2), nur kuratierte Stories, keine Nutzerprojekte (F7) |
 | Insights | `/insights/where-does-the-lithium-in-an-eu-ev-battery-come-from` | Markdown | Phase 4 (1–2 Artikel früher) |
 | Einbettung | `/embed/supply-chains/jet-fuel-frankfurt-airport` | wie Seite, nur Karte + Quelle | Phase 3 |
 | Downloads | `/downloads/countries/germany.csv` | wie Seite | Phase 3 |
@@ -221,6 +224,7 @@ Die Seite ist die **teilbare, indexierbare Fassung** eines Kartenzustands. Die K
 | `#map?view=product&good=li_ion_battery&…` | `/products/lithium-ion-battery` |
 | `#map?view=profile&country=DE` | `/countries/germany` |
 | `#map/refinery-rheinland` (Feature) | `/infrastructure/refinery-rheinland` |
+| `#map?story=lebkuchen&step=3` | `/stories/lebkuchen#step-3` (jeder Schritt ist ein Abschnitt mit Anker) |
 
 Umsetzung:
 - Eine Funktion `pageFor(state)` liegt in einem gemeinsamen Modul und wird in der App **und** im Build genutzt.
@@ -423,6 +427,8 @@ Alle Zahlen sind **Platzhalter** `{…}`, es gibt hier keine echten Werte.
 | USGS-Produktion | U.S. Public Domain (USGS-Richtlinie), Quellenangabe erbeten | ja |
 | EIA | U.S. Public Domain | ja |
 | Betreiber- und Behördenberichte | Fakten frei, Tabellen nicht | nur unsere eigenen Angaben, keine kopierten Tabellen |
+| Kuratierte Stories (`*.twr.json`) | CC BY 4.0 | ja (Rev. 2) |
+| OSM-abgeleitete Netzdaten (T1, Verkehrsnetze) | ODbL | ja, aber **nur als eigene Datei mit ODbL-Hinweis**, nie in CC-BY-Downloads gemischt (W8) |
 | UN Comtrade | restriktiv | **nein** (wird ohnehin nicht genutzt) |
 | CARTO-Kacheln | CARTO-Bedingungen (Stand 29.09.2026) | Kacheln dürfen nicht gecacht oder per Proxy verteilt werden. Statische Bilder sind nur „illustrativ/redaktionell“ mit lesbarer Quellenangabe erlaubt. |
 
@@ -433,7 +439,8 @@ Alle Zahlen sind **Platzhalter** `{…}`, es gibt hier keine echten Werte.
   - CARTO erlaubt statische Bilder nur eingeschränkt, und serverseitiges Laden von Kacheln für Hunderte Bilder ist nahe am verbotenen Caching.
   - Ein Headless-Chrome im Vercel-Build wäre langsam und schwer.
   - Vektor ist schärfer und kleiner.
-- **„Ansicht als Bild exportieren“** in der App: ebenfalls Vektor (unsere Ebenen + Umrisse + Quellenangabe) als PNG/SVG. Optional mit Kacheln, falls CARTO CORS liefert. Das wäre noch zu prüfen, mit Quellenangabe im Bild (→ E9).
+- **Rev. 2:** Mit dem eigenen Basemap (Protomaps/PMTiles aus OSM, W3) können Vorschaubilder auch einen Kartenhintergrund bekommen. Das Bild ist dann ein „Produced Work“, die Quellenangabe „© OpenStreetMap“ steht im Bild. Natural-Earth-Umrisse bleiben die einfache Variante ohne Abhängigkeit.
+- **„Ansicht als Bild exportieren“** gehört ab Rev. 2 zur Stufe C1 (Präsentationsmodus). Der folgende Absatz bleibt nur als Hintergrund stehen. In der App: ebenfalls Vektor (unsere Ebenen + Umrisse + Quellenangabe) als PNG/SVG. Optional mit Kacheln, falls CARTO CORS liefert. Das wäre noch zu prüfen, mit Quellenangabe im Bild (→ E9).
 
 ### 6.4 Performance-Ziele
 
@@ -442,6 +449,8 @@ Alle Zahlen sind **Platzhalter** `{…}`, es gibt hier keine echten Werte.
 | Textseiten | LCP < 1,5 s, 0 kB JS bis zur Interaktion mit der Karte, Lighthouse ≥ 95 in Performance, SEO und Accessibility |
 | Startseite | LCP < 2,5 s. Die Hero-Karte lädt **nach** dem Text, das statische Bild ist LCP. |
 | `/map` | wie heute. Daten nachladen (Partitionierung aus dem Erweiterungsplan). |
+
+**Rev. 2, MapLibre (Stufe A2a):** MapLibre GL ist deutlich größer als Leaflet (Richtwert ca. 200 kB gzip). Umso wichtiger: Auf Text- und Startseiten lädt die Karte erst bei Sichtbarkeit oder Klick, das statische Bild ist LCP. Die CSP braucht für MapLibre zusätzlich `worker-src blob:` (Web Worker). Für den CARTO-Vektorstil und eigene PMTiles kommen die entsprechenden Hosts in `connect-src`. Das wird mit A2a geändert, nicht in B1.
 
 ---
 
@@ -512,6 +521,8 @@ Optional `llms-full.txt` mit den Key-Facts aller Seiten als Markdown. Es ist kei
 | 8 | Export restrictions and tariffs: which resource flows are most exposed | BACI + Konzentration | Phase 2b | An Nachrichtenlage koppelbar (Zölle, Exportkontrollen) |
 | 9 | One barrel, many products: what a German refinery makes from crude oil | Raffinerie-Knoten + `outputs` | Phase 2a | Erklärstück für Lehre und Schulen |
 | 10 | Copper: from Chilean mines to German cables | BACI + USGS (Kupfer in Phase 1) | Phase 2b | Neuer Rohstoff, Ergänzung zur Lithium-Story |
+| 11 | *Rev. 2:* Where the ingredients of German Lebkuchen come from | Lebkuchen-Story (vorhanden) + BACI (Kakao, Honig, Nüsse, Gewürze) | **Anfang Dezember** als Story-Seite | Saisonaler Anlass, sehr teilbar, erster Test des Story-Formats |
+| 12 | *Rev. 2:* Insights aus dem Praxistest: Schokolade, E-Bike, Fairphone/iPhone | Editor-Projekte (Stufe P) | nach C2 | Produktgeschichten mit Belegen und Verlässlichkeitsangabe |
 
 ---
 
@@ -529,7 +540,9 @@ Optional `llms-full.txt` mit den Key-Facts aller Seiten als Markdown. Es ist kei
 
 Abhängigkeiten zum Erweiterungsplan der Karte stehen jeweils dabei („EP Phase x“).
 
-### Phase 1: Fundament (ca. 6–8 PT, Start nach dem Merge von EP Phase 0)
+### Phase 1: Fundament (ca. 6–8 PT) = Stufe B1
+
+Voraussetzung erfüllt (EP Phase 0 gemergt). Läuft parallel zu A2a (MapLibre). Absprache: B1 **verschiebt** `index.html` und `app.js` in die Astro-Struktur, ändert aber nicht `map.js` und `heroMap.js`. Das ist der Bereich von A2a. Die Karte wird in B1 nur als Island eingebunden.
 
 1. Astro-Gerüst (E1). App nach `/map`, Weiterleitung alter Hash-Links, statische Startseite mit Hero-Island.
 2. Layout: Navigation und Footer mit echten Links, Breadcrumbs, Überschriften-Hierarchie, Meta-Komponente (Title, Description, canonical, OG/Twitter).
@@ -540,7 +553,7 @@ Abhängigkeiten zum Erweiterungsplan der Karte stehen jeweils dabei („EP Phase
 7. `npm run check:seo` (HTML ohne JS, Sitemap, JSON-LD-Parse, Lighthouse-Budget) in CI.
 8. Du: Search Console und Bing einrichten (Growth-Checkliste).
 
-### Phase 2: Entitätsseiten
+### Phase 2: Entitätsseiten = Stufe B2
 
 **2a: mit vorhandenen Daten (ca. 5–6 PT):**
 - `/infrastructure/*` (69 Seiten);
@@ -548,29 +561,30 @@ Abhängigkeiten zum Erweiterungsplan der Karte stehen jeweils dabei („EP Phase
 - `/resources/*` für 3 Güter, mit USGS-Förderdaten (**USGS-Import aus EP Phase 4 vorziehen**, E5);
 - statische Kartenbilder (Vektor);
 - `pageFor(state)` und Links aus der App;
-- IndexNow.
+- IndexNow;
+- `/stories/*` für kuratierte Stories (F7), zuerst Lebkuchen. Jede Seite enthält alle Schritte als Text mit Bild ohne JS, die Abspielfunktion kommt mit C1. Entitätsseiten können eine passende Story einbetten.
 
-**2b: mit Handelsdaten (ca. 5–7 PT, nach EP Phase 1–3):**
+**2b: mit Handelsdaten (ca. 5–7 PT; Daten liegen seit EP Phase 1 vor, die interaktiven Kartenzustände für Export/Import kommen mit A2/A3):**
 - `/countries/*` (mit Schwelle);
 - `/routes/*`;
 - Ressourcen um BACI-Tabellen und weitere Güter erweitern (E6);
 - Vorlagensystem;
 - redaktionelle Texte für die 30 Länder und 20 Ressourcen, fortlaufend.
 
-### Phase 3: Zitieren, Einbetten, Herunterladen (ca. 5–6 PT)
+### Phase 3: Zitieren, Einbetten, Herunterladen (ca. 4–5 PT) = Stufe B3
 
 - „Cite this page“ (Text, BibTeX, Datenstand). Optional ein Zenodo-DOI je Datenrelease.
 - Downloads CSV/JSON je Seite, Lizenzhinweis je Datei (6.2).
-- `/embed/*` mit eigener CSP (`frame-ancestors *`) und Snippet-Generator.
+- `/embed/*` mit eigener CSP (`frame-ancestors *`) und Snippet-Generator. Embeds können eine Story im Präsentationsmodus zeigen (nach C1). Ein späteres PowerPoint-Add-in nutzt dieselbe `/embed/`-Seite.
 - Teilen-Links ohne Skripte von Drittanbietern (mailto, LinkedIn, Bluesky, X, Reddit, Web Share API).
-- Kartenansicht als Bild exportieren (6.3).
+- ~~Kartenansicht als Bild exportieren~~ → Stufe C1 (Rev. 2).
 - Vorschaubilder je Seite.
 
-### Phase 4: Insights und Mehrsprachigkeit (ca. 6–8 PT + Texte und Übersetzungen)
+### Phase 4: Insights und Mehrsprachigkeit (ca. 6–8 PT + Texte und Übersetzungen) = Stufe B4
 
-- Insights-Gerüst mit MDX, `Article`-Schema und eingebetteten Ansichten. **Artikel 1–3 aus der Themenliste schon in Phase 2a**, als einfache Seiten.
+- Insights-Gerüst mit MDX, `Article`-Schema und eingebetteten Ansichten (auch Story-Schritte). Insights aus dem Praxistest (Stufe P) kommen dazu. **Artikel 1–3 aus der Themenliste schon in Phase 2a**, als einfache Seiten.
 - `/de/` mit hreflang für **alle Seiten** (E10): deutsche Vorlagen für alle Datenteile (Title, Description, Key facts, Tabellen, Kennzahlen-Sätze), deutsche Pfade (`/de/laender/…`, `/de/rohstoffe/…`, `/de/produkte/…`, `/de/routen/…`, `/de/infrastruktur/…`). Redaktionelle Einordnung und Insights nur, wo eine geprüfte Übersetzung vorliegt. Rechtstexte auf Deutsch gibt es schon ab Phase 1.
-- `/products/lithium-ion-battery`, sobald EP Phase 5 Daten liefert.
+- `/products/lithium-ion-battery`, sobald EP Phase 5 (Stufe A5) Daten liefert. Rezepte nutzen dasselbe `process`-Format wie der Editor.
 
 ---
 
@@ -597,3 +611,36 @@ Abweichungen von deinem Plan sind mit **⚠️** markiert.
 | E13 | **Autorenangabe** (About, Insights): Klarname, Pseudonym oder „The World's Resources team“? | ✅ **Freigegeben 23.11.2026:** Ein Klarname stärkt das Vertrauen (E-E-A-T), ist aber deine Entscheidung. Das Impressum nennt den Betreiber ohnehin. |
 | E14 | Redaktion: Wer prüft die 50 Einordnungstexte? | ✅ **Freigegeben 23.11.2026:** Ich liefere Entwürfe mit Quellen, du (oder Fachleute) gibst frei. Frontmatter `reviewed_by` ist Pflicht für die Veröffentlichung. |
 | E15 | CARTO: Ist das Projekt **nicht-kommerziell** im Sinne der Bedingungen? | ✅ **Bestätigt 23.11.2026: nicht-kommerziell.** Frei bis 5 Mio. Tile-Requests pro Monat. Die Nutzung im CARTO-Konto ab und zu prüfen (Embeds erhöhen die Zahl). |
+
+---
+
+## 12. Abgleich mit der Vision-Bewertung (Rev. 2)
+
+Quelle: [vision-assessment.md](vision-assessment.md), Entscheidungen F1–F15 vom 23.11.2026. Die Stufen-IDs stammen aus deren gemeinsamer Roadmap (Abschnitt 3).
+
+**Einordnung dieses Plans in die gemeinsame Roadmap:**
+
+| Stufe | Inhalt | Dieser Plan | Voraussetzung |
+|---|---|---|---|
+| **B1** | Astro-Fundament, App auf `/map` | Phase 1 | – (parallel zu A2a möglich, siehe Phase 1) |
+| **B2** | Entitätsseiten 2a/2b + Story-Seiten | Phase 2 | B1. Für die interaktiven Export- und Import-Zustände zusätzlich A2/A3. |
+| **B3** | Zitieren, Einbetten, Downloads (ohne Bild-Export) | Phase 3 | B2 |
+| **B4** | Insights (auch aus dem Praxistest), `/de/` | Phase 4 | B2, Praxistest (P) für die Produktartikel |
+
+**Was sich gegenüber Rev. 1 ändert:**
+
+| # | Änderung | Grund (Vision-Bewertung) | Abschnitt hier |
+|---|---|---|---|
+| R1 | Neuer Seitentyp **`/stories/[id]`** für kuratierte Stories, ab B2. Nutzerprojekte aus dem Editor bekommen **keine** Seiten. | F7 | 1.2, 3.1, 3.2, Phase 2a |
+| R2 | **„Kartenansicht als Bild exportieren“ wandert in Stufe C1** (Story-Engine und Präsentationsmodus; Exportreihenfolge PNG → PPTX → MP4 → GIF). Phase 3 wird kleiner. | F8, Roadmap C1 | 1.7, 6.3, Phase 3 |
+| R3 | **E9 bleibt** (Vektor statt Kachel-Screenshot). Mit dem eigenen Basemap (W3) sind Vorschaubilder mit Kartenhintergrund möglich, mit Quellenangabe „© OpenStreetMap“. CARTO bleibt auf der Live-Karte (F5). | F5, W3 | 6.3 |
+| R4 | **MapLibre (A2a) kommt vor der Export-Ansicht.** Für SEO heißt das: Karte als Island strikt nachladen (größeres Bundle) und die CSP für Worker und Vektor-Tiles mit A2a anpassen. B1 fasst `map.js` und `heroMap.js` nicht an. | F4, W2 | 6.4, Phase 1 |
+| R5 | Kartenzustand bekommt `story` und `step` (W6). Abbildung auf `/stories/<id>#step-n`. | W6 | 3.2 |
+| R6 | Länderseiten sind **datenseitig sofort möglich** (BACI 2024 auf `main`). | EP Phase 1 erledigt | 1.2, 3.1, Phase 2b |
+| R7 | Neue Themen: Lebkuchen (Anfang Dezember) und Produkte aus dem Praxistest | F9, F15 | 8 |
+| R8 | Datenmodell bekommt **Verlässlichkeit** (`confidence`: belegt / plausibel / geschätzt) und **Quellenliste mit Abrufdatum** (W5). Seiten zeigen die Verlässlichkeit je Element sichtbar an, die Quellen-Seite listet sie. Das erfüllt die Regel „keine Zahl ohne Kennzeichnung als Schätzung“ (1.10) auch für die Infrastruktur. | W5 | 5.x (Vorlagen), 1.10 |
+| R9 | Downloads: Kuratierte Stories sind als `*.twr.json` (CC BY 4.0) herunterladbar. OSM-abgeleitete Daten (Verkehrsnetze, T1) liegen in **eigenen ODbL-Dateien** und werden getrennt angeboten. | W8 | 6.2 |
+| R10 | Growth-Checkliste: Vercel Hobby nur nicht-kommerziell (F11), CLA vor dem ersten externen Pull Request (F2, W8), Wortmarke zurückgestellt (F12) | F2, F11, F12 | growth-checklist.md |
+
+**Unverändert:** alle Entscheidungen E1–E15, das URL-Schema der übrigen Seitentypen, robots.txt (Option A), Deutsch für alle Seiten über Vorlagen (E10).
+

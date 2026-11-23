@@ -6,6 +6,7 @@ import { mapController } from './map.js';
 import { dataService } from './dataService.js';
 import { goods } from './goods.js';
 import { escapeHtml } from './html.js';
+import { mapState } from './mapState.js';
 
 class UIController {
   constructor() {
@@ -90,8 +91,9 @@ class UIController {
       }
     }
 
-    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …)
-    const desiredHash = `#${sectionId}`;
+    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …);
+    // the map keeps its own state (#map/<feature>?view=…)
+    const desiredHash = sectionId === 'map' ? mapState.href() : `#${sectionId}`;
     if (window.location.hash !== desiredHash) {
       history.replaceState(null, '', desiredHash);
     }
@@ -267,45 +269,38 @@ class UIController {
     this.setupViewModeButtons();
   }
 
+  /** View buttons only change the map state; syncMapControls() reflects it in the sidebar. */
   setupViewModeButtons() {
-    const btnOverview = document.getElementById('btn-view-overview');
-    const btnOil = document.getElementById('btn-view-oil-fields');
+    document.querySelectorAll('[data-map-view]').forEach(btn => {
+      btn.addEventListener('click', () => mapState.set({ view: btn.dataset.mapView }));
+    });
+    this.syncMapControls(mapState.get());
+  }
+
+  /** Bring the sidebar controls in line with the map state (called on every state change). */
+  syncMapControls(state) {
+    const active = 'px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer';
+    const idle = 'px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer';
+    document.querySelectorAll('[data-map-view]').forEach(btn => {
+      const on = btn.dataset.mapView === state.view;
+      btn.className = on ? active : idle;
+      btn.setAttribute('aria-pressed', String(on));
+    });
+
     const hint = document.getElementById('view-mode-hint');
+    if (hint) {
+      hint.textContent = state.view === 'oil_fields'
+        ? 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.'
+        : 'Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.';
+    }
+
+    // The resource checkboxes only apply to the overview – dim them otherwise
     const panelResources = document.getElementById('panel-resources');
-
-    const setActiveStyles = (mode) => {
-      const active = 'px-2.5 py-2 rounded-lg bg-indigo-950/90 text-[11px] font-semibold text-indigo-200 border border-indigo-600/60 transition cursor-pointer';
-      const idle = 'px-2.5 py-2 rounded-lg bg-slate-800/90 hover:bg-slate-700 text-[11px] font-semibold text-slate-200 border border-slate-700 transition cursor-pointer';
-      if (btnOverview) btnOverview.className = mode === 'overview' ? active : idle;
-      if (btnOil) btnOil.className = mode === 'oil_fields' ? active : idle;
-    };
-
-    const applyMode = (mode) => {
-      dataService.setViewMode(mode);
-      setActiveStyles(mode);
-
-      if (hint) {
-        hint.textContent = mode === 'oil_fields'
-          ? 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.'
-          : 'Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.';
-      }
-
-      // In isolated oil mode, resource toggles are less relevant – dim the panel slightly
-      if (panelResources) {
-        panelResources.style.opacity = mode === 'oil_fields' ? '0.45' : '1';
-        panelResources.style.pointerEvents = mode === 'oil_fields' ? 'none' : '';
-      }
-
-      this.refreshMap();
-
-      if (mode === 'oil_fields') {
-        mapController.focusOilFields();
-      }
-    };
-
-    btnOverview?.addEventListener('click', () => applyMode('overview'));
-    btnOil?.addEventListener('click', () => applyMode('oil_fields'));
-    setActiveStyles(dataService.getViewMode());
+    if (panelResources) {
+      const off = state.view !== 'overview';
+      panelResources.style.opacity = off ? '0.45' : '1';
+      panelResources.style.pointerEvents = off ? 'none' : '';
+    }
   }
 
   setupApiKeyModal() {
@@ -379,8 +374,13 @@ class UIController {
     });
   }
 
+  /** Features the current map state + sidebar filters show. */
+  visibleFeatures(state = mapState.get()) {
+    return dataService.getFilteredFeatures({ view: state.view, good: state.good });
+  }
+
   refreshMap() {
-    const filtered = dataService.getFilteredFeatures();
+    const filtered = this.visibleFeatures();
     mapController.renderFeatures(filtered);
 
     const counter = document.getElementById('active-elements-count');

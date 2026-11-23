@@ -6,6 +6,8 @@ import { mapController } from './modules/map.js';
 import { uiController } from './modules/ui.js';
 import { inspector } from './modules/inspector.js';
 import { dataService } from './modules/dataService.js';
+import { supplyChain } from './modules/supplyChain.js';
+import { heroMap, FEATURED_CHAINS } from './modules/heroMap.js';
 
 async function bootstrap() {
   console.log('[App] Initializing "The World\'s Resources" WebApp...');
@@ -14,8 +16,9 @@ async function bootstrap() {
   uiController.init();
   inspector.init('inspector-drawer');
 
-  // 2. Initialize Leaflet Map
+  // 2. Initialize Leaflet maps (resource map + homepage hero)
   mapController.init('leaflet-map');
+  heroMap.init('hero-map');
 
   // 3. Load All Datasets (Crude Oil, Natural Gas, Lithium Intercontinental)
   // Use absolute paths from site root so this works both with Vite (public/ → /data/)
@@ -30,6 +33,8 @@ async function bootstrap() {
 
   // 4. Initial Render
   uiController.refreshMap();
+  heroMap.render();
+  fillHomeStats();
 
   // 5. Highlight the supply chain of the open feature and keep the URL in sync: #map/<feature-id>
   inspector.onFeatureChange = (feature) => {
@@ -62,6 +67,28 @@ async function bootstrap() {
   window.addEventListener('hashchange', () => route(window.location.hash));
 
   console.log('[App] All datasets loaded and rendered successfully.');
+}
+
+/** Numbers on the homepage come from the loaded data, so they never go stale. */
+function fillHomeStats() {
+  const all = dataService.getAllFeatures();
+  const isRoute = (f) => f.geometry?.type?.includes('LineString');
+  const set = (key, value) => {
+    const el = document.querySelector(`[data-stat="${key}"]`);
+    if (el) el.textContent = value;
+  };
+  set('places', all.filter(f => !isRoute(f)).length);
+  set('routes', all.filter(isRoute).length);
+  const sourced = all.filter(f => f.properties?.source?.url).length;
+  set('sourced', `${Math.round((sourced / Math.max(all.length, 1)) * 100)}%`);
+
+  for (const { id } of FEATURED_CHAINS) {
+    const el = document.querySelector(`[data-chain-meta="${id}"]`);
+    const chain = supplyChain.getChain(id);
+    if (!el || !chain) continue;
+    const countries = supplyChain.countries(chain);
+    el.textContent = `${supplyChain.steps(chain)} steps · ${countries} ${countries === 1 ? 'country' : 'countries'}`;
+  }
 }
 
 const SECTIONS = ['home', 'map', 'sources', 'contact'];

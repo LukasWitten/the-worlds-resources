@@ -244,8 +244,7 @@ class Inspector {
 
   /** All features of the current supply chain, including the shown one. */
   chainFeatures(chain = this.currentChain) {
-    if (!chain) return [];
-    return [...chain.upstream.flat(), chain.selected, ...chain.downstream.flat()];
+    return supplyChain.features(chain);
   }
 
   /**
@@ -279,15 +278,15 @@ class Inspector {
       </li>`;
 
     const p = chain.selected.properties;
-    const steps = chain.upstream.length + chain.downstream.length + 1;
-    const countries = new Set(this.chainFeatures(chain).map(f => f.properties.country).filter(Boolean));
+    const steps = supplyChain.steps(chain);
+    const countries = supplyChain.countries(chain);
 
     return `
       <div class="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
         <div class="flex items-start justify-between gap-3">
           <div>
             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400">Supply chain</h4>
-            <p class="text-xs text-slate-500 mt-1">${steps} steps${countries.size > 1 ? ` · ${countries.size} countries` : ''}</p>
+            <p class="text-xs text-slate-500 mt-1">${steps} steps${countries > 1 ? ` · ${countries} countries` : ''}</p>
           </div>
           <button id="show-chain-btn" class="shrink-0 px-3 py-1.5 rounded-lg text-xs font-medium bg-indigo-600/80 hover:bg-indigo-500 text-white transition cursor-pointer">🗺️ Show on map</button>
         </div>

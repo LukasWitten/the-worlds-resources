@@ -52,7 +52,7 @@ class UIController {
     const targetEl = document.getElementById(`section-${sectionId}`);
     if (targetEl) targetEl.classList.remove('hidden');
 
-    document.querySelectorAll('[data-section-target]').forEach(btn => {
+    document.querySelectorAll('[data-nav-item]').forEach(btn => {
       if (btn.getAttribute('data-section-target') === sectionId) {
         btn.classList.add('text-indigo-400');
         btn.classList.remove('text-slate-300');

@@ -88,6 +88,23 @@ class SupplyChain {
 
     return { upstream, selected, downstream, ids };
   }
+
+  /** All features of a chain, from the furthest source to the furthest destination. */
+  features(chain) {
+    if (!chain) return [];
+    return [...[...chain.upstream].reverse().flat(), chain.selected, ...chain.downstream.flat()];
+  }
+
+  /** Number of steps (levels) in a chain, including the selected feature. */
+  steps(chain) {
+    return chain ? chain.upstream.length + chain.downstream.length + 1 : 0;
+  }
+
+  /** Countries a chain passes through ("INT" marks international waters and is not counted). */
+  countries(chain) {
+    const codes = this.features(chain).map(f => f.properties.country).filter(c => c && c !== 'INT');
+    return new Set(codes).size;
+  }
 }
 
 function push(map, key, value) {

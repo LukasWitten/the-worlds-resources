@@ -8,6 +8,7 @@ import { goods } from './goods.js';
 import { escapeHtml } from './html.js';
 import { mapState } from './mapState.js';
 import { supplyChain } from './supplyChain.js';
+import { RAIL_COLOR } from './colors.js';
 
 const regionNames = typeof Intl !== 'undefined' && Intl.DisplayNames
   ? new Intl.DisplayNames(['en'], { type: 'region' })
@@ -367,6 +368,54 @@ class UIController {
       const off = state.view !== 'overview';
       panelResources.style.opacity = off ? '0.45' : '1';
       panelResources.style.pointerEvents = off ? 'none' : '';
+    }
+  }
+
+  /** Collapsible legend on the map: route colours per resource, place types, marker rings. */
+  renderLegend() {
+    const body = document.getElementById('map-legend-body');
+    const toggle = document.getElementById('map-legend-toggle');
+    if (!body || !toggle) return;
+    const e = escapeHtml;
+    const line = (color) => `<span class="inline-block w-5 h-[3px] rounded-full shrink-0" style="background:${color}"></span>`;
+    const row = (symbol, label) => `<li class="flex items-center gap-2">${symbol}<span>${e(label)}</span></li>`;
+    const icon = (emoji) => `<span class="w-5 text-center shrink-0" aria-hidden="true">${e(emoji)}</span>`;
+
+    // Pipelines in the colour of the resource, sea routes may have their own colour, rail is one colour
+    const raw = goods.ids('raw');
+    const routes = raw.map(id => row(line(goods.color(id)), `${goods.label(id)}`));
+    const shippingColors = new Map();
+    for (const id of raw) {
+      const color = goods.routeColor(id, 'shipping_route');
+      if (color !== goods.color(id)) shippingColors.set(color, [...(shippingColors.get(color) || []), goods.label(id)]);
+    }
+    for (const [color, labels] of shippingColors) routes.push(row(line(color), `Sea route (${labels.join(', ')})`));
+    routes.push(row(line(RAIL_COLOR), 'Rail corridor'));
+
+    const places = [
+      row(icon('⛏️'), 'Extraction site'),
+      row(`<span class="w-5 h-3 rounded-sm shrink-0 border" style="background:rgba(245,158,11,0.3); border-color:#f59e0b"></span>`, 'Oil field (shape is illustrative)'),
+      row(icon('⚓'), 'Port or import terminal'),
+      ...raw.map(id => row(icon(goods.processingIcon(id)), `Processing: ${goods.label(id)}`)),
+      row(icon('🏬'), 'Storage'),
+      row(icon('🧭'), 'Shipping approach')
+    ];
+
+    const heading = (text) => `<h4 class="text-[10px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5">${e(text)}</h4>`;
+    body.innerHTML = `
+      <div>${heading('Routes')}<ul class="space-y-1">${routes.join('')}</ul></div>
+      <div>${heading('Places')}<ul class="space-y-1">${places.join('')}</ul></div>
+      <p class="text-[10px] text-slate-400 leading-relaxed">The ring around a place shows the colours of the routes connected to it. Click a place or route to see its whole supply chain.</p>`;
+
+    if (!toggle.dataset.bound) {
+      toggle.dataset.bound = 'true';
+      toggle.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open));
+        body.classList.toggle('hidden', !open);
+        const iconEl = document.getElementById('map-legend-icon');
+        if (iconEl) iconEl.textContent = open ? '▴' : '▾';
+      });
     }
   }
 

@@ -422,6 +422,16 @@
         <!-- Leaflet Map Container -->
         <div id="leaflet-map" class="w-full h-full"></div>
 
+        <!-- Map legend (body filled from the goods catalogue by ui.js) -->
+        <div id="map-legend" class="absolute top-14 sm:top-4 right-4 z-[1040] w-60 max-w-[calc(100%-2rem)] rounded-xl bg-cardbg/95 backdrop-blur-md border border-slate-700/80 shadow-2xl text-xs text-slate-200">
+          <button id="map-legend-toggle" type="button" aria-expanded="false" aria-controls="map-legend-body"
+            class="w-full flex items-center justify-between px-3.5 py-2 font-semibold uppercase tracking-wider text-[11px] text-slate-300 hover:text-white cursor-pointer">
+            <span>Legend</span>
+            <span id="map-legend-icon" aria-hidden="true">▾</span>
+          </button>
+          <div id="map-legend-body" class="hidden px-3.5 pb-3 space-y-3 max-h-[60vh] overflow-y-auto"></div>
+        </div>
+
         <!-- Active view (filled by ui.js): visible even while the sidebar is collapsed, e.g. after opening a shared link -->
         <div id="map-view-chip" role="status" aria-live="polite"
           class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-[1040] max-w-[calc(100%-2rem)] items-center gap-2 pl-3.5 pr-1.5 py-1.5 rounded-full bg-cardbg/95 backdrop-blur-md border border-slate-700/80 shadow-2xl text-xs text-slate-200">

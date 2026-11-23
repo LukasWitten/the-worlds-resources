@@ -71,6 +71,69 @@
       "exporters": 97,
       "importers": 139,
       "rows": 590
+    },
+    "cocoa": {
+      "worldUsd": 18742433176,
+      "worldQty": 3267382,
+      "exporters": 137,
+      "importers": 153,
+      "rows": 517
+    },
+    "honey": {
+      "worldUsd": 2282645383,
+      "worldQty": 821747,
+      "exporters": 175,
+      "importers": 214,
+      "rows": 470
+    },
+    "almonds": {
+      "worldUsd": 6876020179,
+      "worldQty": 1470499,
+      "exporters": 139,
+      "importers": 214,
+      "rows": 422
+    },
+    "hazelnuts": {
+      "worldUsd": 2461577683,
+      "worldQty": 326961,
+      "exporters": 104,
+      "importers": 192,
+      "rows": 263
+    },
+    "cinnamon": {
+      "worldUsd": 833445501,
+      "worldQty": 203135,
+      "exporters": 140,
+      "importers": 210,
+      "rows": 253
+    },
+    "cloves": {
+      "worldUsd": 671298062,
+      "worldQty": 97474,
+      "exporters": 129,
+      "importers": 201,
+      "rows": 205
+    },
+    "nutmeg": {
+      "worldUsd": 308785011,
+      "worldQty": 39557,
+      "exporters": 117,
+      "importers": 201,
+      "rows": 162
+    },
+    "cardamom": {
+      "worldUsd": 952664588,
+      "worldQty": 66368,
+      "exporters": 112,
+      "importers": 191,
+      "rows": 184
+    },
+    "ginger": {
+      "worldUsd": 1511397525,
+      "worldQty": 986630,
+      "exporters": 165,
+      "importers": 219,
+      "rows": 322
     }
   },
   "countries": [
@@ -124,6 +187,7 @@
     "CU",
     "CV",
     "CW",
+    "CX",
     "CY",
     "CZ",
     "DE",
@@ -141,6 +205,7 @@
     "FI",
     "FJ",
     "FK",
+    "FM",
     "FR",
     "GA",
     "GB",
@@ -236,6 +301,7 @@
     "PK",
     "PL",
     "PM",
+    "PN",
     "PS",
     "PT",
     "PW",

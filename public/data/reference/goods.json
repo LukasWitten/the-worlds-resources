@@ -2,7 +2,7 @@
   "metadata": {
     "description": "Catalogue of goods shown on the map. A good is a raw material, an intermediate or a final product. The resource views (export, import, resource) use the goods with stage \"raw\". Every \"resource\" value in the GeoJSON datasets must be an id from this file.",
     "license": "CC-BY-4.0",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "last_updated": "2026-11-23",
     "notes": {
       "stage": "raw = extracted or first-processed commodity as counted by USGS (crude oil, ore concentrate, lithium carbonate); intermediate = input for further production; final = product for end use.",
@@ -50,6 +50,70 @@
       "style": {
         "color": "#c084fc",
         "icon": "🔋"
+      }
+    },
+    "copper": {
+      "label": "Copper",
+      "stage": "raw",
+      "category": "base_metal",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["2603", "7402", "7403"],
+        "precision": "exact",
+        "note": "Ores and concentrates (2603), unrefined copper (7402) and refined copper (7403). Quantities are gross weight, not copper content: a tonne of concentrate holds roughly a quarter tonne of copper. Scrap (7404) is not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#fb923c",
+        "icon": "🟠"
+      }
+    },
+    "iron_ore": {
+      "label": "Iron Ore",
+      "stage": "raw",
+      "category": "base_metal",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["2601"],
+        "precision": "exact",
+        "note": "Iron ores and concentrates, including roasted iron pyrites. Pig iron and steel are not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#f87171",
+        "icon": "⛏️"
+      }
+    },
+    "coal": {
+      "label": "Coal",
+      "stage": "raw",
+      "category": "energy",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["2701"],
+        "precision": "exact",
+        "note": "Hard coal (thermal and coking coal) and briquettes. Lignite (2702) and coke (2704) are not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#a8a29e",
+        "icon": "🪨"
+      }
+    },
+    "nickel": {
+      "label": "Nickel",
+      "stage": "raw",
+      "category": "critical_mineral",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["2604", "7501", "7502"],
+        "precision": "partial",
+        "note": "Ores and concentrates (2604), mattes, oxide sinters and other intermediates of nickel metallurgy such as mixed hydroxide precipitate (7501), unwrought nickel (7502). Quantities are gross weight. Nickel pig iron itself is traded as ferro-alloy (7202) and is not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#a3e635",
+        "icon": "⚪"
       }
     }
   }

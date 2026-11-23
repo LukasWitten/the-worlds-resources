@@ -6,6 +6,7 @@
  *  - every feature matches public/data/schemas/resource-feature.schema.json
  *  - the goods catalogue matches its schema, and every feature's "resource"
  *    is a good from that catalogue
+ *  - the sources register matches its schema
  *  - feature ids are unique across the whole project
  *  - every route names its start/end via from_node_id / to_node_id, the ids
  *    exist, and the first/last coordinate lies on that node (or inside that
@@ -27,6 +28,8 @@ const TEMPLATES_DIR = path.join(DATA_ROOT, 'templates');
 const SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'resource-feature.schema.json');
 const GOODS_PATH = path.join(DATA_ROOT, 'reference', 'goods.json');
 const GOODS_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'goods.schema.json');
+const SOURCES_PATH = path.join(DATA_ROOT, 'reference', 'sources.json');
+const SOURCES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'sources.schema.json');
 
 // How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
@@ -101,6 +104,22 @@ for (const [id, good] of Object.entries(goodsCatalogue.goods || {})) {
   }
 }
 console.log(`[checked] ${GOODS_PATH} (${goodIds.size} goods)`);
+
+/** Validate a JSON file against a schema file; returns the data (or null if unreadable). */
+function checkAgainstSchema(file, schemaFile) {
+  const fileSchema = readJson(schemaFile);
+  const data = readJson(file);
+  if (!fileSchema || !data) return null;
+  const validate = ajv.compile(fileSchema);
+  if (!validate(data)) {
+    for (const msg of formatAjvErrors(validate.errors)) fail(file, msg);
+  }
+  return data;
+}
+
+const sourcesRegister = checkAgainstSchema(SOURCES_PATH, SOURCES_SCHEMA_PATH);
+const sourceIds = new Set(Object.keys(sourcesRegister?.sources || {}));
+console.log(`[checked] ${SOURCES_PATH} (${sourceIds.size} sources)`);
 
 function checkFeature(file, feature, index) {
   const resource = feature?.properties?.resource;

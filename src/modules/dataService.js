@@ -55,6 +55,11 @@ class DataService {
   }
 
   /** Country codes (ISO alpha-2) that occur in the data; "INT" (international waters) is left out. */
+  /** Ids of the goods that have places or routes on the map (the catalogue also lists goods known only from trade data). */
+  getMappedGoods() {
+    return new Set(this.getAllFeatures().map(f => f.properties?.resource).filter(Boolean));
+  }
+
   getCountries() {
     const codes = this.getAllFeatures().map(f => f.properties?.country).filter(c => c && c !== 'INT');
     return [...new Set(codes)];

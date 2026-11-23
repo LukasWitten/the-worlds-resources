@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "validate:data": "node scripts/validate-data.js",
-    "data:countries": "node scripts/pipeline/build-countries.js"
+    "data:countries": "node scripts/pipeline/build-countries.js",
+    "data:trade": "node scripts/pipeline/build-trade.js"
   },
   "keywords": [
     "resources",

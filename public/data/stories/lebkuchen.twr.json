@@ -21,9 +21,9 @@
       "publisher": "CEPII",
       "url": "https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37",
       "type": "dataset",
-      "accessed": "2026-11-23",
       "registryId": "baci-202601",
-      "note": "Processed by scripts/pipeline/build-trade.js into public/data/trade/2024/. Partner = country the goods were shipped from; re-exports (e.g. via the Netherlands) count for the shipping country."
+      "note": "Processed by scripts/pipeline/build-trade.js into public/data/trade/2024/. Partner = country the goods were shipped from; re-exports (e.g. via the Netherlands) count for the shipping country.",
+      "accessed": "2026-11-23"
     },
     {
       "id": "lgl-gga",
@@ -47,8 +47,8 @@
       "publisher": "umwelt-online (Deutsche Lebensmittelbuch-Kommission)",
       "url": "https://umwelt-online.de/recht/lebensmt/lebensmb.ges/yback.htm",
       "type": "secondary",
-      "accessed": "2026-11-23",
-      "note": "Elisenlebkuchen: at least 25 % almonds, hazelnuts or walnuts, at most 10 % flour. The Leitsätze were revised on 19.11.2024; check against the current official text before publishing."
+      "note": "Elisenlebkuchen: at least 25 % almonds, hazelnuts or walnuts, at most 10 % flour. The Leitsätze were revised on 19.11.2024; check against the current official text before publishing.",
+      "accessed": "2026-11-23"
     },
     {
       "id": "lebkuchen-schmidt-press",
@@ -80,8 +80,8 @@
       "publisher": "UNCTAD",
       "url": "https://unctad.org/publication/review-maritime-transport-2024",
       "type": "primary",
-      "accessed": "2026-11-23",
-      "note": "By mid-2024 tonnage through the Suez Canal was down about 70 %; ship arrivals at the Cape of Good Hope up about 89 %."
+      "note": "By mid-2024 tonnage through the Suez Canal was down about 70 %; ship arrivals at the Cape of Good Hope up about 89 %.",
+      "accessed": "2026-11-23"
     }
   ],
   "nodes": [
@@ -1819,6 +1819,7 @@
       {
         "id": "intro",
         "title": "Where does a Lebkuchen come from?",
+        "text": "Nürnberger Lebkuchen must be baked in Nuremberg – a protected geographical indication since 1996. Its ingredients come from all over the world.",
         "camera": {
           "bounds": [
             [
@@ -1838,7 +1839,6 @@
         "focus": [
           "nuremberg"
         ],
-        "text": "Nürnberger Lebkuchen must be baked in Nuremberg – a protected geographical indication since 1996. Its ingredients come from all over the world.",
         "sourceIds": [
           "lgl-gga",
           "nbg-lebkuchen"
@@ -1847,6 +1847,7 @@
       {
         "id": "nuts",
         "title": "Nuts: the heart of the dough",
+        "text": "Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country – 65 % from Turkey. 47 % of its almonds come from the United States.",
         "camera": {
           "bounds": [
             [
@@ -1877,7 +1878,6 @@
           "tr",
           "us"
         ],
-        "text": "Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country – 65 % from Turkey. 47 % of its almonds come from the United States.",
         "sourceIds": [
           "leitsaetze-backwaren",
           "baci"
@@ -1886,6 +1886,7 @@
       {
         "id": "honey",
         "title": "Honey: Germany imports the second most in the world",
+        "text": "Germany imported 80,000 tonnes of honey in 2024 – only the United States bought more. The largest suppliers: Ukraine (15 %), New Zealand, Argentina and Hungary.",
         "camera": {
           "bounds": [
             [
@@ -1912,7 +1913,6 @@
           "ua",
           "ar"
         ],
-        "text": "Germany imported 80,000 tonnes of honey in 2024 – only the United States bought more. The largest suppliers: Ukraine (15 %), New Zealand, Argentina and Hungary.",
         "sourceIds": [
           "baci"
         ]
@@ -1920,6 +1920,7 @@
       {
         "id": "spices",
         "title": "Spices from the tropics",
+        "text": "Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. 54 % of Germany's nutmeg comes from Indonesia, 39 % of its cloves from Madagascar – and 52 % of its cardamom from Guatemala.",
         "camera": {
           "bounds": [
             [
@@ -1967,7 +1968,6 @@
           "mg",
           "gt"
         ],
-        "text": "Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. 54 % of Germany's nutmeg comes from Indonesia, 39 % of its cloves from Madagascar – and 52 % of its cardamom from Guatemala.",
         "sourceIds": [
           "dm-gewuerz",
           "oekotest-gewuerz",
@@ -1977,6 +1977,7 @@
       {
         "id": "detour",
         "title": "The long way round",
+        "text": "In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope – a detour of thousands of kilometres on the way to Hamburg.",
         "camera": {
           "bounds": [
             [
@@ -1993,7 +1994,6 @@
         "focus": [
           "wp-cape"
         ],
-        "text": "In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope – a detour of thousands of kilometres on the way to Hamburg.",
         "sourceIds": [
           "unctad-rmt2024"
         ]
@@ -2001,6 +2001,7 @@
       {
         "id": "nuremberg",
         "title": "All routes lead to Nuremberg",
+        "text": "14 countries on four continents for one biscuit. The Netherlands also show up as a big spice supplier: Rotterdam and Amsterdam re-export what arrives from the tropics.",
         "camera": {
           "bounds": [
             [
@@ -2017,7 +2018,6 @@
         "focus": [
           "nuremberg"
         ],
-        "text": "14 countries on four continents for one biscuit. The Netherlands also show up as a big spice supplier: Rotterdam and Amsterdam re-export what arrives from the tropics.",
         "sourceIds": [
           "baci"
         ]

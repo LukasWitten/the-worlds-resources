@@ -121,8 +121,23 @@ function loadProject(file) {
   return { ...p, nodeMap: nodes, edgeMap: edges };
 }
 
+/** Fixed slide texts and catalogue labels per project language (meta.language); English is the fallback. */
+const UI = {
+  en: { sources: 'Sources', footer: 'Map: Natural Earth · Routes schematic', next: 'swipe →' },
+  de: { sources: 'Quellen', footer: 'Karte: Natural Earth · Routen schematisch', next: 'weiter →' }
+};
+const GOOD_LABELS = {
+  de: {
+    crude_oil: 'Rohöl', natural_gas: 'Erdgas & LNG', lithium: 'Lithium', copper: 'Kupfer', iron_ore: 'Eisenerz',
+    coal: 'Kohle', nickel: 'Nickel', cocoa: 'Kakaobohnen', honey: 'Honig', almonds: 'Mandeln', hazelnuts: 'Haselnüsse',
+    cinnamon: 'Zimt', cloves: 'Nelken', nutmeg: 'Muskatnuss & Macis', cardamom: 'Kardamom', ginger: 'Ingwer'
+  }
+};
+let LANG = 'en';
+const ui = key => (UI[LANG] || UI.en)[key];
+
 const goodColor = g => GOODS[g]?.style?.color || '#e2e8f0';
-const goodLabel = g => GOODS[g]?.label || g;
+const goodLabel = g => GOOD_LABELS[LANG]?.[g] || GOODS[g]?.label || g;
 const goodOrder = g => Object.keys(GOODS).indexOf(g);
 
 /** Which element ids are visible at each step, and which are new in it. */
@@ -309,13 +324,13 @@ function slideSvg({ project, countries, state, index, total, fmt }) {
   const legend = newGoods.map(g => {
     const label = goodLabel(g);
     const item = `<circle cx="${r1(lx + 9 * unit)}" cy="${r1(legendY - 8 * unit)}" r="${9 * unit}" fill="${goodColor(g)}"/><text x="${r1(lx + 26 * unit)}" y="${r1(legendY)}" font-size="${24 * unit}" fill="#cbd5e1">${esc(label)}</text>`;
-    lx += (26 + label.length * 13 + 30) * unit;
+    lx += (26 + label.length * 12 + 30) * unit;
     return item;
   }).join('');
 
   const sourceNames = [...new Set((step.sourceIds || []).map(id => project.sources.find(s => s.id === id)).filter(Boolean).map(s => s.publisher || s.title))];
-  const sourceLine = sourceNames.length ? `Sources: ${sourceNames.join('; ')}` : '';
-  const footer = `theworldsresources.org · Map: Natural Earth · Routes schematic`;
+  const sourceLine = sourceNames.length ? `${ui('sources')}: ${sourceNames.join('; ')}` : '';
+  const footer = `theworldsresources.org · ${ui('footer')}`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${fmt.w}" height="${fmt.h}" viewBox="0 0 ${fmt.w} ${fmt.h}" font-family="${FONT}">
 <defs>
@@ -334,7 +349,7 @@ ${legend}
 ${textBlock(bodyLines, side, fmt.text + bodySize, bodySize, bodySize * 1.38, `fill="${C.text}"`)}
 ${sourceLine ? `<text x="${side}" y="${fmt.footer - 38 * unit}" font-size="${19 * unit}" fill="${C.muted}">${esc(sourceLine)}</text>` : ''}
 <text x="${side}" y="${fmt.footer}" font-size="${19 * unit}" fill="${C.muted}">${esc(footer)}</text>
-${index + 1 < total ? `<text x="${fmt.w - side}" y="${fmt.footer}" font-size="${19 * unit}" font-weight="600" fill="${C.link}" text-anchor="end">swipe →</text>` : ''}
+${index + 1 < total ? `<text x="${fmt.w - side}" y="${fmt.footer}" font-size="${19 * unit}" font-weight="600" fill="${C.link}" text-anchor="end">${esc(ui('next'))}</text>` : ''}
 </svg>
 `;
 }
@@ -373,6 +388,7 @@ function main() {
     process.exit(1);
   }
   const project = loadProject(args.project);
+  LANG = project.meta.language || 'en';
   if (!project.story?.steps?.length) throw new Error(`${args.project} has no story`);
   const name = path.basename(args.project).replace(/\.twr\.json$/, '');
   const outDir = args.out || path.join('exports', 'stories', name);

@@ -5,7 +5,8 @@
  * are given in the BACI revision (HS17). A 4-digit code covers all its 6-digit
  * sub-codes.
  *
- * Output, public/data/trade/<year>/ (year = latest BACI year):
+ * Output, public/data/trade/index.json (years with data, latest year) and
+ * public/data/trade/<year>/ (year = latest BACI year unless --year is given):
  *   meta.json              source, years, thresholds, goods with world totals
  *   world.json             per country the top 1–3 export and import goods (world map markers)
  *   by-good/<good>.json    all bilateral flows of one good (columnar)
@@ -320,6 +321,13 @@ writeJson(path.join(outDir, 'meta.json'), {
   countries: countriesOut,
   generated: new Date().toISOString().slice(0, 10)
 }, { pretty: true });
+
+// index.json: which years exist (the app loads the latest by default)
+const available = fs.readdirSync(OUT_ROOT, { withFileTypes: true })
+  .filter(e => e.isDirectory() && /^\d{4}$/.test(e.name))
+  .map(e => Number(e.name))
+  .sort((a, b) => a - b);
+writeJson(path.join(OUT_ROOT, 'index.json'), { years: available, latest: available[available.length - 1] }, { pretty: true });
 
 const size = (dir) => fs.readdirSync(dir, { withFileTypes: true })
   .reduce((s, e) => s + (e.isDirectory() ? size(path.join(dir, e.name)) : fs.statSync(path.join(dir, e.name)).size), 0);

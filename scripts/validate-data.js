@@ -229,8 +229,15 @@ function checkTradeYear(dir) {
 }
 
 if (tradeSchema && fs.existsSync(TRADE_DIR)) {
-  for (const entry of fs.readdirSync(TRADE_DIR, { withFileTypes: true })) {
-    if (entry.isDirectory()) checkTradeYear(path.join(TRADE_DIR, entry.name));
+  const yearDirs = fs.readdirSync(TRADE_DIR, { withFileTypes: true }).filter(e => e.isDirectory()).map(e => e.name).sort();
+  for (const dir of yearDirs) checkTradeYear(path.join(TRADE_DIR, dir));
+  // index.json tells the app which years exist and which one to load first
+  const indexFile = path.join(TRADE_DIR, 'index.json');
+  const index = fs.existsSync(indexFile) ? readJson(indexFile) : (fail(indexFile, 'missing'), null);
+  if (index) {
+    const listed = (index.years || []).map(String).sort();
+    if (listed.join(',') !== yearDirs.join(',')) fail(indexFile, `years [${listed}] differ from the year folders [${yearDirs}]`);
+    if (String(index.latest) !== yearDirs[yearDirs.length - 1]) fail(indexFile, `latest ${index.latest} is not the newest year folder`);
   }
 }
 

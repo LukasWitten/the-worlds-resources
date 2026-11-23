@@ -46,6 +46,7 @@ async function bootstrap() {
   mapState.normalize = normalizeMapState;
   mapState.subscribe(onMapStateChange);
   uiController.renderResourceFilters();
+  uiController.renderMapSelects();
   uiController.refreshMap();
   heroMap.render();
   fillHomeStats();

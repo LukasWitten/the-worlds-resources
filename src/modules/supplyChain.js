@@ -89,6 +89,21 @@ class SupplyChain {
     return { upstream, selected, downstream, ids };
   }
 
+  /**
+   * Ids of everything in a country plus every supply chain that touches it
+   * (e.g. Chile → the lithium chain to Schwarzheide). Used by the country filter.
+   */
+  countryScope(country) {
+    this.ensureGraph();
+    const ids = new Set();
+    for (const f of this.byId.values()) {
+      if (f.properties.country !== country) continue;
+      const chain = this.getChain(f.properties.id);
+      chain?.ids.forEach(id => ids.add(id));
+    }
+    return ids;
+  }
+
   /** All features of a chain, from the furthest source to the furthest destination. */
   features(chain) {
     if (!chain) return [];

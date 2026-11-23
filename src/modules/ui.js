@@ -7,6 +7,20 @@ import { dataService } from './dataService.js';
 import { goods } from './goods.js';
 import { escapeHtml } from './html.js';
 import { mapState } from './mapState.js';
+import { supplyChain } from './supplyChain.js';
+
+const regionNames = typeof Intl !== 'undefined' && Intl.DisplayNames
+  ? new Intl.DisplayNames(['en'], { type: 'region' })
+  : null;
+
+/** "CL" → "Chile" (falls back to the code). */
+export function countryName(code) {
+  try {
+    return regionNames?.of(code) || code;
+  } catch {
+    return code;
+  }
+}
 
 class UIController {
   constructor() {
@@ -269,11 +283,45 @@ class UIController {
     this.setupViewModeButtons();
   }
 
-  /** View buttons only change the map state; syncMapControls() reflects it in the sidebar. */
+  /** View buttons and selects only change the map state; syncMapControls() reflects it in the sidebar. */
   setupViewModeButtons() {
     document.querySelectorAll('[data-map-view]').forEach(btn => {
-      btn.addEventListener('click', () => mapState.set({ view: btn.dataset.mapView }));
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.mapView;
+        // "Resource" keeps the last chosen resource, or starts with the first one
+        const good = view === 'good' ? (this.lastGood || goods.ids('raw')[0]) : null;
+        mapState.set({ view, good });
+      });
     });
+    document.getElementById('good-select')?.addEventListener('change', (e) => {
+      mapState.set({ view: 'good', good: e.target.value });
+    });
+    document.getElementById('country-select')?.addEventListener('change', (e) => {
+      mapState.set({ country: e.target.value || null });
+    });
+    document.getElementById('map-view-chip-reset')?.addEventListener('click', () => {
+      mapState.set({ view: 'overview', good: null, country: null });
+    });
+    this.syncMapControls(mapState.get());
+  }
+
+  /** Options of the resource and country selects (call once catalogue and data are loaded). */
+  renderMapSelects() {
+    const goodSelect = document.getElementById('good-select');
+    if (goodSelect) {
+      goodSelect.innerHTML = goods.ids('raw')
+        .map(id => `<option value="${escapeHtml(id)}">${escapeHtml(goods.icon(id))} ${escapeHtml(goods.label(id))}</option>`)
+        .join('');
+    }
+    const countrySelect = document.getElementById('country-select');
+    if (countrySelect) {
+      const countries = dataService.getCountries()
+        .map(code => ({ code, name: countryName(code) }))
+        .sort((a, b) => a.name.localeCompare(b.name));
+      countrySelect.innerHTML = '<option value="">All countries</option>' + countries
+        .map(({ code, name }) => `<option value="${escapeHtml(code)}">${escapeHtml(name)}</option>`)
+        .join('');
+    }
     this.syncMapControls(mapState.get());
   }
 
@@ -287,11 +335,30 @@ class UIController {
       btn.setAttribute('aria-pressed', String(on));
     });
 
+    if (state.good) this.lastGood = state.good;
+    document.getElementById('good-select-wrap')?.classList.toggle('hidden', state.view !== 'good');
+    const goodSelect = document.getElementById('good-select');
+    if (goodSelect && state.good) goodSelect.value = state.good;
+    const countrySelect = document.getElementById('country-select');
+    if (countrySelect) countrySelect.value = state.country || '';
+
+    // The isolated oil view is global; a country filter doesn't apply there
+    const panelCountry = document.getElementById('panel-country');
+    if (panelCountry) {
+      const off = state.view === 'oil_fields';
+      panelCountry.style.opacity = off ? '0.45' : '1';
+      panelCountry.style.pointerEvents = off ? 'none' : '';
+    }
+
     const hint = document.getElementById('view-mode-hint');
     if (hint) {
-      hint.textContent = state.view === 'oil_fields'
-        ? 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.'
-        : 'Overview shows all active resources. Oil Fields isolates major global deposits and the crude supply chain.';
+      const where = state.country ? ` touching ${countryName(state.country)}` : '';
+      hint.textContent = {
+        oil_fields: 'Isolated view: major oil deposits (lakes) + crude oil routes and hubs only.',
+        good: `All sources, routes and destinations of ${goods.label(state.good)}${where}.`
+      }[state.view] || (state.country
+        ? `All resources in ${countryName(state.country)} and the supply chains that touch it.`
+        : 'Overview shows all active resources. Resource focuses on one of them. Oil Fields isolates major global deposits and the crude supply chain.');
     }
 
     // The resource checkboxes only apply to the overview – dim them otherwise
@@ -301,6 +368,23 @@ class UIController {
       panelResources.style.opacity = off ? '0.45' : '1';
       panelResources.style.pointerEvents = off ? 'none' : '';
     }
+  }
+
+  /** Chip on the map naming the active resource / country filter, with a reset button. */
+  updateViewChip(state, visibleCount) {
+    const chip = document.getElementById('map-view-chip');
+    const text = document.getElementById('map-view-chip-text');
+    if (!chip || !text) return;
+    const parts = [];
+    if (state.view === 'good') parts.push(`${goods.icon(state.good)} ${goods.label(state.good)}`);
+    if (state.country) parts.push(countryName(state.country));
+    const show = parts.length > 0;
+    chip.classList.toggle('hidden', !show);
+    chip.classList.toggle('flex', show);
+    if (!show) return;
+    text.textContent = visibleCount > 0
+      ? parts.join(' · ')
+      : `${parts.join(' · ')}: nothing recorded yet`;
   }
 
   setupApiKeyModal() {
@@ -376,12 +460,15 @@ class UIController {
 
   /** Features the current map state + sidebar filters show. */
   visibleFeatures(state = mapState.get()) {
-    return dataService.getFilteredFeatures({ view: state.view, good: state.good });
+    const scopeIds = state.country ? supplyChain.countryScope(state.country) : null;
+    return dataService.getFilteredFeatures({ view: state.view, good: state.good, scopeIds });
   }
 
   refreshMap() {
-    const filtered = this.visibleFeatures();
+    const state = mapState.get();
+    const filtered = this.visibleFeatures(state);
     mapController.renderFeatures(filtered);
+    this.updateViewChip(state, filtered.length);
 
     const counter = document.getElementById('active-elements-count');
     if (counter) {

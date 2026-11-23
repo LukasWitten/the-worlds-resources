@@ -78,4 +78,12 @@ npm run preview
 npm run validate:data
 ```
 
-Geprüft werden: gültiges JSON, das Schema `public/data/schemas/resource-feature.schema.json`, projektweit eindeutige IDs und dass jede Route an einem sichtbaren Knoten (oder in einem Ölfeld) beginnt und endet. Fehlende Quell-URLs werden als Warnung gemeldet.
+Geprüft werden: gültiges JSON, das Schema `public/data/schemas/resource-feature.schema.json`, projektweit eindeutige IDs und dass jede Route über `from_node_id` / `to_node_id` auf existierende Knoten verweist, deren Position zum ersten bzw. letzten Koordinatenpunkt passt. Fehlende Quell-URLs werden als Warnung gemeldet.
+
+## Lizenz
+
+- **Code:** MIT License (siehe [`LICENSE`](LICENSE))
+- **Daten** (`public/data/geojson/`): Creative Commons Namensnennung 4.0 (CC BY 4.0), siehe [`public/data/LICENSE.md`](public/data/LICENSE.md)
+
+Vorgeschlagene Namensnennung bei Weiterverwendung der Daten:
+„Data: © The World's Resources contributors (theworldsresources.org), CC BY 4.0“

@@ -5,7 +5,7 @@
  */
 import { NAV, SITE } from '../lib/site.js';
 
-const { slim = false } = Astro.props;
+const { slim = false, lang } = Astro.props;
 const year = new Date().getFullYear();
 const legal = [
   { href: '/about#contact', label: 'Contact' },
@@ -14,7 +14,7 @@ const legal = [
 ];
 ---
 {slim ? (
-  <footer class="border-t border-slate-800/80 py-1 px-4 sm:px-6 lg:px-8 bg-darkbg">
+  <footer lang={lang} class="border-t border-slate-800/80 py-1 px-4 sm:px-6 lg:px-8 bg-darkbg">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[11px] leading-4 text-slate-400">
       <span>© {year} {SITE.name}<span class="hidden sm:inline"> contributors · Code MIT · Data CC BY 4.0</span></span>
       <div class="flex items-center gap-4">
@@ -24,7 +24,7 @@ const legal = [
     </div>
   </footer>
 ) : (
-  <footer class="border-t border-slate-800/80 px-4 sm:px-6 lg:px-8 bg-darkbg">
+  <footer lang={lang} class="border-t border-slate-800/80 px-4 sm:px-6 lg:px-8 bg-darkbg">
     <div class="max-w-7xl mx-auto py-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between text-sm">
       <div class="max-w-sm">
         <a href="/" class="flex items-center gap-2 text-white font-semibold">

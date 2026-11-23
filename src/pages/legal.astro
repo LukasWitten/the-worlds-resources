@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalAddress from '../components/LegalAddress.astro';
+import { SITE } from '../lib/site.js';
+---
+<BaseLayout
+  title="Legal Notice"
+  description="Legal notice (Impressum) of The World's Resources: who is responsible for this website and how to reach us."
+  breadcrumbs={[{ name: 'Legal Notice', path: '/legal' }]}
+  alternates={[{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>Legal Notice</h1>
+    <p class="text-sm text-slate-400">Deutsche Fassung: <a href="/de/impressum" hreflang="de" lang="de">Impressum</a></p>
+
+    <h2>Information pursuant to Section 5 DDG</h2>
+    <p><strong>Responsible for content:</strong></p>
+    <LegalAddress />
+
+    <h2>Contact</h2>
+    <p>Email: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+
+    <h2>About this project</h2>
+    <p>“The World's Resources” is an independent, non-commercial open-source project visualizing global resource flows. The code is licensed under the MIT License, the datasets under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. All data is based on publicly available sources; no warranty is given for completeness or accuracy.</p>
+
+    <p>How we handle personal data is described in the <a href="/privacy">privacy policy</a>.</p>
+  </article>
+</BaseLayout>

@@ -21,17 +21,22 @@ const {
   ogType = 'website',
   bodyClass = '',
   slimFooter = false,
-  mainClass = 'flex-grow'
+  mainClass = 'flex-grow',
+  lang = 'en',
+  // Same page in other languages: [{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }]
+  alternates = []
 } = Astro.props;
 
 const path = pagePath(Astro.url);
 const canonical = absoluteUrl(path);
 const fullTitle = path === '/' ? title : `${title} – ${SITE.name}`;
 const ogImage = absoluteUrl(SITE.ogImage);
-const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs)] : jsonLd;
+const homeLabel = lang === 'de' ? 'Startseite' : 'Home';
+const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs, homeLabel)] : jsonLd;
+const defaultAlternate = alternates.find(a => a.lang === 'en');
 ---
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang={lang} class="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,6 +44,8 @@ const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs)] 
   <meta name="description" content={description}>
   <meta name="theme-color" content="#0b0f19">
   {noindex ? <meta name="robots" content="noindex"> : <link rel="canonical" href={canonical}>}
+  {alternates.map(({ lang: hreflang, path: altPath }) => <link rel="alternate" hreflang={hreflang} href={absoluteUrl(altPath)}>)}
+  {defaultAlternate && <link rel="alternate" hreflang="x-default" href={absoluteUrl(defaultAlternate.path)}>}
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -52,7 +59,7 @@ const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs)] 
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content={SITE.ogImageAlt}>
-  <meta property="og:locale" content="en_US">
+  <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_US'}>
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content={fullTitle}>
   <meta name="twitter:description" content={description}>
@@ -64,17 +71,17 @@ const structuredData = breadcrumbs ? [...jsonLd, breadcrumbJsonLd(breadcrumbs)] 
 </head>
 <body class:list={['bg-darkbg text-slate-100 antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white', bodyClass]}>
   <a href="#content" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[3000] focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:text-slate-900">Skip to content</a>
-  <Nav />
+  <Nav lang={lang === 'en' ? undefined : 'en'} />
   <slot name="after-nav" />
   <main id="content" class={mainClass}>
     {breadcrumbs && (
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <Breadcrumbs crumbs={breadcrumbs} />
+        <Breadcrumbs crumbs={breadcrumbs} homeLabel={homeLabel} />
       </div>
     )}
     <slot />
   </main>
-  <Footer slim={slimFooter} />
+  <Footer slim={slimFooter} lang={lang === 'en' ? undefined : 'en'} />
   <slot name="end" />
   <script>
     import '../scripts/site.js';

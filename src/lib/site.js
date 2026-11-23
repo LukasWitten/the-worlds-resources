@@ -59,8 +59,8 @@ export function websiteJsonLd() {
 }
 
 /** crumbs: [{ name, path }] without the homepage, which is always the first item. */
-export function breadcrumbJsonLd(crumbs) {
-  const items = [{ name: 'Home', path: '/' }, ...crumbs];
+export function breadcrumbJsonLd(crumbs, homeLabel = 'Home') {
+  const items = [{ name: homeLabel, path: '/' }, ...crumbs];
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

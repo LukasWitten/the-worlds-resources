@@ -1,7 +1,7 @@
 ---
 /** Visible breadcrumb trail; the matching BreadcrumbList JSON-LD is added by the layout. */
-const { crumbs = [] } = Astro.props;
-const items = [{ name: 'Home', path: '/' }, ...crumbs];
+const { crumbs = [], homeLabel = 'Home' } = Astro.props;
+const items = [{ name: homeLabel, path: '/' }, ...crumbs];
 ---
 <nav aria-label="Breadcrumb" class="text-xs text-slate-400 mb-6">
   <ol class="flex flex-wrap items-center gap-1.5">

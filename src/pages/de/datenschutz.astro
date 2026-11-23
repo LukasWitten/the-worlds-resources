@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../lib/site.js';
+
+const ext = { target: '_blank', rel: 'noopener noreferrer' };
+---
+<BaseLayout
+  lang="de"
+  title="Datenschutzerklärung"
+  description="Datenschutzerklärung von The World's Resources: keine Cookies, kein seitenübergreifendes Tracking. Welche Anbieter beim Nutzen der Karte technische Daten sehen und warum."
+  breadcrumbs={[{ name: 'Datenschutzerklärung', path: '/de/datenschutz' }]}
+  alternates={[{ lang: 'en', path: '/privacy' }, { lang: 'de', path: '/de/datenschutz' }]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>Datenschutzerklärung</h1>
+    <p class="text-sm text-slate-400">English version: <a href="/privacy" hreflang="en" lang="en">Privacy Policy</a></p>
+
+    <h2 id="ueberblick">1. Datenschutz auf einen Blick</h2>
+    <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Verantwortlich ist die im <a href="/de/impressum">Impressum</a> genannte Person.</p>
+
+    <h2 id="hosting">2. Hosting und Content Delivery Networks (CDN)</h2>
+    <h3>Externes Hosting (Vercel)</h3>
+    <p>Diese Website wird bei einem externen Dienstleister gehostet: Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA). Personenbezogene Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert.</p>
+    <h3>Cloudflare (CDN und DNS)</h3>
+    <p>Wir nutzen Dienste der Cloudflare Inc. (101 Townsend St, San Francisco, CA 94107, USA), um die Auslieferung unserer Website abzusichern und zu beschleunigen. Cloudflare verarbeitet dabei technische Verbindungsdaten (einschließlich der IP-Adressen der Besucher), um Angriffe abzuwehren und Inhalte auszuliefern.</p>
+
+    <h2 id="kartenkacheln">3. Kartenkacheln (Anbieter der Hintergrundkarte)</h2>
+    <h3>CARTO</h3>
+    <p>Die Karten laden ihre Hintergrundbilder („Kacheln“) von CARTO (CartoDB Inc., USA). Dafür verbindet sich Ihr Browser direkt mit den Servern von CARTO, die Ihre IP-Adresse und technische Anfragedaten erhalten (z. B. Browsertyp, angefragter Kartenausschnitt). Das ist nötig, um die Karte anzuzeigen (Art. 6 Abs. 1 lit. f DSGVO, berechtigtes Interesse an einer funktionierenden Karte). <a href="https://carto.com/privacy" {...ext}>Datenschutzerklärung von CARTO ↗</a></p>
+    <h3>Esri (optional)</h3>
+    <p>Wenn Sie in den Karteneinstellungen auf „Esri Dark Canvas“ umstellen, werden die Kacheln stattdessen von Esri (Environmental Systems Research Institute, Inc., USA) geladen, mit denselben technischen Daten. <a href="https://www.esri.com/en-us/privacy/overview" {...ext}>Datenschutzerklärung von Esri ↗</a></p>
+    <p>Alle übrigen Skripte und Stylesheets dieser Website kommen von unserer eigenen Domain; weitere externe CDNs werden nicht genutzt.</p>
+
+    <h2 id="statistik">4. Besucherstatistik (Vercel Web Analytics)</h2>
+    <p>Um zu sehen, wie viele Menschen diese Website besuchen und welche Teile genutzt werden, verwenden wir Vercel Web Analytics, einen Dienst der Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA). Er arbeitet ohne Cookies und speichert nichts auf Ihrem Gerät.</p>
+    <p>Pro Seitenaufruf werden erfasst: Zeitpunkt, Seitenadresse, die zuvor besuchte Seite (Referrer), Land/Region, Browser, Betriebssystem und Gerätetyp (Desktop, Tablet oder Mobilgerät). Besucher werden nicht einzeln identifiziert: Vercel nutzt nur einen aus der Anfrage berechneten Hash, der nach 24 Stunden verworfen wird. Besuche lassen sich daher weder über mehrere Tage noch einer Person zuordnen. Wir sehen nur zusammengefasste Statistiken.</p>
+    <p>Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an anonymer Nutzungsstatistik zur Verbesserung der Website). <a href="https://vercel.com/docs/analytics/privacy-policy" {...ext}>Datenschutzhinweise zu Vercel Web Analytics ↗</a></p>
+
+    <h2 id="lokaler-speicher">5. Lokaler Speicher in Ihrem Browser</h2>
+    <p>Diese Website setzt keine Cookies und verfolgt Sie nicht über andere Websites hinweg. Wenn Sie die Einstellungen der Hintergrundkarte ändern, wird Ihre Auswahl (und ein optional eingegebener CARTO-Schlüssel) im lokalen Speicher Ihres Browsers abgelegt, damit sie beim nächsten Besuch erhalten bleibt. Diese Daten bleiben auf Ihrem Gerät und werden nie an uns übertragen. Sie können sie jederzeit über die Einstellungen Ihres Browsers löschen.</p>
+
+    <h2 id="allgemeines">6. Allgemeine Hinweise und Pflichtinformationen</h2>
+    <h3>SSL-/TLS-Verschlüsselung</h3>
+    <p>Aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte nutzt diese Seite eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers mit „https://“ beginnt, und am Schloss-Symbol.</p>
+    <h3>Kontakt per E-Mail</h3>
+    <p>Wenn Sie uns per E-Mail kontaktieren (z. B. an <a href={`mailto:${SITE.email}`}>{SITE.email}</a>), speichern wir Ihre E-Mail-Adresse und die übermittelten Daten, um Ihre Anfrage zu bearbeiten. Ohne Ihre Einwilligung geben wir diese Daten nicht weiter.</p>
+  </article>
+</BaseLayout>

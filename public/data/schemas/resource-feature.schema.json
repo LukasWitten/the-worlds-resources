@@ -84,6 +84,16 @@
         "category": {
           "enum": ["node", "edge"]
         },
+        "from_node_id": {
+          "description": "Routes only: id of the visible node or oil field where the route starts (its first coordinate).",
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$"
+        },
+        "to_node_id": {
+          "description": "Routes only: id of the visible node where the route ends (its last coordinate).",
+          "type": "string",
+          "pattern": "^[a-z0-9_-]+$"
+        },
         "type": {
           "enum": [
             "import_hub",
@@ -165,12 +175,12 @@
       }
     },
     {
-      "description": "Lines are routes (edges).",
+      "description": "Lines are routes (edges) and must reference their start and end node.",
       "if": { "properties": { "geometry": { "properties": { "type": { "enum": ["LineString", "MultiLineString"] } } } } },
       "then": {
         "properties": {
           "properties": {
-            "required": ["category"],
+            "required": ["category", "from_node_id", "to_node_id"],
             "properties": {
               "category": { "const": "edge" },
               "type": { "$ref": "#/definitions/edgeType" }

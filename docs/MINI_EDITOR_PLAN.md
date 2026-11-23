@@ -27,7 +27,7 @@ Everything runs in the browser; the user downloads JSON and submits it via PR or
 5. **Import draft** (load a previous export to continue editing)
 6. **Validation** before export
    - Routes must have ≥ 2 coordinates
-   - Start/end should snap to visible nodes
+   - Start/end must snap to visible nodes; the editor writes their ids into `from_node_id` / `to_node_id`
    - Required fields present
    - `id` auto-generated or user-defined (unique in draft)
 
@@ -79,7 +79,7 @@ No backend. No build requirement beyond what the main site already uses (Vite op
 
 - Visible node → `category: "node"`, `visible: true`
 - Waypoints → **only** middle coordinates on LineString (no Point features)
-- Route → `category: "edge"`, `type`: `pipeline` | `shipping_route` | `rail_corridor`
+- Route → `category: "edge"`, `type`: `pipeline` | `shipping_route` | `rail_corridor`, `from_node_id` / `to_node_id` = ids of the snapped start / end nodes
 - Export must be valid JSON ready to paste into `public/data/geojson/...`
 
 ---

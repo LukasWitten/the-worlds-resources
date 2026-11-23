@@ -2,6 +2,7 @@
   "type": "FeatureCollection",
   "name": "global_major_oil_fields",
   "metadata": {
+    "license": "CC-BY-4.0",
     "resource": "crude_oil",
     "layer": "oil_field_lakes",
     "version": "0.1.0",
@@ -76,8 +77,9 @@
           "everyday_impact": "A noticeable share of globally traded crude – and therefore of fuels and plastics – has at some point come from this one structure."
         },
         "source": {
-          "name": "Saudi Aramco / public estimates",
-          "year": "2018–2025"
+          "name": "U.S. EIA – Country Analysis: Saudi Arabia",
+          "year": "2018–2025",
+          "url": "https://www.eia.gov/international/analysis/country/SAU"
         }
       }
     },
@@ -152,8 +154,9 @@
           "everyday_impact": "When Venezuelan exports rise or fall, it mainly affects specific heavy-crude refineries rather than every petrol station overnight."
         },
         "source": {
-          "name": "OPEC ASB / EIA",
-          "year": "2025"
+          "name": "U.S. EIA – Country Analysis: Venezuela",
+          "year": "2025",
+          "url": "https://www.eia.gov/international/analysis/country/VEN"
         }
       }
     },
@@ -224,8 +227,9 @@
           "everyday_impact": "Canadian oil sands crude is an important feedstock for refineries in the US Midwest and beyond."
         },
         "source": {
-          "name": "AER / EIA / OPEC notes",
-          "year": "2024–2025"
+          "name": "Alberta Energy Regulator – ST98: Alberta Energy Outlook",
+          "year": "2024–2025",
+          "url": "https://www.aer.ca/providing-information/data-and-reports/statistical-reports/st98"
         }
       }
     },
@@ -288,8 +292,9 @@
           "everyday_impact": "Burgan-grade crude has long been a staple in global seaborne oil trade."
         },
         "source": {
-          "name": "Public field rankings / OPEC",
-          "year": "2020–2025"
+          "name": "U.S. EIA – Country Analysis: Kuwait",
+          "year": "2020–2025",
+          "url": "https://www.eia.gov/international/analysis/country/KWT"
         }
       }
     },
@@ -352,8 +357,9 @@
           "everyday_impact": "UAE crude is a major component of seaborne supply to Asia and Europe."
         },
         "source": {
-          "name": "ADNOC / public reports",
-          "year": "2020–2025"
+          "name": "U.S. EIA – Country Analysis: United Arab Emirates",
+          "year": "2020–2025",
+          "url": "https://www.eia.gov/international/analysis/country/ARE"
         }
       }
     },
@@ -416,8 +422,9 @@
           "everyday_impact": "Iraqi barrels are an important flexible source in the global market."
         },
         "source": {
-          "name": "Field operator reports / public estimates",
-          "year": "2020–2025"
+          "name": "bp – bp in Iraq (Rumaila field)",
+          "year": "2020–2025",
+          "url": "https://www.bp.com/about-us/what-we-do/bp-worldwide/bp-in-iraq"
         }
       }
     },
@@ -480,8 +487,9 @@
           "everyday_impact": "Offshore Saudi grades are a regular part of long-haul crude trade."
         },
         "source": {
-          "name": "Saudi Aramco / public rankings",
-          "year": "2020–2025"
+          "name": "U.S. EIA – Country Analysis: Saudi Arabia",
+          "year": "2020–2025",
+          "url": "https://www.eia.gov/international/analysis/country/SAU"
         }
       }
     },
@@ -544,8 +552,9 @@
           "everyday_impact": "US export growth in the last decade is tightly linked to this one basin."
         },
         "source": {
-          "name": "EIA / USGS assessments",
-          "year": "2023–2025"
+          "name": "U.S. EIA – Permian Basin Wolfcamp, Bone Spring, Delaware geology review",
+          "year": "2023–2025",
+          "url": "https://www.eia.gov/maps/pdf/Permian-pI_Wolfcamp-Bonespring-Delaware.pdf"
         }
       }
     }

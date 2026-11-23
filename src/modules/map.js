@@ -407,6 +407,35 @@ class MapController {
     this.layersGroup.addLayer(polyline);
   }
 
+  /**
+   * Center the map on a single feature (used for shared links).
+   * Points get a regional zoom, lines and areas are fitted into view.
+   * rightInset: width in px covered on the right (open inspector), so the
+   * feature is centered in the part of the map that is still visible.
+   */
+  focusFeature(feature, rightInset = 0) {
+    if (!this.map || !feature?.geometry) return;
+    if (feature.geometry.type === 'Point') {
+      const [lon, lat] = feature.geometry.coordinates;
+      const zoom = Math.max(this.map.getZoom(), 7);
+      const target = this.map.unproject(
+        this.map.project([lat, lon], zoom).add([rightInset / 2, 0]),
+        zoom
+      );
+      this.map.flyTo(target, zoom, { duration: 1.2 });
+      return;
+    }
+    const bounds = L.geoJSON(feature).getBounds();
+    if (bounds.isValid()) {
+      this.map.flyToBounds(bounds, {
+        paddingTopLeft: [60, 60],
+        paddingBottomRight: [60 + rightInset, 60],
+        maxZoom: 8,
+        duration: 1.2
+      });
+    }
+  }
+
   focusGermany() {
     if (this.map) {
       this.map.flyTo([51.1657, 10.4515], 6, { duration: 1.5 });

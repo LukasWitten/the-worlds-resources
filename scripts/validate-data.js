@@ -6,7 +6,9 @@
  *  - every feature matches public/data/schemas/resource-feature.schema.json
  *  - the goods catalogue matches its schema, and every feature's "resource"
  *    is a good from that catalogue
- *  - the sources register matches its schema
+ *  - the sources register and the country master data match their schemas;
+ *    every source id they name exists, every feature's "country" is a known
+ *    country (or "INT")
  *  - feature ids are unique across the whole project
  *  - every route names its start/end via from_node_id / to_node_id, the ids
  *    exist, and the first/last coordinate lies on that node (or inside that
@@ -30,6 +32,8 @@ const GOODS_PATH = path.join(DATA_ROOT, 'reference', 'goods.json');
 const GOODS_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'goods.schema.json');
 const SOURCES_PATH = path.join(DATA_ROOT, 'reference', 'sources.json');
 const SOURCES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'sources.schema.json');
+const COUNTRIES_PATH = path.join(DATA_ROOT, 'reference', 'countries.json');
+const COUNTRIES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'countries.schema.json');
 
 // How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
@@ -121,10 +125,21 @@ const sourcesRegister = checkAgainstSchema(SOURCES_PATH, SOURCES_SCHEMA_PATH);
 const sourceIds = new Set(Object.keys(sourcesRegister?.sources || {}));
 console.log(`[checked] ${SOURCES_PATH} (${sourceIds.size} sources)`);
 
+const countryData = checkAgainstSchema(COUNTRIES_PATH, COUNTRIES_SCHEMA_PATH);
+const countryCodes = new Set(Object.keys(countryData?.countries || {}));
+for (const id of countryData?.metadata?.sources || []) {
+  if (!sourceIds.has(id)) fail(COUNTRIES_PATH, `metadata.sources names unknown source "${id}" (not in ${SOURCES_PATH})`);
+}
+console.log(`[checked] ${COUNTRIES_PATH} (${countryCodes.size} countries)`);
+
 function checkFeature(file, feature, index) {
   const resource = feature?.properties?.resource;
   if (resource && !goodIds.has(resource)) {
     fail(file, `${label(feature, index)} /properties/resource "${resource}" is not a good in ${GOODS_PATH} (${[...goodIds].join(', ')})`);
+  }
+  const country = feature?.properties?.country;
+  if (country && country !== 'INT' && countryCodes.size && !countryCodes.has(country)) {
+    fail(file, `${label(feature, index)} /properties/country "${country}" is not in ${COUNTRIES_PATH}`);
   }
   if (validateFeature(feature)) return true;
   for (const msg of formatAjvErrors(validateFeature.errors)) {

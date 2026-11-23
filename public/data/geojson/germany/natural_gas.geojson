@@ -9,9 +9,9 @@
     "last_updated": "2026-11-17",
     "description": "Natural gas & LNG import terminals, major transmission pipelines, and strategic underground storage facilities in Germany.",
     "primary_sources": [
-      "Bundesnetzagentur (BNetzA)",
-      "FNB Gas (Vereinigung der Fernleitungsnetzbetreiber)",
-      "Statistisches Bundesamt (Destatis)"
+      "Federal Network Agency (Bundesnetzagentur, BNetzA)",
+      "FNB Gas (Association of German Transmission System Operators)",
+      "Federal Statistical Office of Germany (Destatis)"
     ]
   },
   "features": [
@@ -26,29 +26,29 @@
       },
       "properties": {
         "id": "lng-wilhelmshaven",
-        "name": "FSRU Wilhelmshaven (LNG Terminal Höegh Esperanza)",
+        "name": "FSRU Wilhelmshaven (LNG terminal Höegh Esperanza)",
         "resource": "natural_gas",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
-        "operator": "Uniper / Bund",
-        "capacity": "ca. 5–7,5 Mrd. m³ Gas / Jahr",
-        "summary": "Deutschlands erstes schwimmendes Importterminal für verflüssigtes Erdgas (LNG).",
-        "description": "Innerhalb von nur 10 Monaten im Jahr 2022 errichtet. Wandelt tiefkaltes Flüssiggas (-162°C) von Tankschiffen wieder in gasförmigen Zustand um und speist es direkt ins Fernleitungsnetz ein.",
+        "operator": "Uniper / German federal government",
+        "capacity": "approx. 5–7.5 bn m³ of gas / year",
+        "summary": "Germany’s first floating import terminal for liquefied natural gas (LNG).",
+        "description": "Built in just 10 months in 2022. Turns cryogenic liquefied gas (−162 °C) from tankers back into its gaseous state and feeds it directly into the transmission grid.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Wärme für Privathaushalte",
-          "Strom aus Gaskraftwerken",
-          "Industriegas für Chemie und Glas"
+          "Heat for private households",
+          "Electricity from gas-fired power plants",
+          "Industrial gas for chemicals and glass"
         ],
         "aha_moment": {
-          "title": "Wärme für Millionen Wohnzimmer",
-          "explanation": "Ein einziger LNG-Tanker speist genug Energie ein, um etwa 50.000 Einfamilienhäuser ein ganzes Jahr lang zuverlässig zu beheizen.",
-          "everyday_impact": "Sichert die warme Dusche und funktionierende Heizkörper an kalten Wintertagen im Norden und Westen."
+          "title": "Warmth for millions of living rooms",
+          "explanation": "A single LNG tanker delivers enough energy to reliably heat around 50,000 single-family homes for a whole year.",
+          "everyday_impact": "Keeps showers hot and radiators working on cold winter days in the north and west."
         },
         "source": {
-          "name": "Bundesnetzagentur Gasmonitoring",
+          "name": "Federal Network Agency gas monitoring",
           "url": "https://www.bundesnetzagentur.de",
           "year": 2025
         }
@@ -65,26 +65,26 @@
       },
       "properties": {
         "id": "lng-brunsbuettel",
-        "name": "LNG Terminal Brunsbüttel (Elbehafen)",
+        "name": "LNG Terminal Brunsbüttel (Elbe port)",
         "resource": "natural_gas",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Deutsche Energy Terminal (DET)",
-        "capacity": "ca. 4–5 Mrd. m³ Gas / Jahr",
-        "summary": "Wichtiges LNG-Terminal an der Elbmündung für Industrie und Norddeutschland.",
-        "description": "Schwimmendes Terminal an der Mündung von Elbe und Nord-Ostsee-Kanal. Versorgt direkt die energieintensive Grundstoffindustrie im ChemCoast Park Brunsbüttel und das Hamburger Umland.",
+        "capacity": "approx. 4–5 bn m³ of gas / year",
+        "summary": "Key LNG terminal at the mouth of the Elbe for industry and northern Germany.",
+        "description": "Floating terminal where the Elbe and the Kiel Canal meet. Directly supplies the energy-intensive basic materials industry in the ChemCoast Park Brunsbüttel and the area around Hamburg.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Grundstoff für Kunstdünger (Haber-Bosch)",
-          "Fernwärme Hamburg",
-          "Prozesswärme für Chemie"
+          "Feedstock for fertiliser (Haber-Bosch)",
+          "District heating for Hamburg",
+          "Process heat for chemicals"
         ],
         "aha_moment": {
-          "title": "Ohne Gas kein Brot auf dem Tisch",
-          "explanation": "Erdgas ist nicht nur Heizstoff, sondern unverzichtbarer Rohstoff zur Erzeugung von Ammoniak und Mineraldünger. Ohne Gas sinken die landwirtschaftlichen Ernteerträge drastisch.",
-          "everyday_impact": "Die Brunsbütteler Chemiebetriebe sichern über den Düngemittelmarkt die Lebensmittelversorgung ganz Mitteleuropas."
+          "title": "No gas, no bread on the table",
+          "explanation": "Natural gas is not only a heating fuel but an essential raw material for producing ammonia and mineral fertiliser. Without gas, crop yields drop drastically.",
+          "everyday_impact": "Through the fertiliser market, Brunsbüttel’s chemical plants help secure the food supply of all of Central Europe."
         },
         "source": {
           "name": "DET & FNB Gas",
@@ -104,28 +104,28 @@
       },
       "properties": {
         "id": "gas-hub-dornum",
-        "name": "Gas-Anlandestation Dornum (Europipe)",
+        "name": "Dornum gas landing station (Europipe)",
         "resource": "natural_gas",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
-        "operator": "Gassco AS (Norwegen) / Open Grid Europe",
-        "capacity": "ca. 18 Mrd. m³ Gas / Jahr",
-        "summary": "Haupteinfallstor für norwegisches Pipeline-Pipelinegas nach Deutschland.",
-        "description": "Hier endet die gigantische Nordsee-Unterwasser-Pipeline Europipe aus den norwegischen Offshore-Gasfeldern Troll und Ekofisk. Norwegen ist heute Deutschlands wichtigster Gaslieferant.",
+        "operator": "Gassco AS (Norway) / Open Grid Europe",
+        "capacity": "approx. 18 bn m³ of gas / year",
+        "summary": "Main entry point for Norwegian pipeline gas into Germany.",
+        "description": "This is where the huge Europipe subsea pipeline from the Norwegian offshore gas fields Troll and Ekofisk comes ashore. Norway is now Germany’s most important gas supplier.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Netzgas für Süd- und Westdeutschland",
-          "Prozessenergie für Stahlwerke"
+          "Grid gas for southern and western Germany",
+          "Process energy for steelworks"
         ],
         "aha_moment": {
-          "title": "Norwegens Offshore-Power am Strand",
-          "explanation": "Rund ein Drittel des gesamten deutschen Gasbedarfs kommt unsichtbar über den Meeresboden aus norwegischen Fjorden direkt hier an der ostfriesischen Küste an.",
-          "everyday_impact": "Der verlässlichste Grundpfeiler der modernen deutschen Energieversorgung."
+          "title": "Norway’s offshore power on the beach",
+          "explanation": "Around a third of Germany’s entire gas demand arrives invisibly across the seabed from Norway, landing right here on the East Frisian coast.",
+          "everyday_impact": "The most reliable pillar of Germany’s modern energy supply."
         },
         "source": {
-          "name": "Gassco AS Transport Reports",
+          "name": "Gassco AS transport reports",
           "url": "https://www.gassco.no",
           "year": 2025
         }
@@ -142,25 +142,25 @@
       },
       "properties": {
         "id": "gas-storage-rehden",
-        "name": "Gasspeicher Rehden (Niedersachsen)",
+        "name": "Rehden Gas Storage (Lower Saxony)",
         "resource": "natural_gas",
         "category": "node",
         "type": "storage_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Trading Hub Europe / SEFE",
-        "capacity": "ca. 4 Mrd. m³ Arbeitsgas (Größter Speicher Westeuropas)",
-        "summary": "Die strategische Energiereserve der Bundesrepublik Deutschland.",
-        "description": "Ein gigantischer unterirdischer Porenspeicher in 2.000 Metern Tiefe. Seine Kapazität reicht aus, um rund zwei Millionen Haushalte einen ganzen kalten Winter lang zu versorgen.",
+        "capacity": "approx. 4 bn m³ of working gas (largest storage facility in Western Europe)",
+        "summary": "Germany’s strategic energy reserve.",
+        "description": "A gigantic underground porous-rock storage facility 2,000 metres deep. Its capacity is enough to supply around two million households through an entire cold winter.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Strategische Winterreserve",
-          "Druckausgleich im nationalen Netz"
+          "Strategic winter reserve",
+          "Pressure balancing in the national grid"
         ],
         "aha_moment": {
-          "title": "Deutschlands Energiespeicher in 2 km Tiefe",
-          "explanation": "In porösen Sandsteinschichten, in denen vor Millionen Jahren natürliches Erdgas lagerte, wird heute im Sommer Gas eingelagert, um im eisigen Januar Verbrauchsspitzen abzufedern.",
-          "everyday_impact": "Verhindert Versorgungsengpässe bei extremen Kältewellen."
+          "title": "Germany’s energy store 2 km underground",
+          "explanation": "In porous sandstone layers that held natural gas millions of years ago, gas is now stored in summer to cushion peaks in demand in freezing January.",
+          "everyday_impact": "Prevents supply shortages during extreme cold spells."
         },
         "source": {
           "name": "Aggregated Gas Storage Inventory (AGSI+)",
@@ -180,28 +180,28 @@
       },
       "properties": {
         "id": "gas-hub-waidhaus",
-        "name": "Verdichterstation Waidhaus (Oberpfalz)",
+        "name": "Waidhaus Compressor Station (Upper Palatinate)",
         "resource": "natural_gas",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Open Grid Europe (OGE)",
-        "capacity": "Knotenpunkt für ca. 25 Mrd. m³ / Jahr",
-        "summary": "Zentraler kontinentaler Gaskreuzungspunkt an der deutsch-tschechischen Grenze.",
-        "description": "Historisch Einlasspunkt für russisches Gas, heute umgestellt auf Reverse-Flow: Gas kann flexibel zwischen Deutschland, Tschechien, Österreich und Südosteuropa verschoben werden.",
+        "capacity": "Hub for approx. 25 bn m³ / year",
+        "summary": "Central continental gas crossing point on the German-Czech border.",
+        "description": "Historically an entry point for Russian gas, now converted to reverse flow: gas can be moved flexibly between Germany, Czechia, Austria and south-eastern Europe.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Gasversorgung Bayerns",
-          "Transit nach Österreich und Italien"
+          "Gas supply for Bavaria",
+          "Transit to Austria and Italy"
         ],
         "aha_moment": {
-          "title": "Verdichten und Pumpen über hunderte Kilometer",
-          "explanation": "Gas verliert beim Fließen durch Reibung an Druck. Riesige Turbinen in Waidhaus komprimieren das Gas wieder auf bis zu 100 bar, damit es bis nach München oder Stuttgart strömt.",
-          "everyday_impact": "Hält Bayerns Glas- und Keramikindustrie sowie Autofabriken am Laufen."
+          "title": "Compressing and pumping over hundreds of kilometres",
+          "explanation": "Gas loses pressure through friction as it flows. Huge turbines in Waidhaus recompress it to up to 100 bar so that it keeps flowing all the way to Munich or Stuttgart.",
+          "everyday_impact": "Keeps Bavaria’s glass and ceramics industry and car factories running."
         },
         "source": {
-          "name": "Open Grid Europe Netzdaten",
+          "name": "Open Grid Europe network data",
           "url": "https://www.oge.net",
           "year": 2025
         }
@@ -236,7 +236,7 @@
       },
       "properties": {
         "id": "pipeline-netra",
-        "name": "NETRA Ferngasleitung (Dornum – Salzwedel)",
+        "name": "NETRA gas transmission pipeline (Dornum – Salzwedel)",
         "resource": "natural_gas",
         "category": "edge",
         "from_node_id": "gas-hub-dornum",
@@ -245,21 +245,21 @@
         "status": "operational",
         "operator": "Open Grid Europe / Gasunie",
         "length_km": 341,
-        "capacity": "ca. 20 Mrd. m³ / Jahr",
-        "flow_direction": "Dornum (Nordsee) → Niedersachsen → Sachsen-Anhalt",
-        "summary": "Ost-West-Hauptversorgungsachse für norwegisches Gas quer durch Norddeutschland.",
-        "description": "Verbindet die Küsten-Anlandestation Dornum mit den Speicheranlagen und dem ostdeutschen Gasnetz.",
+        "capacity": "approx. 20 bn m³ / year",
+        "flow_direction": "Dornum (North Sea) → Lower Saxony → Saxony-Anhalt",
+        "summary": "Main east-west supply axis for Norwegian gas across northern Germany.",
+        "description": "Connects the Dornum coastal landing station with storage facilities and the eastern German gas grid.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Versorgung Nord- und Ostdeutschlands"
+          "Supply for northern and eastern Germany"
         ],
         "aha_moment": {
-          "title": "Unsichtbare Hochdruckautobahn",
-          "explanation": "Ein unterirdisches 1,2-Meter-Stahlrohr transportiert mehr Energie als dutzende Hochspannungs-Stromtrassen zusammen.",
-          "everyday_impact": "Versorgt Millionen Haushalte mit verlässlicher Heizenergie."
+          "title": "An invisible high-pressure motorway",
+          "explanation": "A single underground steel pipe 1.2 metres wide carries more energy than dozens of high-voltage power lines combined.",
+          "everyday_impact": "Supplies millions of households with reliable heating energy."
         },
         "source": {
-          "name": "FNB Gas Netzentwicklungsplan",
+          "name": "FNB Gas network development plan",
           "url": "https://www.fnb-gas.de",
           "year": 2025
         }
@@ -294,7 +294,7 @@
       },
       "properties": {
         "id": "pipeline-eugal",
-        "name": "EUGAL Pipeline (Europäische Gas-Anbindungsleitung)",
+        "name": "EUGAL Pipeline (European Gas Link)",
         "resource": "natural_gas",
         "category": "edge",
         "from_node_id": "gas-hub-lubmin",
@@ -303,21 +303,21 @@
         "status": "operational",
         "operator": "Gascade Gastransport GmbH",
         "length_km": 480,
-        "capacity": "ca. 55 Mrd. m³ / Jahr",
-        "flow_direction": "Ostsee / Lubmin → Brandenburg → Sachsen → Tschechien",
-        "summary": "Leistungsstärkste Doppelstrang-Gastrasse in Mitteleuropa.",
-        "description": "Verläuft von der Ostseeküste kerzengerade nach Süden bis an die tschechische Grenze. Sie wird künftig für den Transport von Wasserstoff im Rahmen des europäischen Wasserstoff-Kernnetzes umgerüstet.",
+        "capacity": "approx. 55 bn m³ / year",
+        "flow_direction": "Baltic Sea / Lubmin → Brandenburg → Saxony → Czechia",
+        "summary": "The most powerful twin-line gas route in Central Europe.",
+        "description": "Runs dead straight south from the Baltic coast to the Czech border. It is to be converted for hydrogen transport as part of the European hydrogen core network.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Transitgas für Südosteuropa & Ostdeutschland"
+          "Transit gas for south-eastern Europe & eastern Germany"
         ],
         "aha_moment": {
-          "title": "Bereit für den grünen Wasserstoff",
-          "explanation": "Die modernste Gastrasse Deutschlands wurde bereits H2-ready gebaut und wird die Brücke in die CO2-neutrale Zukunft bilden.",
-          "everyday_impact": "Grundgerüst für die künftige saubere Energieversorgung der Industrie."
+          "title": "Ready for green hydrogen",
+          "explanation": "Germany’s most modern gas route was built hydrogen-ready and will form the bridge to a carbon-neutral future.",
+          "everyday_impact": "Backbone of industry’s future clean energy supply."
         },
         "source": {
-          "name": "Gascade Unternehmensinformationen",
+          "name": "Gascade company information",
           "url": "https://www.gascade.de",
           "year": 2025
         }
@@ -352,7 +352,7 @@
       },
       "properties": {
         "id": "pipeline-megal",
-        "name": "MEGAL Pipeline (Mittel-Europäische Gasleitung)",
+        "name": "MEGAL Pipeline (Central European Gas Pipeline)",
         "resource": "natural_gas",
         "category": "edge",
         "from_node_id": "gas-hub-waidhaus",
@@ -361,22 +361,22 @@
         "status": "operational",
         "operator": "Open Grid Europe / GRTgaz",
         "length_km": 450,
-        "capacity": "ca. 22 Mrd. m³ / Jahr",
-        "flow_direction": "Waidhaus (Bayern) → Nürnberg → Karlsruhe → Saarland / Frankreich",
-        "summary": "Die große Süddeutsche Gas-Transversale quer durch Bayern und Baden-Württemberg.",
-        "description": "Verbindet Süddeutschland mit den westeuropäischen Fernleitungsnetzen und sichert die Energieversorgung der süddeutschen Automobil-, Maschinenbau- und Chemiecluster.",
+        "capacity": "approx. 22 bn m³ / year",
+        "flow_direction": "Waidhaus (Bavaria) → Nuremberg → Karlsruhe → Saarland / France",
+        "summary": "The great southern German gas transversal across Bavaria and Baden-Württemberg.",
+        "description": "Connects southern Germany with the western European transmission networks and secures the energy supply of southern Germany’s automotive, engineering and chemical clusters.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Industriegas Süddeutschland",
-          "Fernwärme München und Nürnberg"
+          "Industrial gas for southern Germany",
+          "District heating for Munich and Nuremberg"
         ],
         "aha_moment": {
-          "title": "Die Lebensader der süddeutschen Industrie",
-          "explanation": "Von BMW über Audi bis hin zur Glasherstellung im Bayerischen Wald: Ohne den konstanten Druck der MEGAL stünden die Fertigungsbänder still.",
-          "everyday_impact": "Hält hunderttausende Industriearbeitsplätze im Süden Deutschlands produktiv."
+          "title": "The lifeline of southern German industry",
+          "explanation": "From BMW and Audi to glassmaking in the Bavarian Forest: without the constant pressure of the MEGAL, production lines would stand still.",
+          "everyday_impact": "Keeps hundreds of thousands of industrial jobs in southern Germany productive."
         },
         "source": {
-          "name": "Open Grid Europe MEGAL Datenblatt",
+          "name": "Open Grid Europe MEGAL data sheet",
           "url": "https://www.oge.net",
           "year": 2025
         }
@@ -393,26 +393,26 @@
       },
       "properties": {
         "id": "gas-hub-salzwedel",
-        "name": "Gas Hub Salzwedel (NETRA Endpunkt)",
+        "name": "Salzwedel Gas Hub (NETRA end point)",
         "resource": "natural_gas",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "GASCADE Gastransport / Open Grid Europe",
-        "capacity": "Wichtiger Verteilerknoten Norddeutschland",
-        "summary": "Östlicher End- und Übergabepunkt der NETRA-Ferngasleitung.",
-        "description": "An der Station Salzwedel wird Erdgas aus der NETRA in das weiterführende deutsche Fernleitungsnetz übergeben. Der Knoten verbindet norddeutsche Anlandungen mit Verbrauchsschwerpunkten und Speichern.",
+        "capacity": "Important distribution hub for northern Germany",
+        "summary": "Eastern end and transfer point of the NETRA gas transmission pipeline.",
+        "description": "At the Salzwedel station, natural gas from the NETRA is handed over to the onward German transmission network. The hub links northern German landing points with centres of consumption and storage facilities.",
         "supply_chain_stage": "transmission",
         "consumer_products": [
-          "Haushaltsgas",
-          "Industriegas",
-          "Kraftwerkseinsatz"
+          "Household gas",
+          "Industrial gas",
+          "Power generation"
         ],
         "aha_moment": {
-          "title": "Vom Nordseegas ins Netz",
-          "explanation": "Gas, das in Dornum oder Wilhelmshaven anlandet, fließt über die NETRA bis nach Salzwedel und wird von hier aus ins gesamte deutsche Netz verteilt.",
-          "everyday_impact": "Ein Teil des Erdgases, das in norddeutschen Haushalten und Kraftwerken ankommt, passiert diesen Knoten."
+          "title": "From North Sea gas into the grid",
+          "explanation": "Gas landing in Dornum or Wilhelmshaven flows through the NETRA to Salzwedel and is distributed from here across the whole German grid.",
+          "everyday_impact": "Part of the natural gas that reaches homes and power plants in northern Germany passes through this hub."
         },
         "source": {
           "name": "FNB Gas / GASCADE",
@@ -432,26 +432,26 @@
       },
       "properties": {
         "id": "gas-hub-eugal-south",
-        "name": "EUGAL Süd-Übergabe (Deutsch-Tschechische Grenze)",
+        "name": "EUGAL southern transfer point (German-Czech border)",
         "resource": "natural_gas",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "GASCADE Gastransport",
-        "capacity": "Hochdruck-Übergabe in Richtung Tschechien / Süddeutschland",
-        "summary": "Südlicher End- und Übergabepunkt der EUGAL-Pipeline.",
-        "description": "Die EUGAL transportiert Erdgas von der Ostseeküste südwärts. An diesem Knoten wird Gas in Richtung tschechisches Netz und süddeutsche Verbrauchszentren übergeben.",
+        "capacity": "High-pressure transfer towards Czechia / southern Germany",
+        "summary": "Southern end and transfer point of the EUGAL pipeline.",
+        "description": "The EUGAL carries natural gas south from the Baltic coast. At this hub, gas is handed over towards the Czech grid and southern German centres of consumption.",
         "supply_chain_stage": "transmission",
         "consumer_products": [
-          "Haushaltsgas",
-          "Industriegas",
-          "Export / Transit"
+          "Household gas",
+          "Industrial gas",
+          "Export / transit"
         ],
         "aha_moment": {
-          "title": "Gas-Autobahn nach Süden",
-          "explanation": "EUGAL ist eine der größten deutschen Ferngasleitungen und verbindet die Ostsee-Anlandung mit dem Süden und den Nachbarländern.",
-          "everyday_impact": "Gas aus dieser Trasse kann sowohl in deutschen Haushalten als auch in benachbarten Ländern ankommen."
+          "title": "A gas motorway to the south",
+          "explanation": "EUGAL is one of Germany’s largest gas transmission pipelines, linking the Baltic landing point with the south and neighbouring countries.",
+          "everyday_impact": "Gas from this route can end up in German homes as well as in neighbouring countries."
         },
         "source": {
           "name": "GASCADE / FNB Gas",
@@ -471,26 +471,26 @@
       },
       "properties": {
         "id": "gas-hub-megal-west",
-        "name": "MEGAL West-Übergabe (Richtung Frankreich)",
+        "name": "MEGAL western transfer point (towards France)",
         "resource": "natural_gas",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "GRTgaz Deutschland / Open Grid Europe",
-        "capacity": "Wichtige West-Ost-Verbindung",
-        "summary": "Westlicher End- und Übergabepunkt der MEGAL-Pipeline.",
-        "description": "Die MEGAL (Mittel-Europäische Gasleitung) ist eine der zentralen Ost-West-Achsen im deutschen Fernleitungsnetz. An diesem Knoten wird Gas in Richtung Frankreich und den südwestlichen Raum übergeben.",
+        "capacity": "Important west-east connection",
+        "summary": "Western end and transfer point of the MEGAL pipeline.",
+        "description": "The MEGAL (Central European Gas Pipeline) is one of the central east-west axes of the German transmission network. At this hub, gas is handed over towards France and the south-west.",
         "supply_chain_stage": "transmission",
         "consumer_products": [
-          "Haushaltsgas",
-          "Industriegas",
-          "Grenzüberschreitender Transit"
+          "Household gas",
+          "Industrial gas",
+          "Cross-border transit"
         ],
         "aha_moment": {
-          "title": "Ost-West-Gasbrücke",
-          "explanation": "Über die MEGAL fließt Gas quer durch Süddeutschland – von der tschechischen Grenze bis an die französische Grenze.",
-          "everyday_impact": "Viele Gaslieferungen in Süd- und Westdeutschland sowie in Nachbarländer nutzen diese Trasse."
+          "title": "An east-west gas bridge",
+          "explanation": "Through the MEGAL, gas flows right across southern Germany – from the Czech border to the French border.",
+          "everyday_impact": "Many gas deliveries in southern and western Germany and to neighbouring countries use this route."
         },
         "source": {
           "name": "FNB Gas / GRTgaz",
@@ -510,26 +510,26 @@
       },
       "properties": {
         "id": "gas-hub-lubmin",
-        "name": "Anlandestation Lubmin / Greifswald (EUGAL Start)",
+        "name": "Lubmin / Greifswald landing station (EUGAL start)",
         "resource": "natural_gas",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
         "operator": "GASCADE Gastransport",
-        "capacity": "Ostsee-Anlandepunkt",
-        "summary": "Nördlicher Startpunkt der EUGAL an der Ostseeküste.",
-        "description": "Bei Lubmin / Greifswald wird Erdgas aus Ostsee-Verbindungen an Land gebracht und in die EUGAL eingespeist. Der Standort ist einer der zentralen Import- und Verteilknoten im Nordosten.",
+        "capacity": "Baltic Sea landing point",
+        "summary": "Northern starting point of the EUGAL on the Baltic coast.",
+        "description": "Near Lubmin / Greifswald, natural gas from Baltic Sea connections is brought ashore and fed into the EUGAL. The site is one of the central import and distribution hubs in the north-east.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Haushaltsgas",
-          "Industriegas",
-          "Kraftwerkseinsatz"
+          "Household gas",
+          "Industrial gas",
+          "Power generation"
         ],
         "aha_moment": {
-          "title": "Ostsee-Tor für Erdgas",
-          "explanation": "Hier kommt Gas aus der Ostsee an und beginnt seine Reise durch das deutsche Fernleitungsnetz nach Süden.",
-          "everyday_impact": "Ein Teil des Gases, das in Ost- und Süddeutschland ankommt, startet an diesem Punkt."
+          "title": "Baltic gateway for natural gas",
+          "explanation": "This is where gas from the Baltic Sea arrives and begins its journey south through the German transmission network.",
+          "everyday_impact": "Part of the gas that reaches eastern and southern Germany starts its journey here."
         },
         "source": {
           "name": "GASCADE / FNB Gas",

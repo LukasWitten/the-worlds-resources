@@ -9,9 +9,9 @@
     "last_updated": "2026-11-17",
     "description": "Crude oil import ports, processing refineries, and key supply pipelines for Germany.",
     "primary_sources": [
-      "Bundesnetzagentur (BNetzA)",
-      "Statistisches Bundesamt (Destatis)",
-      "en2x - Wirtschaftsverband Fuels und Energie e.V. (ehem. MWV)",
+      "Federal Network Agency (Bundesnetzagentur, BNetzA)",
+      "Federal Statistical Office of Germany (Destatis)",
+      "en2x – German Fuels and Energy Association (formerly MWV)",
       "OpenStreetMap Infrastructure Data"
     ]
   },
@@ -49,7 +49,7 @@
           "everyday_impact": "A large share of the fuel used in Lower Saxony, North Rhine-Westphalia and Hamburg has passed through this hub before reaching a refinery and finally a filling station."
         },
         "source": {
-          "name": "NWO / en2x Jahresbericht",
+          "name": "NWO / en2x annual report",
           "url": "https://www.nwo-ol.de/",
           "year": 2025
         }
@@ -66,29 +66,29 @@
       },
       "properties": {
         "id": "rostock-port",
-        "name": "Ölhafen Rostock",
+        "name": "Rostock Oil Port",
         "resource": "crude_oil",
         "category": "node",
         "type": "import_hub",
         "status": "under_expansion",
         "country": "DE",
         "operator": "Rostock Port GmbH",
-        "capacity": "ca. 3,5–9 Mio. Tonnen / Jahr (im Ausbau)",
-        "summary": "Strategischer Ostsee-Einfuhrhafen zur Versorgung Ostdeutschlands.",
-        "description": "Seit dem Stopp der Druschba-Pipeline-Lieferungen aus Russland ist der Hafen Rostock die lebenswichtige Versorgungsader für die Raffinerie PCK Schwedt. Tanker aus Norwegen, Nordamerika und Westafrika entladen hier.",
+        "capacity": "approx. 3.5–9 million tonnes / year (being expanded)",
+        "summary": "Strategic Baltic Sea import port supplying eastern Germany.",
+        "description": "Since deliveries through Russia’s Druzhba pipeline stopped, the port of Rostock has become the vital supply artery for the PCK refinery in Schwedt. Tankers from Norway, North America and West Africa discharge here.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Flugbenzin für Flughafen BER",
-          "Diesel & Heizöl für Berlin-Brandenburg",
-          "Straßenbitumen"
+          "Jet fuel for Berlin Brandenburg Airport (BER)",
+          "Diesel & heating oil for Berlin-Brandenburg",
+          "Road bitumen"
         ],
         "aha_moment": {
-          "title": "Ostsee-Lebensader statt Druschba",
-          "explanation": "Innerhalb kürzester Zeit wurde Rostock von einem regionalen Terminal zur geopolitischen Schlüsselachse für die Energiesicherheit der deutschen Hauptstadtregion umfunktioniert.",
-          "everyday_impact": "Sichert die Kraftstoffversorgung für Rettungsdienste, Busse und Pkw in Berlin und Brandenburg."
+          "title": "A Baltic lifeline instead of Druzhba",
+          "explanation": "Within a very short time, Rostock was turned from a regional terminal into a geopolitical key axis for the energy security of Germany’s capital region.",
+          "everyday_impact": "Secures the fuel supply for emergency services, buses and cars in Berlin and Brandenburg."
         },
         "source": {
-          "name": "Bundesministerium für Wirtschaft und Klimaschutz (BMWK)",
+          "name": "German Federal Ministry for Economic Affairs and Climate Action (BMWK)",
           "url": "https://www.bmwk.de",
           "year": 2025
         }
@@ -105,26 +105,26 @@
       },
       "properties": {
         "id": "trieste-port",
-        "name": "Hafen Triest (SIOT Marine Terminal, Italien)",
+        "name": "Port of Trieste (SIOT Marine Terminal, Italy)",
         "resource": "crude_oil",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "IT",
         "operator": "SIOT / TAL Group",
-        "capacity": "ca. 43 Mio. Tonnen Rohöl / Jahr",
-        "summary": "Südliches Einfallstor für Rohöl nach Bayern, Baden-Württemberg und Mitteleuropa.",
-        "description": "Rohöltanker aus dem Mittelmeer, Nordafrika und dem Nahen Osten entladen in Triest. Von hier aus pumpt die Transalpine Ölleitung (TAL) das Öl über die Alpen direkt in süddeutsche Raffinerien.",
+        "capacity": "approx. 43 million tonnes of crude oil / year",
+        "summary": "Southern gateway for crude oil to Bavaria, Baden-Württemberg and Central Europe.",
+        "description": "Crude oil tankers from the Mediterranean, North Africa and the Middle East discharge in Trieste. From here, the Transalpine Pipeline (TAL) pumps the oil across the Alps directly to southern German refineries.",
         "supply_chain_stage": "import",
         "consumer_products": [
-          "Kraftstoffe für Süddeutschland",
-          "Industrieschmierstoffe für den Maschinenbau",
-          "Heizöl für den Alpenraum"
+          "Fuels for southern Germany",
+          "Industrial lubricants for mechanical engineering",
+          "Heating oil for the Alpine region"
         ],
         "aha_moment": {
-          "title": "Öl fließt über die Alpen",
-          "explanation": "Über 90% des Rohöls in Bayern und Baden-Württemberg kommt nicht aus der Nordsee, sondern wird über Triest und spektakuläre Bergtunnel quer durch Österreich nach Deutschland gepumpt.",
-          "everyday_impact": "Treibstoff für jeden Pkw und Lkw auf Bayerns Autobahnen stammt ursprünglich aus Schiffen in der Adria."
+          "title": "Oil flows across the Alps",
+          "explanation": "More than 90% of the crude oil in Bavaria and Baden-Württemberg does not come from the North Sea – it is pumped via Trieste and spectacular mountain tunnels right across Austria into Germany.",
+          "everyday_impact": "The fuel for every car and truck on Bavaria’s motorways originally arrived on ships in the Adriatic."
         },
         "source": {
           "name": "TAL Group (Transalpine Pipeline)",
@@ -144,31 +144,31 @@
       },
       "properties": {
         "id": "refinery-schwedt",
-        "name": "PCK Raffinerie Schwedt",
+        "name": "PCK Refinery Schwedt",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "PCK Raffinerie GmbH",
-        "capacity": "ca. 11,5 Mio. Tonnen / Jahr",
-        "summary": "Herzstück der Kraftstoffversorgung für Berlin, Brandenburg und Westpolen.",
-        "description": "Die PCK Raffinerie verarbeitet Rohöl zu hochreinen Treibstoffen. Sie versorgt ca. 95% aller Tankstellen in Berlin und Brandenburg sowie den Hauptstadtflughafen BER direkt per Pipeline.",
+        "capacity": "approx. 11.5 million tonnes / year",
+        "summary": "The heart of the fuel supply for Berlin, Brandenburg and western Poland.",
+        "description": "The PCK refinery processes crude oil into high-purity fuels. It supplies around 95% of all filling stations in Berlin and Brandenburg as well as the capital’s BER airport directly by pipeline.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Benzin (Super 95 / Super E10)",
-          "Diesel für Nahverkehr und Speditionen",
-          "Flugturbinenkraftstoff Jet A-1 für BER",
-          "Bitumen für den Straßenbau",
-          "Propan & Butan (Flüssiggas)"
+          "Gasoline (Super 95 / Super E10)",
+          "Diesel for public transport and haulage companies",
+          "Jet A-1 aviation fuel for BER",
+          "Bitumen for road construction",
+          "Propane & butane (LPG)"
         ],
         "aha_moment": {
-          "title": "Jeder Flug ab Berlin fliegt mit Schwedt",
-          "explanation": "Nahezu jeder Linienflug, der vom Hauptstadtflughafen BER abhebt, wird durch Kerosin betankt, das in Schwedt raffiniert und über eine dedizierte Direkt-Pipeline nach Schönefeld gepumpt wird.",
-          "everyday_impact": "Dein Urlaubsflug nach Mallorca oder deine Autofahrt über den Berliner Ring wird von hier angetrieben."
+          "title": "Every flight from Berlin flies on Schwedt",
+          "explanation": "Almost every scheduled flight taking off from Berlin’s BER airport is fuelled with kerosene refined in Schwedt and pumped to Schönefeld through a dedicated direct pipeline.",
+          "everyday_impact": "Your holiday flight to Mallorca or your drive around the Berlin ring road is powered from here."
         },
         "source": {
-          "name": "PCK Raffinerie GmbH Unternehmensprofil",
+          "name": "PCK Raffinerie GmbH company profile",
           "url": "https://www.pck.de/",
           "year": 2025
         }
@@ -185,31 +185,31 @@
       },
       "properties": {
         "id": "refinery-leuna",
-        "name": "TotalEnergies Raffinerie Mitteldeutschland (Leuna)",
+        "name": "TotalEnergies Refinery Central Germany (Leuna)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "TotalEnergies",
-        "capacity": "ca. 12 Mio. Tonnen / Jahr",
-        "summary": "Modernste Raffinerie Deutschlands und Energieversorger Mitteldeutschlands.",
-        "description": "In Leuna (Sachsen-Anhalt) steht eine der fortschrittlichsten Großraffinerien Europas. Sie versorgt rund 1.300 Tankstellen in Mitteldeutschland und liefert petrochemische Grundstoffe für den Chemiestandort Leuna.",
+        "capacity": "approx. 12 million tonnes / year",
+        "summary": "Germany’s most modern refinery and the energy supplier of central Germany.",
+        "description": "Leuna (Saxony-Anhalt) is home to one of the most advanced large refineries in Europe. It supplies around 1,300 filling stations in central Germany and delivers petrochemical feedstocks to the Leuna chemical site.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Ottokraftstoffe & Diesel",
-          "Methanol für chemische Synthesen",
-          "Heizöl",
-          "Flüssiggas",
-          "Schwefel für Pharmazie und Düngemittel"
+          "Gasoline & diesel",
+          "Methanol for chemical synthesis",
+          "Heating oil",
+          "Liquefied petroleum gas (LPG)",
+          "Sulphur for pharmaceuticals and fertilisers"
         ],
         "aha_moment": {
-          "title": "Vom Rohöl zur Aspirin-Schachtel",
-          "explanation": "Aus den Grundstoffen in Leuna entstehen nicht nur Treibstoffe, sondern Vorprodukte für Kunststoffe, Dämmstoffe für Hausfassaden und pharmazeutische Hilfsstoffe.",
-          "everyday_impact": "Sichert die Mobilität in Sachsen, Sachsen-Anhalt und Thüringen und liefert Kunststoffe für Verpackungen."
+          "title": "From crude oil to a box of aspirin",
+          "explanation": "Leuna’s base materials are turned not only into fuels but also into precursors for plastics, insulation for house facades and pharmaceutical excipients.",
+          "everyday_impact": "Keeps Saxony, Saxony-Anhalt and Thuringia moving and supplies plastics for packaging."
         },
         "source": {
-          "name": "TotalEnergies Mitteldeutschland",
+          "name": "TotalEnergies Central Germany",
           "url": "https://totalenergies.de/",
           "year": 2025
         }
@@ -226,31 +226,31 @@
       },
       "properties": {
         "id": "refinery-miro",
-        "name": "MiRO Mineraloelraffinerie Oberrhein (Karlsruhe)",
+        "name": "MiRO Upper Rhine Refinery (Karlsruhe)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "MiRO GmbH & Co. KG",
-        "capacity": "ca. 14,9 Mio. Tonnen / Jahr",
-        "summary": "Größte Kraftstoffraffinerie Deutschlands und zentraler Pfeiler Südwestdeutschlands.",
-        "description": "Jeder vierte in Deutschland verbrauchte Liter Benzin und Diesel stammt aus der Karlsruher MiRO. Sie wird maßgeblich über die Transalpine Pipeline (TAL) aus Triest gespeist.",
+        "capacity": "approx. 14.9 million tonnes / year",
+        "summary": "Germany’s largest fuel refinery and a central pillar of the south-west.",
+        "description": "One in four litres of gasoline and diesel consumed in Germany comes from MiRO in Karlsruhe. It is fed mainly via the Transalpine Pipeline (TAL) from Trieste.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Superbenzin & Super Plus",
-          "Dieselkraftstoff",
-          "Propylen für Automobil- und Elektronikbauteile",
-          "Heizöl extraleicht",
-          "Petrolkoks für Aluminiumhütten"
+          "Premium gasoline & Super Plus",
+          "Diesel fuel",
+          "Propylene for automotive and electronic components",
+          "Extra-light heating oil",
+          "Petroleum coke for aluminium smelters"
         ],
         "aha_moment": {
-          "title": "25% aller deutschen Autofahrten",
-          "explanation": "Statistisch gesehen stammt jede vierte Tankfüllung in ganz Deutschland aus den Destillationstürmen am Rheinufer in Karlsruhe.",
-          "everyday_impact": "Treibt Autos, Lkw und Landmaschinen in ganz Baden-Württemberg, Rheinland-Pfalz und Hessen an."
+          "title": "25% of all car journeys in Germany",
+          "explanation": "Statistically, one in four tank fills anywhere in Germany comes from the distillation towers on the banks of the Rhine in Karlsruhe.",
+          "everyday_impact": "Powers cars, trucks and farm machinery throughout Baden-Württemberg, Rhineland-Palatinate and Hesse."
         },
         "source": {
-          "name": "MiRO Jahresdaten & en2x",
+          "name": "MiRO annual data & en2x",
           "url": "https://www.miro-ka.de/",
           "year": 2025
         }
@@ -267,27 +267,27 @@
       },
       "properties": {
         "id": "refinery-rheinland",
-        "name": "Shell Energy and Chemicals Park Rheinland (Köln/Wesseling)",
+        "name": "Shell Energy and Chemicals Park Rheinland (Cologne/Wesseling)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Shell Deutschland GmbH",
-        "capacity": "ca. 17 Mio. Tonnen / Jahr (inkl. Chemieverbund)",
-        "summary": "Größter zusammenhängender Raffinerie- und Chemieverbundkomplex in Deutschland.",
-        "description": "Die Standorte Wesseling und Godorf sind direkt per Pipeline mit Rotterdam und Wilhelmshaven vernetzt. Sie beliefern u.a. die Flughäfen Frankfurt am Main und Köln/Bonn mit Kerosin.",
+        "capacity": "approx. 17 million tonnes / year (incl. chemical complex)",
+        "summary": "Germany’s largest integrated refinery and chemicals complex.",
+        "description": "The Wesseling and Godorf sites are connected directly by pipeline to Rotterdam and Wilhelmshaven. Among others, they supply Frankfurt and Cologne/Bonn airports with kerosene.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Kerosin für Flughafen Frankfurt (FRA) & Köln/Bonn",
-          "Benzin & Diesel für Nordrhein-Westfalen",
-          "Basischemikalien für die Pharmaindustrie",
-          "Synthetische Schmieröle"
+          "Kerosene for Frankfurt (FRA) & Cologne/Bonn airports",
+          "Gasoline & diesel for North Rhine-Westphalia",
+          "Base chemicals for the pharmaceutical industry",
+          "Synthetic lubricants"
         ],
         "aha_moment": {
-          "title": "Der Treibstoff für Europas größten Luftverkehrsknoten",
-          "explanation": "Der Flughafen Frankfurt verbraucht gigantische Mengen Kerosin. Ein Großteil davon wird in Wesseling produziert und gelangt über unterirdische Pipelines emissionsfrei direkt an die Flugzeugstellplätze.",
-          "everyday_impact": "Ermöglicht weltweiten Fracht- und Personenverkehr ab Frankfurt am Main."
+          "title": "Fuel for Europe’s biggest aviation hub",
+          "explanation": "Frankfurt Airport uses enormous amounts of kerosene. Much of it is produced in Wesseling and travels through underground pipelines, without truck traffic, straight to the aircraft stands.",
+          "everyday_impact": "Enables worldwide cargo and passenger traffic from Frankfurt am Main."
         },
         "source": {
           "name": "Shell Deutschland & BNetzA",
@@ -307,27 +307,27 @@
       },
       "properties": {
         "id": "refinery-gelsenkirchen",
-        "name": "BP Raffinerie Gelsenkirchen (Horst & Scholven)",
+        "name": "BP Refinery Gelsenkirchen (Horst & Scholven)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Ruhr Oel GmbH / BP Europa SE",
-        "capacity": "ca. 12,8 Mio. Tonnen / Jahr",
-        "summary": "Petrochemisches Kraftzentrum im Herzen des Ruhrgebiets.",
-        "description": "Eng integriert in den nordwesteuropäischen Pipeline-Verbund. Neben Kraftstoffen werden hier Vorprodukte für die gesamte chemische Industrie des Ruhrgebiets erzeugt.",
+        "capacity": "approx. 12.8 million tonnes / year",
+        "summary": "Petrochemical powerhouse in the heart of the Ruhr area.",
+        "description": "Closely integrated into the north-west European pipeline network. Besides fuels, it produces feedstocks for the entire chemical industry of the Ruhr area.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Kraftstoffe",
-          "Naphtha für Steamcracker (Kunststoffproduktion)",
-          "Ethylen & Propylen",
-          "Ammoniak"
+          "Fuels",
+          "Naphtha for steam crackers (plastics production)",
+          "Ethylene & propylene",
+          "Ammonia"
         ],
         "aha_moment": {
-          "title": "Vom Ölteppich zum Smartphone-Gehäuse",
-          "explanation": "Das aus Wilhelmshaven gelieferte Naphtha wird hier in Ethylen aufgespalten – die Grundlage für Polyethylen, aus dem moderne Smartphone-Displays, Kabelisolierungen und Medizinprodukte bestehen.",
-          "everyday_impact": "Ohne diese Petrochemie gäbe es keine modernen Bildschirme, Leichtbauautos oder sterile Verpackungen."
+          "title": "From crude oil to smartphone casing",
+          "explanation": "Naphtha delivered from Wilhelmshaven is cracked into ethylene here – the basis for polyethylene, used in modern smartphone displays, cable insulation and medical products.",
+          "everyday_impact": "Without this petrochemistry there would be no modern screens, lightweight cars or sterile packaging."
         },
         "source": {
           "name": "BP Europa SE",
@@ -347,27 +347,27 @@
       },
       "properties": {
         "id": "refinery-bayernoil",
-        "name": "Bayernoil Raffinerie (Vohburg & Neustadt an der Donau)",
+        "name": "Bayernoil Refinery (Vohburg & Neustadt an der Donau)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Bayernoil Raffineriegesellschaft mbH",
-        "capacity": "ca. 10,3 Mio. Tonnen / Jahr",
-        "summary": "Zentrale Energiequelle für Bayern und Teile Österreichs.",
-        "description": "Erreicht über die TAL-Pipeline aus Triest. Produziert Kraftstoffe für den bayerischen Markt und beliefert das bayerische Chemiedreieck (Burghausen).",
+        "capacity": "approx. 10.3 million tonnes / year",
+        "summary": "Central energy source for Bavaria and parts of Austria.",
+        "description": "Supplied via the TAL pipeline from Trieste. Produces fuels for the Bavarian market and supplies the Bavarian Chemical Triangle (Burghausen).",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Superbenzin & Diesel",
-          "Flüssiggas (LPG)",
-          "Kerosin für Flughafen München (MUC)",
+          "Premium gasoline & diesel",
+          "Liquefied petroleum gas (LPG)",
+          "Kerosene for Munich Airport (MUC)",
           "Bitumen"
         ],
         "aha_moment": {
-          "title": "Der Motor des Südens",
-          "explanation": "Der Flughafen München wird direkt aus Bayernoil und Burghausen mit Flugturbinenkraftstoff versorgt. Auch Bayerns Industrie stützt sich auf deren Prozesswärme und Grundstoffe.",
-          "everyday_impact": "Sichert Wärme und Mobilität für Millionen Menschen im Freistaat Bayern."
+          "title": "The engine of the south",
+          "explanation": "Munich Airport is supplied with jet fuel directly from Bayernoil and Burghausen. Bavaria’s industry also relies on their process heat and base materials.",
+          "everyday_impact": "Secures heat and mobility for millions of people in the Free State of Bavaria."
         },
         "source": {
           "name": "Bayernoil Raffineriegesellschaft",
@@ -387,30 +387,30 @@
       },
       "properties": {
         "id": "refinery-lingen",
-        "name": "BP Raffinerie Lingen (Emsland)",
+        "name": "BP Refinery Lingen (Emsland)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "BP Europa SE",
-        "capacity": "ca. 4,7 Mio. Tonnen / Jahr",
-        "summary": "Spezialisierte Raffinerie und Vorreiter bei grünem Wasserstoff und Co-Processing.",
-        "description": "Über die NWO-Pipeline aus Wilhelmshaven versorgt. Lingen nimmt heute eine Pionierrolle ein, indem fossiles Rohöl zunehmend mit biogenen Reststoffen und grünem Wasserstoff für nachhaltige Flugkraftstoffe (SAF) kombiniert wird.",
+        "capacity": "approx. 4.7 million tonnes / year",
+        "summary": "Specialised refinery and pioneer in green hydrogen and co-processing.",
+        "description": "Supplied via the NWO pipeline from Wilhelmshaven. Lingen is taking a pioneering role today by increasingly combining fossil crude oil with biogenic residues and green hydrogen to make sustainable aviation fuel (SAF).",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Kraftstoffe",
-          "Heizöl",
-          "Nachhaltiger Flugkraftstoff (SAF)",
-          "Vorprodukte für Textilfasern"
+          "Fuels",
+          "Heating oil",
+          "Sustainable aviation fuel (SAF)",
+          "Precursors for textile fibres"
         ],
         "aha_moment": {
-          "title": "Die Brücke in die Zukunft",
-          "explanation": "Hier trifft traditionelle Rohölverarbeitung auf Deutschlands größte industrielle Elektrolyseure für grünen Wasserstoff.",
-          "everyday_impact": "Zeigt, wie der Übergang von fossiler Infrastruktur zu erneuerbaren E-Fuels real vollzogen wird."
+          "title": "The bridge to the future",
+          "explanation": "Here, traditional crude oil processing meets Germany’s largest industrial electrolysers for green hydrogen.",
+          "everyday_impact": "Shows how the transition from fossil infrastructure to renewable e-fuels is actually taking place."
         },
         "source": {
-          "name": "BP Raffinerie Lingen Profil",
+          "name": "BP Refinery Lingen profile",
           "url": "https://www.bp.com",
           "year": 2025
         }
@@ -427,27 +427,27 @@
       },
       "properties": {
         "id": "refinery-hamburg",
-        "name": "Holborn Europa Raffinerie (Hamburg-Harburg)",
+        "name": "Holborn Europa Refinery (Hamburg-Harburg)",
         "resource": "crude_oil",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "Holborn Europa Raffinerie GmbH",
-        "capacity": "ca. 5,2 Mio. Tonnen / Jahr",
-        "summary": "Versorger der Metropolregion Hamburg und Schleswig-Holsteins.",
-        "description": "Erhaelt Rohöl über die NDO-Pipeline aus Wilhelmshaven. Versorgt den Hamburger Hafen, die maritime Wirtschaft und den Nahverkehr.",
+        "capacity": "approx. 5.2 million tonnes / year",
+        "summary": "Supplier for the Hamburg metropolitan region and Schleswig-Holstein.",
+        "description": "Receives crude oil via the NDO pipeline from Wilhelmshaven. Supplies the Port of Hamburg, the maritime economy and local public transport.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Benzin & Diesel",
-          "Schiffsdiesel für den Hamburger Hafen",
-          "Heizöl",
-          "Kerosin für Flughafen Hamburg (HAM)"
+          "Gasoline & diesel",
+          "Marine diesel for the Port of Hamburg",
+          "Heating oil",
+          "Kerosene for Hamburg Airport (HAM)"
         ],
         "aha_moment": {
-          "title": "Treibstoff für den drittgrößten Hafen Europas",
-          "explanation": "Schlepper, Hafenfähren und Lkw-Flotten des Hamburger Hafens werden durch Treibstoffe angetrieben, die nur wenige Kilometer südlich der Elbe erzeugt werden.",
-          "everyday_impact": "Hält den Warentransport in Norddeutschland in Bewegung."
+          "title": "Fuel for Europe’s third-largest port",
+          "explanation": "Tugboats, harbour ferries and truck fleets in the Port of Hamburg run on fuels produced just a few kilometres south of the Elbe.",
+          "everyday_impact": "Keeps the movement of goods in northern Germany going."
         },
         "source": {
           "name": "Holborn Europa Raffinerie",
@@ -493,7 +493,7 @@
       },
       "properties": {
         "id": "pipeline-nwo",
-        "name": "Nord-West Oelleitung (NWO Pipeline)",
+        "name": "North-West Oil Pipeline (NWO)",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "wilhelmshaven-port",
@@ -502,21 +502,21 @@
         "status": "operational",
         "operator": "Nord-West Oelleitung GmbH",
         "length_km": 391,
-        "capacity": "ca. 16,3 Mio. Tonnen / Jahr",
-        "flow_direction": "Wilhelmshaven Oil Hub → Shell Rheinland (Köln/Wesseling) and western Germany",
+        "capacity": "approx. 16.3 million tonnes / year",
+        "flow_direction": "Wilhelmshaven Oil Hub → Shell Rheinland (Cologne/Wesseling) and western Germany",
         "summary": "Main outbound pipeline from the Wilhelmshaven oil hub to the Rhine refinery cluster.",
         "description": "The Nord-West Oelleitung is the primary artery leaving the Wilhelmshaven hub. It carries crude that has just been unloaded from tankers southward to the large refining and chemical complex in the Rhine area (Shell Energy and Chemicals Park Rheinland).",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölzubringer für Raffinerien im Westen"
+          "Crude oil feed for refineries in the west"
         ],
         "aha_moment": {
-          "title": "Unsichtbar unter Wiesen und Äckern",
-          "explanation": "Mit einem Durchmesser von 70 Zentimetern pumpt die NWO ununterbrochen rund um die Uhr gigantische Rohölmengen, ohne dass Autofahrer auf Autobahnen oder Spaziergänger an Feldern je etwas davon bemerken.",
-          "everyday_impact": "Ersetzt jeden Tag tausende Lkw-Fahrten oder Tankwaggons auf Schienen."
+          "title": "Invisible beneath meadows and fields",
+          "explanation": "With a diameter of 70 centimetres, the NWO pumps enormous volumes of crude oil around the clock without drivers on the motorways or walkers in the fields ever noticing.",
+          "everyday_impact": "Replaces thousands of truck journeys or rail tank cars every day."
         },
         "source": {
-          "name": "BNetzA Infrastrukturdaten & NWO",
+          "name": "BNetzA infrastructure data & NWO",
           "url": "https://www.nwo-ol.de/",
           "year": 2025
         }
@@ -551,7 +551,7 @@
       },
       "properties": {
         "id": "pipeline-ndo",
-        "name": "Norddeutsche Oelleitung (NDO Pipeline)",
+        "name": "North German Oil Pipeline (NDO)",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "wilhelmshaven-port",
@@ -560,18 +560,18 @@
         "status": "operational",
         "operator": "NDO GmbH",
         "length_km": 143,
-        "capacity": "ca. 5 Mio. Tonnen / Jahr",
-        "flow_direction": "Wilhelmshaven Oil Hub → Holborn Europa Raffinerie (Hamburg)",
+        "capacity": "approx. 5 million tonnes / year",
+        "flow_direction": "Wilhelmshaven Oil Hub → Holborn Europa Refinery (Hamburg)",
         "summary": "Outbound pipeline from the Wilhelmshaven oil hub to the Hamburg refining area.",
         "description": "The Norddeutsche Oelleitung leaves the Wilhelmshaven hub eastward and supplies the Holborn Europa refinery in Hamburg-Harburg. Together with the NWO it shows how one import hub feeds multiple regions.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölzubringer für Hamburg & Norddeutschland"
+          "Crude oil feed for Hamburg & northern Germany"
         ],
         "aha_moment": {
-          "title": "Öl fließt unter der Weser durch",
-          "explanation": "Die Pipeline quert tief unter dem Flussbett der Weser und versorgt Hamburg mit Rohöl, ohne den Schiffsverkehr auf der Elbe zu belasten.",
-          "everyday_impact": "Sichert die Kraftstoffversorgung für Schifffahrt und Flughafen in Hamburg."
+          "title": "Oil flows under the Weser",
+          "explanation": "The pipeline crosses deep beneath the bed of the Weser river and supplies Hamburg with crude oil without adding to shipping traffic on the Elbe.",
+          "everyday_impact": "Secures the fuel supply for shipping and the airport in Hamburg."
         },
         "source": {
           "name": "NDO / en2x",
@@ -616,23 +616,23 @@
         "to_node_id": "refinery-schwedt",
         "type": "pipeline",
         "status": "under_expansion",
-        "operator": "PCK Raffinerie GmbH / Bund",
+        "operator": "PCK Raffinerie GmbH / German federal government",
         "length_km": 203,
-        "capacity": "ca. 6–9 Mio. Tonnen / Jahr (wird ertüchtigt)",
-        "flow_direction": "Hafen Rostock → PCK Schwedt",
-        "summary": "Strategische Versorgungsleitung von der Ostseeküste in die Uckermark.",
-        "description": "Ersetzt seit 2023 die Druschba-Pipelinelieferungen. Die Bundesregierung fördert die technische Ertüchtigung mit Durchflussbeschleunigern zur Steigerung der Kapazität.",
+        "capacity": "approx. 6–9 million tonnes / year (being upgraded)",
+        "flow_direction": "Port of Rostock → PCK Schwedt",
+        "summary": "Strategic supply line from the Baltic coast to the Uckermark region.",
+        "description": "Has replaced deliveries through the Druzhba pipeline since 2023. The German federal government is funding a technical upgrade with drag-reducing agents to increase capacity.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölzubringer für Berlin-Brandenburg"
+          "Crude oil feed for Berlin-Brandenburg"
         ],
         "aha_moment": {
-          "title": "Vom Nebengleis zur Hauptschlagader",
-          "explanation": "Früher nur als Notfall-Reservelinie gedacht, transportiert diese Pipeline heute das lebenswichtige Öl für Ostdeutschlands gesamte Hauptstadtregion.",
-          "everyday_impact": "Hält den Berliner Nahverkehr und Rettungsdienste rollend."
+          "title": "From side track to main artery",
+          "explanation": "Originally intended only as an emergency backup line, this pipeline now carries the vital oil for eastern Germany’s entire capital region.",
+          "everyday_impact": "Keeps Berlin’s public transport and emergency services on the road."
         },
         "source": {
-          "name": "BMWK Pressemitteilung PCK Ertüchtigung",
+          "name": "BMWK press release on the PCK upgrade",
           "url": "https://www.bmwk.de",
           "year": 2025
         }
@@ -671,30 +671,30 @@
       },
       "properties": {
         "id": "pipeline-tal",
-        "name": "Transalpine Ölleitung (TAL Pipeline)",
+        "name": "Transalpine Pipeline (TAL)",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "trieste-port",
         "to_node_id": "refinery-bayernoil",
         "type": "pipeline",
         "status": "operational",
-        "operator": "TAL Group (Società Italiana per l'Oleodotto Transalpino / Transalpine Ölleitung in Österreich / Deutsche Transalpine Oellitung)",
+        "operator": "TAL Group (Società Italiana per l'Oleodotto Transalpino / Transalpine Ölleitung in Österreich / Deutsche Transalpine Oelleitung)",
         "length_km": 465,
-        "capacity": "ca. 43 Mio. Tonnen / Jahr",
-        "flow_direction": "Triest (Adria) → Felbertauern / Alpen → Ingolstadt (Bayern)",
-        "summary": "Europäisches Meisterwerk der Ingenieurskunst quer über die Alpen.",
-        "description": "Führt von Triest durch Italien, überwindet in Kärnten und Salzburg die Alpen in Tunneln bis auf 1.572 Meter Seehöhe und erreicht das Raffineriezentrum in Bayern.",
+        "capacity": "approx. 43 million tonnes / year",
+        "flow_direction": "Trieste (Adriatic) → Felbertauern / Alps → Ingolstadt (Bavaria)",
+        "summary": "A European engineering masterpiece across the Alps.",
+        "description": "Runs from Trieste through Italy, crosses the Alps in Carinthia and Salzburg in tunnels at up to 1,572 metres above sea level, and reaches the refinery centre in Bavaria.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohöl für Bayern, Baden-Württemberg, Österreich & Tschechien"
+          "Crude oil for Bavaria, Baden-Württemberg, Austria & Czechia"
         ],
         "aha_moment": {
-          "title": "Öl im Alpentunnel auf 1.500m Höhe",
-          "explanation": "Damit das Rohöl die Alpen überwinden kann, drücken gigantische Hochdruckpumpen das Öl durch den Felbertauerntunnel – ein 7,3 km langer Gebirgstunnel nur für Öl.",
-          "everyday_impact": "Versorgt Bayern zu 100% und Baden-Württemberg zu ca. 50% mit Rohöl."
+          "title": "Oil in an Alpine tunnel at 1,500 m",
+          "explanation": "To get the crude oil over the Alps, giant high-pressure pumps push it through the Felbertauern tunnel – a 7.3 km mountain tunnel built just for oil.",
+          "everyday_impact": "Supplies 100% of Bavaria’s and about 50% of Baden-Württemberg’s crude oil."
         },
         "source": {
-          "name": "TAL Group Offizieller Bericht",
+          "name": "TAL Group official report",
           "url": "https://www.tal-oil.com/",
           "year": 2025
         }
@@ -729,7 +729,7 @@
       },
       "properties": {
         "id": "pipeline-rdo",
-        "name": "Rhein-Donau-Ölleitung (TAL-West / RDO Pipeline)",
+        "name": "Rhine-Danube Oil Pipeline (TAL-West / RDO)",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "refinery-bayernoil",
@@ -738,18 +738,18 @@
         "status": "operational",
         "operator": "Deutsche Transalpine Oelleitung GmbH",
         "length_km": 290,
-        "capacity": "ca. 10 Mio. Tonnen / Jahr",
-        "flow_direction": "Ingolstadt (Bayern) → Karlsruhe (MiRO Baden-Württemberg)",
-        "summary": "Westanbindung der TAL von Bayern nach Baden-Württemberg.",
-        "description": "Leitet Rohöl aus der Transalpinen Ölleitung von Ingolstadt über Schwäbisch Gmünd direkt zur Großraffinerie MiRO am Rhein in Karlsruhe.",
+        "capacity": "approx. 10 million tonnes / year",
+        "flow_direction": "Ingolstadt (Bavaria) → Karlsruhe (MiRO, Baden-Württemberg)",
+        "summary": "Western branch of the TAL from Bavaria to Baden-Württemberg.",
+        "description": "Carries crude oil from the Transalpine Pipeline from Ingolstadt via Schwäbisch Gmünd directly to the large MiRO refinery on the Rhine in Karlsruhe.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölversorgung für Südwestdeutschland"
+          "Crude oil supply for south-west Germany"
         ],
         "aha_moment": {
-          "title": "Die Querspange des Südens",
-          "explanation": "Verbindet Donau und Rhein unterirdisch und versorgt die größte Raffinerie Deutschlands mit mediterranem Rohöl.",
-          "everyday_impact": "Macht Baden-Württemberg unabhängig von Rheinschiff-Niedrigwasser bei der Rohölzufuhr."
+          "title": "The southern cross-link",
+          "explanation": "Connects the Danube and the Rhine underground and supplies Germany’s largest refinery with Mediterranean crude oil.",
+          "everyday_impact": "Makes Baden-Württemberg’s crude supply independent of low water levels for Rhine shipping."
         },
         "source": {
           "name": "TAL Group & MiRO",
@@ -787,30 +787,30 @@
       },
       "properties": {
         "id": "shipping-north-sea",
-        "name": "Nordsee Tanker-Seeweg",
+        "name": "North Sea Tanker Route",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "crude-origin-north-sea",
         "to_node_id": "wilhelmshaven-port",
         "type": "shipping_route",
         "status": "operational",
-        "operator": "Internationale Reedereien",
+        "operator": "International shipping companies",
         "length_km": 680,
-        "capacity": "Dauerhafter Schiffskorridor",
+        "capacity": "Permanent shipping corridor",
         "flow_direction": "North Sea / North Atlantic Crude Approach → Wilhelmshaven Oil Hub",
         "summary": "Inbound tanker approach into Germany’s central crude oil hub at Wilhelmshaven.",
         "description": "This shipping corridor represents the final inbound leg of crude oil tankers heading for Wilhelmshaven – Germany’s only deep-water oil port. All of this flow converges on the oil pier before being redistributed by the NWO and NDO pipelines.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölimporte per Tankschiff"
+          "Crude oil imports by tanker"
         ],
         "aha_moment": {
-          "title": "Auf den Spuren der Supertanker",
-          "explanation": "Schiffe mit bis zu 250.000 Tonnen Tragfähigkeit und 20 Metern Tiefgang können nur hier anlegen. Nirgendwo sonst an deutschen Küsten ist das Meer tief genug.",
-          "everyday_impact": "Sichert den Anschluss Deutschlands an die weltweiten Ölmärkte."
+          "title": "In the wake of supertankers",
+          "explanation": "Ships with up to 250,000 tonnes deadweight and 20 metres draught can only berth here. Nowhere else on Germany’s coast is the sea deep enough.",
+          "everyday_impact": "Connects Germany to the world’s oil markets."
         },
         "source": {
-          "name": "Wasserstraßen- und Schifffahrtsverwaltung des Bundes (WSV)",
+          "name": "German Federal Waterways and Shipping Administration (WSV)",
           "url": "https://www.wsv.de/",
           "year": 2025
         }
@@ -841,30 +841,30 @@
       },
       "properties": {
         "id": "shipping-mediterranean",
-        "name": "Adria Tanker-Seeweg nach Triest",
+        "name": "Adriatic Tanker Route to Trieste",
         "resource": "crude_oil",
         "category": "edge",
         "from_node_id": "crude-origin-mediterranean",
         "to_node_id": "trieste-port",
         "type": "shipping_route",
         "status": "operational",
-        "operator": "Internationale Reedereien",
+        "operator": "International shipping companies",
         "length_km": 1250,
-        "capacity": "Dauerhafter Schifffahrtskorridor",
-        "flow_direction": "Suezkanal / Mittelmeer → Adria → Triest",
-        "summary": "Mediterraner Schifffahrtskorridor für Rohölimporte nach Mitteleuropa.",
-        "description": "Transportiert Rohöl aus dem Nahen Osten, Zentralasien (via Bosporus/Kaspisches Meer) und Nordafrika durch das Ionische Meer und die Adria nach Triest.",
+        "capacity": "Permanent shipping corridor",
+        "flow_direction": "Suez Canal / Mediterranean → Adriatic → Trieste",
+        "summary": "Mediterranean shipping corridor for crude oil imports to Central Europe.",
+        "description": "Carries crude oil from the Middle East, Central Asia (via the Bosporus / Caspian Sea) and North Africa through the Ionian Sea and the Adriatic to Trieste.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Rohölimporte für Süddeutschland & Alpenraum"
+          "Crude oil imports for southern Germany & the Alpine region"
         ],
         "aha_moment": {
-          "title": "Die Seidenstraße des flüssigen Goldes",
-          "explanation": "Durch diesen Seeweg fließt Rohöl aus den großen Förderregionen des Orients direkt nach Triest und landet schließlich als Benzin im Pkw-Tank in München oder Stuttgart.",
-          "everyday_impact": "Verbindet deutsche Autofahrer mit globalen Handelsrouten über Tausende Seemeilen."
+          "title": "The Silk Road of liquid gold",
+          "explanation": "Through this sea route, crude oil from the major producing regions of the Middle East flows directly to Trieste and ends up as gasoline in car tanks in Munich or Stuttgart.",
+          "everyday_impact": "Connects German drivers with global trade routes spanning thousands of nautical miles."
         },
         "source": {
-          "name": "SIOT / Hafen Triest Verkehrsbericht",
+          "name": "SIOT / Port of Trieste traffic report",
           "url": "https://www.porto.trieste.it/",
           "year": 2025
         }

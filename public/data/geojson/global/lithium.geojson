@@ -10,7 +10,7 @@
     "description": "Intercontinental supply chain of lithium: from brine extraction in the Atacama Desert (Chile) via the Panama Canal to battery cathode manufacturing in Germany.",
     "primary_sources": [
       "USGS (U.S. Geological Survey) Lithium Mineral Commodity Summaries",
-      "Bundesanstalt für Geowissenschaften und Rohstoffe (BGR)",
+      "Federal Institute for Geosciences and Natural Resources (BGR)",
       "BASF Battery Materials / E-Mobility Reports"
     ]
   },
@@ -33,18 +33,18 @@
         "status": "operational",
         "country": "CL",
         "operator": "SQM / Albemarle",
-        "capacity": "ca. 180.000 Tonnen Lithiumcarbonat-Äquivalent (LCE) / Jahr",
-        "summary": "Die ergiebigste Lithium-Lagerstätte der Welt im südamerikanischen 'Lithium-Dreieck'.",
-        "description": "In 2.300 Metern Höhe gelegen. Aus unterirdischen Sole-Lagerstätten wird lithiumhaltiges Salzwasser an die Oberfläche gepumpt und in riesigen Verdunstungsbecken über Monate durch die intensive Sonneneinstrahlung der Atacama-Wüste konzentriert.",
+        "capacity": "approx. 180,000 tonnes of lithium carbonate equivalent (LCE) / year",
+        "summary": "The world’s richest lithium deposit, in South America’s ‘Lithium Triangle’.",
+        "description": "Located at 2,300 metres altitude. Lithium-bearing brine is pumped to the surface from underground reservoirs and concentrated over months in huge evaporation ponds by the intense sunshine of the Atacama Desert.",
         "supply_chain_stage": "extraction",
         "consumer_products": [
-          "Lithiumcarbonat für Batteriezellen",
-          "Lithiumhydroxid für Hochleistungs-Akkus"
+          "Lithium carbonate for battery cells",
+          "Lithium hydroxide for high-performance batteries"
         ],
         "aha_moment": {
-          "title": "Vom Salzsee in dein Smartphone",
-          "explanation": "In jedem Smartphone steckt etwa 2 bis 3 Gramm reines Lithium, in einem Elektroauto-Akku zwischen 8 und 12 Kilogramm. Nahezu die Hälfte der weltweiten Reserven lagert hier in den chilenischen Anden.",
-          "everyday_impact": "Ermöglicht die kabellose Energie für moderne Laptops, E-Autos und Energiespeicher."
+          "title": "From salt lake to your smartphone",
+          "explanation": "Every smartphone contains about 2 to 3 grams of pure lithium, an electric car battery between 8 and 12 kilograms. Nearly half of the world’s reserves lie here in the Chilean Andes.",
+          "everyday_impact": "Provides the cordless energy for modern laptops, electric cars and energy storage."
         },
         "source": {
           "name": "USGS Mineral Commodity Summaries: Lithium",
@@ -64,27 +64,27 @@
       },
       "properties": {
         "id": "port-antofagasta",
-        "name": "Hafen Antofagasta (Pazifikküste, Chile)",
+        "name": "Port of Antofagasta (Pacific coast, Chile)",
         "resource": "lithium",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "CL",
         "operator": "Empresa Portuaria Antofagasta (EPA)",
-        "capacity": "Zentraler Pazifik-Export-Hub für chilenische Minerale",
-        "summary": "Das weltweite Tor für Lithium- und Kupfer-Exporte nach Übersee.",
-        "description": "Hier wird das getrocknete und raffinierte weiße Lithiumcarbonat-Pulver in Übersee-Container verladen und auf Frachtschiffe für den Transport nach Europa und Asien verfrachtet.",
+        "capacity": "Central Pacific export hub for Chilean minerals",
+        "summary": "The world’s gateway for lithium and copper exports overseas.",
+        "description": "This is where the dried and refined white lithium carbonate powder is loaded into containers and onto cargo ships for transport to Europe and Asia.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Globaler Rohstoff-Seehandel"
+          "Global seaborne raw materials trade"
         ],
         "aha_moment": {
-          "title": "Startpunkt einer 12.000 km Seereise",
-          "explanation": "Frachtschiffe beladen mit tausenden Tonnen 'weißem Gold' legen hier ab, um die Ozeane zu überqueren und die europäische Autoindustrie mit Zellrohstoffen zu versorgen.",
-          "everyday_impact": "Verknüpft die trockenste Wüste der Erde mit den Hightech-Fabriken Deutschlands."
+          "title": "Starting point of a 12,000 km sea voyage",
+          "explanation": "Cargo ships loaded with thousands of tonnes of ‘white gold’ set sail from here to cross the oceans and supply the European car industry with battery cell materials.",
+          "everyday_impact": "Links the driest desert on Earth with Germany’s high-tech factories."
         },
         "source": {
-          "name": "Puerto Antofagasta Jahresbericht",
+          "name": "Port of Antofagasta annual report",
           "url": "https://www.anfport.cl",
           "year": 2025
         }
@@ -101,27 +101,27 @@
       },
       "properties": {
         "id": "port-hamburg-lithium",
-        "name": "Hamburger Hafen (Container Terminal Altenwerder)",
+        "name": "Port of Hamburg (Container Terminal Altenwerder)",
         "resource": "lithium",
         "category": "node",
         "type": "import_hub",
         "status": "operational",
         "country": "DE",
         "operator": "HHLA (Hamburger Hafen und Logistik AG)",
-        "capacity": "Größter deutscher Seehafen für Spezial- und Containergüter",
-        "summary": "Deutsches Eingangstor für interkontinentale Batterierohstoffe.",
-        "description": "Containerschiffe aus Südamerika entladen hier. Das Lithium wird vom Seeschiff auf Güterzüge und Binnenschiffe umgeladen, die es direkt in die neuen ostdeutschen Batteriefabriken transportieren.",
+        "capacity": "Germany’s largest seaport for special and container cargo",
+        "summary": "Germany’s gateway for intercontinental battery raw materials.",
+        "description": "Container ships from South America unload here. The lithium is transferred from ocean vessels to freight trains and inland barges that take it straight to the new battery plants in eastern Germany.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Import-Umschlag für Batterierohstoffe"
+          "Import handling of battery raw materials"
         ],
         "aha_moment": {
-          "title": "Vom Ozeanriesen auf die Schiene",
-          "explanation": "Modernste automatisierte Hafenkräne heben die Container binnen Minuten vom Schiff auf Güterzüge der Bahn, um eine lückenlose Lieferkette für die Elektromobilität zu garantieren.",
-          "everyday_impact": "Ohne den Hamburger Hafen stünde die Produktion deutscher Elektrofahrzeuge still."
+          "title": "From ocean giant to rail",
+          "explanation": "State-of-the-art automated cranes lift the containers from ship to freight train within minutes, ensuring a seamless supply chain for electric mobility.",
+          "everyday_impact": "Without the Port of Hamburg, production of German electric vehicles would come to a halt."
         },
         "source": {
-          "name": "HHLA Nachhaltigkeitsbericht",
+          "name": "HHLA sustainability report",
           "url": "https://hhla.de",
           "year": 2025
         }
@@ -138,29 +138,29 @@
       },
       "properties": {
         "id": "processing-schwarzheide",
-        "name": "BASF Schwarzheide / Batteriematerial-Zentrum (Lausitz)",
+        "name": "BASF Schwarzheide battery materials centre (Lusatia)",
         "resource": "lithium",
         "category": "node",
         "type": "processing_hub",
         "status": "operational",
         "country": "DE",
         "operator": "BASF SE",
-        "capacity": "Kathodenmaterial für ca. 400.000 Elektrofahrzeuge / Jahr",
-        "summary": "Europas modernste Großfertigung für Kathodenaktive Batteriematerialien (CAM) und Batterie-Recycling.",
-        "description": "In Schwarzheide (Brandenburg) synthetisiert BASF aus importiertem Lithium, Nickel, Kobalt und Mangan hochreine Kathodenmaterialien. Diese werden direkt an europäische Batteriezellhersteller wie ACC, CATL und deutsche Automobilbauer geliefert.",
+        "capacity": "Cathode material for approx. 400,000 electric vehicles / year",
+        "summary": "Europe’s most modern large-scale production of cathode active materials (CAM) and battery recycling.",
+        "description": "In Schwarzheide (Brandenburg), BASF synthesises high-purity cathode materials from imported lithium, nickel, cobalt and manganese. They are delivered directly to European battery cell makers such as ACC and CATL and to German carmakers.",
         "supply_chain_stage": "processing",
         "consumer_products": [
-          "Lithium-Ionen-Akkuzellen für E-Autos",
-          "Hausspeicher für Solaranlagen",
-          "Batterie-Recycling (Black Mass Recovery)"
+          "Lithium-ion battery cells for electric cars",
+          "Home storage batteries for solar systems",
+          "Battery recycling (black mass recovery)"
         ],
         "aha_moment": {
-          "title": "Das chemische Herz der Verkehrswende",
-          "explanation": "Das Kathodenmaterial bestimmt maßgeblich Reichweite, Ladegeschwindigkeit und Lebensdauer moderner E-Autos. Aus dem chilenischen Salz wird hier Hochtechnologie.",
-          "everyday_impact": "Dein nächstes Elektroauto oder deine Solarbatterie im Keller nutzt Material, das genau hier veredelt wurde."
+          "title": "The chemical heart of the transport transition",
+          "explanation": "The cathode material largely determines the range, charging speed and lifetime of modern electric cars. Here, Chilean salt is turned into high technology.",
+          "everyday_impact": "Your next electric car or the solar battery in your basement uses material refined right here."
         },
         "source": {
-          "name": "BASF Battery Materials Presseinformationen",
+          "name": "BASF Battery Materials press releases",
           "url": "https://www.basf.com",
           "year": 2025
         }
@@ -235,30 +235,30 @@
       },
       "properties": {
         "id": "route-transatlantic-lithium",
-        "name": "Transozeanische Lithium-Route (Chile → Panamakanal → Hamburg)",
+        "name": "Transoceanic lithium route (Chile → Panama Canal → Hamburg)",
         "resource": "lithium",
         "category": "edge",
         "from_node_id": "port-antofagasta",
         "to_node_id": "port-hamburg-lithium",
         "type": "shipping_route",
         "status": "operational",
-        "operator": "Internationale Containerreedereien (Hapag-Lloyd, Maersk)",
+        "operator": "International container shipping lines (Hapag-Lloyd, Maersk)",
         "length_km": 12850,
-        "capacity": "Regelmäßiger Übersee-Liniendienst",
-        "flow_direction": "Antofagasta (Chile) → Pazifik → Panamakanal → Nordatlantik → Hamburg",
-        "summary": "Interkontinentale Hochsee-Transportader für die globale Energiewende.",
-        "description": "Überwindet fast 13.000 Kilometer: Vom Pazifischen Ozean durch die Schleusen des Panamakanals in die Karibik, quer über den Nordatlantik und durch die Nordsee direkt in die Elbmündung nach Hamburg.",
+        "capacity": "Regular overseas liner service",
+        "flow_direction": "Antofagasta (Chile) → Pacific → Panama Canal → North Atlantic → Hamburg",
+        "summary": "Intercontinental deep-sea transport artery for the global energy transition.",
+        "description": "Covers almost 13,000 kilometres: from the Pacific through the locks of the Panama Canal into the Caribbean, across the North Atlantic and through the North Sea straight into the Elbe estuary to Hamburg.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Interkontinentaler Rohstofftransport"
+          "Intercontinental raw materials transport"
         ],
         "aha_moment": {
-          "title": "13.000 km Seeweg für eine Batterieladung",
-          "explanation": "Bevor der Akku in einem in Deutschland montierten Elektroauto zum ersten Mal geladen wird, haben seine Rohstoffe bereits eine halbe Weltreise auf Frachtschiffen hinter sich.",
-          "everyday_impact": "Veranschaulicht die enorme globale Arbeitsteilung und Abhängigkeit moderner Zukunftstechnologien."
+          "title": "13,000 km by sea for one battery charge",
+          "explanation": "Before the battery of an electric car assembled in Germany is charged for the first time, its raw materials have already travelled halfway around the world on cargo ships.",
+          "everyday_impact": "Illustrates the enormous global division of labour – and dependence – behind modern future technologies."
         },
         "source": {
-          "name": "World Shipping Council / BGR Rohstoffbericht",
+          "name": "World Shipping Council / BGR raw materials report",
           "url": "https://www.bgr.bund.de",
           "year": 2025
         }
@@ -293,7 +293,7 @@
       },
       "properties": {
         "id": "route-rail-hamburg-schwarzheide",
-        "name": "Schienengüterkorridor Hamburg – Schwarzheide",
+        "name": "Rail freight corridor Hamburg – Schwarzheide",
         "resource": "lithium",
         "category": "edge",
         "from_node_id": "port-hamburg-lithium",
@@ -302,21 +302,21 @@
         "status": "operational",
         "operator": "DB Cargo / Kombiverkehr",
         "length_km": 420,
-        "capacity": "Container-Ganzzüge",
-        "flow_direction": "Hafen Hamburg → Brandenburg / Lausitz",
-        "summary": "Elektrifizierter Schienenkorridor für den Weitertransport vom Seehafen ins Werk.",
-        "description": "Verbindet den Seehafen Hamburg direkt mit dem Bahnanschluss des Industrieparks Schwarzheide und der Region Berlin-Brandenburg.",
+        "capacity": "Container block trains",
+        "flow_direction": "Port of Hamburg → Brandenburg / Lusatia",
+        "summary": "Electrified rail corridor for onward transport from the seaport to the plant.",
+        "description": "Connects the Port of Hamburg directly with the rail siding of the Schwarzheide industrial park and the Berlin-Brandenburg region.",
         "supply_chain_stage": "transport",
         "consumer_products": [
-          "Inlandslogistik für Batterierohstoffe"
+          "Inland logistics for battery raw materials"
         ],
         "aha_moment": {
-          "title": "Emissionsarmer Transport bis ans Werkstor",
-          "explanation": "Ein einziger Güterzug ersetzt bis zu 52 Lkw auf den Autobahnen A24 und A13 und bringt das Rohmaterial direkt zum Chemie-Reaktor.",
-          "everyday_impact": "Sichert die Just-in-Time-Produktion ohne Staus auf den Straßen."
+          "title": "Low-emission transport right to the factory gate",
+          "explanation": "A single freight train replaces up to 52 trucks on the A24 and A13 motorways and brings the raw material directly to the chemical reactor.",
+          "everyday_impact": "Secures just-in-time production without traffic jams on the roads."
         },
         "source": {
-          "name": "DB Cargo Netzwerkübersicht",
+          "name": "DB Cargo network overview",
           "url": "https://www.dbcargo.com",
           "year": 2025
         }

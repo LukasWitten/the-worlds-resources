@@ -1,0 +1,458 @@
+{
+  "$schema": "../schemas/project-1.schema.json",
+  "format": "twr-project",
+  "formatVersion": "1.0.0",
+  "meta": {
+    "title": "From rainforest to living room (example)",
+    "language": "en",
+    "license": "CC-BY-4.0",
+    "created": "2026-11-23",
+    "modified": "2026-11-23",
+    "example": true,
+    "note": "Illustrative example data. Not a statement about any real company or supply chain."
+  },
+  "sources": [
+    {
+      "id": "s1",
+      "title": "Example source A (placeholder)",
+      "url": "https://example.org/source-a",
+      "type": "secondary",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "s2",
+      "title": "Example port statistics (placeholder)",
+      "url": "https://example.org/port-stats",
+      "type": "primary",
+      "accessed": "2026-11-23"
+    }
+  ],
+  "goods": {
+    "x-tropical-logs": {
+      "label": "Tropical logs",
+      "stage": "raw",
+      "category": "wood",
+      "unit": "m3",
+      "hs": {
+        "rev": "HS17",
+        "codes": [
+          "4403"
+        ],
+        "precision": "partial"
+      }
+    },
+    "x-sawn-timber": {
+      "label": "Sawn tropical timber",
+      "stage": "intermediate",
+      "category": "wood",
+      "unit": "m3",
+      "parent": "x-tropical-logs",
+      "hs": {
+        "rev": "HS17",
+        "codes": [
+          "4407"
+        ],
+        "precision": "partial"
+      }
+    },
+    "x-dining-table": {
+      "label": "Dining table",
+      "stage": "final",
+      "category": "furniture",
+      "unit": "pcs",
+      "hs": {
+        "rev": "HS17",
+        "codes": [
+          "940360"
+        ],
+        "precision": "partial"
+      }
+    }
+  },
+  "nodes": [
+    {
+      "id": "logging-site",
+      "kind": "site",
+      "type": "extraction_site",
+      "name": "Logging concession (example)",
+      "coord": [
+        -50.5,
+        -3.8
+      ],
+      "country": "BR",
+      "process": {
+        "outputs": [
+          {
+            "good": "x-tropical-logs",
+            "qty": 1200,
+            "unit": "m3/yr"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": [
+            "s1"
+          ],
+          "note": "Example location"
+        }
+      ]
+    },
+    {
+      "id": "sawmill",
+      "kind": "site",
+      "type": "processing_hub",
+      "name": "Sawmill (example)",
+      "coord": [
+        -47.4,
+        -3.0
+      ],
+      "country": "BR",
+      "process": {
+        "inputs": [
+          {
+            "good": "x-tropical-logs",
+            "qty": 1200,
+            "unit": "m3/yr"
+          }
+        ],
+        "outputs": [
+          {
+            "good": "x-sawn-timber",
+            "qty": 550,
+            "unit": "m3/yr"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "confidence": "plausible",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "port-belem",
+      "kind": "transfer",
+      "type": "import_hub",
+      "name": "Port of Belém",
+      "coord": [
+        -48.5,
+        -1.45
+      ],
+      "country": "BR",
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wp-channel",
+      "kind": "waypoint",
+      "coord": [
+        -1.5,
+        49.9
+      ]
+    },
+    {
+      "id": "port-rotterdam",
+      "kind": "transfer",
+      "type": "import_hub",
+      "name": "Port of Rotterdam",
+      "coord": [
+        4.05,
+        51.95
+      ],
+      "country": "NL",
+      "ref": {
+        "dataset": "twr",
+        "id": "port-rotterdam",
+        "version": "2026-11-23"
+      },
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "furniture-plant",
+      "kind": "site",
+      "type": "processing_hub",
+      "name": "Furniture plant (example)",
+      "coord": [
+        17.0,
+        52.4
+      ],
+      "country": "PL",
+      "process": {
+        "inputs": [
+          {
+            "good": "x-sawn-timber",
+            "qty": 0.08,
+            "unit": "m3/pcs"
+          }
+        ],
+        "outputs": [
+          {
+            "good": "x-dining-table",
+            "qty": 1,
+            "unit": "pcs"
+          }
+        ]
+      },
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": [
+            "s1"
+          ],
+          "note": "Example: assumed location of final assembly"
+        }
+      ]
+    },
+    {
+      "id": "store-karlsruhe",
+      "kind": "site",
+      "type": "retail",
+      "name": "Furniture store, Karlsruhe (example)",
+      "coord": [
+        8.4,
+        49.01
+      ],
+      "country": "DE",
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Example end point"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "from": "logging-site",
+      "to": "sawmill",
+      "mode": "road",
+      "goods": [
+        "x-tropical-logs"
+      ],
+      "claims": [
+        {
+          "confidence": "plausible",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e2",
+      "from": "sawmill",
+      "to": "port-belem",
+      "mode": "road",
+      "goods": [
+        "x-sawn-timber"
+      ],
+      "claims": [
+        {
+          "confidence": "plausible",
+          "sourceIds": [
+            "s1"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e3",
+      "from": "port-belem",
+      "to": "port-rotterdam",
+      "via": [
+        "wp-channel"
+      ],
+      "mode": "sea",
+      "goods": [
+        "x-sawn-timber"
+      ],
+      "qty": {
+        "value": 550,
+        "unit": "m3/yr"
+      },
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": [
+            "s1",
+            "s2"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e4",
+      "from": "port-rotterdam",
+      "to": "furniture-plant",
+      "mode": "rail",
+      "goods": [
+        "x-sawn-timber"
+      ],
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": []
+        }
+      ]
+    },
+    {
+      "id": "e5",
+      "from": "furniture-plant",
+      "to": "store-karlsruhe",
+      "mode": "road",
+      "goods": [
+        "x-dining-table"
+      ],
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": []
+        }
+      ]
+    }
+  ],
+  "story": {
+    "steps": [
+      {
+        "id": "1",
+        "title": "It starts in the rainforest",
+        "text": "Example: logs are cut in a concession in Pará, Brazil.",
+        "camera": {
+          "center": [
+            -50.0,
+            -3.5
+          ],
+          "zoom": 6
+        },
+        "transition": "cut",
+        "reveal": [
+          "logging-site"
+        ],
+        "durationMs": 4000
+      },
+      {
+        "id": "2",
+        "title": "Cut to size",
+        "text": "A sawmill turns logs into sawn timber; less than half the volume remains (example value).",
+        "camera": {
+          "bounds": [
+            [
+              -51.5,
+              -4.5
+            ],
+            [
+              -46.5,
+              -0.8
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "e1",
+          "sawmill",
+          "e2",
+          "port-belem"
+        ],
+        "focus": [
+          "sawmill"
+        ],
+        "durationMs": 5000
+      },
+      {
+        "id": "3",
+        "title": "Across the Atlantic",
+        "text": "Example: about two weeks by ship to Rotterdam.",
+        "camera": {
+          "bounds": [
+            [
+              -55,
+              -8
+            ],
+            [
+              12,
+              56
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "e3",
+          "port-rotterdam"
+        ],
+        "focus": [
+          "e3"
+        ],
+        "durationMs": 6000
+      },
+      {
+        "id": "4",
+        "title": "Made into a table",
+        "text": "Example: by rail to a furniture plant, where the table is built.",
+        "camera": {
+          "bounds": [
+            [
+              2,
+              48
+            ],
+            [
+              20,
+              54
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "e4",
+          "furniture-plant"
+        ],
+        "focus": [
+          "furniture-plant"
+        ],
+        "durationMs": 5000
+      },
+      {
+        "id": "5",
+        "title": "In the shop in Karlsruhe",
+        "text": "The whole journey, from rainforest to store (all values are examples).",
+        "camera": {
+          "bounds": [
+            [
+              -55,
+              -8
+            ],
+            [
+              22,
+              56
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "e5",
+          "store-karlsruhe"
+        ],
+        "durationMs": 6000
+      }
+    ]
+  }
+}

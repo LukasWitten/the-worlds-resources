@@ -228,7 +228,7 @@ Spalte „Herkunft“: EP = Kartenerweiterung, SEO = SEO/GEO-Plan, NEU = aus die
 | `sources` | Quellenliste: `id`, `title`, `url`, `publisher`, `accessed` (Datum), `type` (`primary` / `secondary` / `self_reported`) | ja (darf leer sein) |
 | `goods` | Nur **eigene** Güter des Projekts (`x-…`). Katalog-Güter werden nur per ID referenziert. Felder wie in `goods.json`, plus `parent` (z. B. Holz → Tisch). | nein |
 | `nodes` | Orte: `id`, `kind` (`site` = Ort, `transfer` = Umschlagknoten, `waypoint` = unsichtbarer Wegpunkt), `type` (wie heute: `extraction_site`, `processing_hub` …), `name`, `coord` [lon, lat], `country`, `process` (Inputs → Outputs), `claims` | ja |
-| `edges` | Routen: `id`, `from`, `to`, `via` (Wegpunkt-IDs **oder** freie Koordinaten), `mode`, `good`, `qty` (optional), `claims` | ja |
+| `edges` | Routen: `id`, `from`, `to`, `via` (Wegpunkt-IDs **oder** freie Koordinaten), `mode`, `goods` (ein oder mehrere Güter, z. B. ein Containerschiff mit mehreren Gewürzen), `qty` (optional), `claims` | ja |
 | `claims` | Jede Aussage mit `confidence` (`documented` / `plausible` / `estimated`), `sourceIds`, `note`. Mindestens ein Claim für die Existenz des Elements. | ja (pro Element) |
 | `story` | `steps`: `id`, `title`, `text`, `camera` (`bounds` oder `center`/`zoom`), `transition`, `reveal`, `focus`, `durationMs` | nein |
 | `ref` (an Knoten/Kanten) | Herkunft aus Website-Daten: `{ "dataset": "twr", "id": "port-rotterdam", "version": "2026-11-23" }` | nein |
@@ -283,20 +283,20 @@ Regeln:
     { "id": "furniture-plant", "kind": "site", "type": "processing_hub", "name": "Furniture plant (example)", "coord": [17.0, 52.4], "country": "PL",
       "process": { "inputs": [{ "good": "x-sawn-timber", "qty": 0.08, "unit": "m3/pcs" }], "outputs": [{ "good": "x-dining-table", "qty": 1, "unit": "pcs" }] },
       "claims": [{ "confidence": "estimated", "sourceIds": ["s1"], "note": "Example: assumed location of final assembly" }] },
-    { "id": "store-karlsruhe", "kind": "site", "type": "storage_hub", "name": "Furniture store, Karlsruhe (example)", "coord": [8.40, 49.01], "country": "DE",
+    { "id": "store-karlsruhe", "kind": "site", "type": "retail", "name": "Furniture store, Karlsruhe (example)", "coord": [8.40, 49.01], "country": "DE",
       "claims": [{ "confidence": "estimated", "sourceIds": [], "note": "Example end point" }] }
   ],
   "edges": [
-    { "id": "e1", "from": "logging-site", "to": "sawmill", "mode": "road", "good": "x-tropical-logs",
+    { "id": "e1", "from": "logging-site", "to": "sawmill", "mode": "road", "goods": ["x-tropical-logs"],
       "claims": [{ "confidence": "plausible", "sourceIds": ["s1"] }] },
-    { "id": "e2", "from": "sawmill", "to": "port-belem", "mode": "road", "good": "x-sawn-timber",
+    { "id": "e2", "from": "sawmill", "to": "port-belem", "mode": "road", "goods": ["x-sawn-timber"],
       "claims": [{ "confidence": "plausible", "sourceIds": ["s1"] }] },
-    { "id": "e3", "from": "port-belem", "to": "port-rotterdam", "via": ["wp-channel"], "mode": "sea", "good": "x-sawn-timber",
-      "qty": { "value": 550, "unit": "m3/yr", "confidence": "estimated" },
+    { "id": "e3", "from": "port-belem", "to": "port-rotterdam", "via": ["wp-channel"], "mode": "sea", "goods": ["x-sawn-timber"],
+      "qty": { "value": 550, "unit": "m3/yr" },
       "claims": [{ "confidence": "estimated", "sourceIds": ["s1", "s2"] }] },
-    { "id": "e4", "from": "port-rotterdam", "to": "furniture-plant", "mode": "rail", "good": "x-sawn-timber",
+    { "id": "e4", "from": "port-rotterdam", "to": "furniture-plant", "mode": "rail", "goods": ["x-sawn-timber"],
       "claims": [{ "confidence": "estimated", "sourceIds": [] }] },
-    { "id": "e5", "from": "furniture-plant", "to": "store-karlsruhe", "mode": "road", "good": "x-dining-table",
+    { "id": "e5", "from": "furniture-plant", "to": "store-karlsruhe", "mode": "road", "goods": ["x-dining-table"],
       "claims": [{ "confidence": "estimated", "sourceIds": [] }] }
   ],
   "story": {

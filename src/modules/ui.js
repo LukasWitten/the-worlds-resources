@@ -52,7 +52,7 @@ class UIController {
     const targetEl = document.getElementById(`section-${sectionId}`);
     if (targetEl) targetEl.classList.remove('hidden');
 
-    document.querySelectorAll('[data-section-target]').forEach(btn => {
+    document.querySelectorAll('[data-nav-item]').forEach(btn => {
       if (btn.getAttribute('data-section-target') === sectionId) {
         btn.classList.add('text-indigo-400');
         btn.classList.remove('text-slate-300');
@@ -70,6 +70,10 @@ class UIController {
     // Top navbar toggle button should only appear when viewing the map
     const topNavbarToggleBtn = document.getElementById('navbar-toggle-btn');
     const navbar = document.getElementById('top-navbar');
+
+    // The map view fills exactly the viewport (navbar + map + footer), so the page never scrolls
+    // and the inspector's header can't end up above the visible area
+    document.body.classList.toggle('map-mode', sectionId === 'map');
 
     if (sectionId === 'map') {
       // Start in clean fullscreen: collapse sidebar + top navbar for maximum "wow" impact
@@ -90,7 +94,8 @@ class UIController {
       history.replaceState(null, '', desiredHash);
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Instant: a smooth scroll can be cut short when the map view locks the page height
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   /**
@@ -161,7 +166,6 @@ class UIController {
     const navbar = document.getElementById('top-navbar');
     const toggleBtn = document.getElementById('navbar-toggle-btn');
     const toggleIcon = document.getElementById('navbar-toggle-icon');
-    const mapSection = document.getElementById('section-map');
 
     if (forceOpen !== null) {
       this.navbarOpen = forceOpen;
@@ -175,20 +179,12 @@ class UIController {
       toggleBtn?.classList.remove('top-0');
       toggleBtn?.classList.add('top-16');
       if (toggleIcon) toggleIcon.innerText = '▲';
-      if (mapSection) {
-        mapSection.classList.remove('h-screen');
-        mapSection.classList.add('h-[calc(100vh-4rem)]');
-      }
     } else {
       // Hide Navbar
       navbar?.classList.add('-translate-y-full', '-mb-16', 'opacity-0', 'pointer-events-none');
       toggleBtn?.classList.remove('top-16');
       toggleBtn?.classList.add('top-0');
       if (toggleIcon) toggleIcon.innerText = '▼';
-      if (mapSection) {
-        mapSection.classList.remove('h-[calc(100vh-4rem)]');
-        mapSection.classList.add('h-screen');
-      }
     }
 
     mapController.invalidateSize();

@@ -90,37 +90,7 @@ class MapController {
       this.map.removeLayer(this.tileLayer);
     }
 
-    const key = this.cartoApiKey || DEFAULT_CARTO_API_KEY;
-
-    if (this.currentProvider === 'carto' && key) {
-      // CARTO Dark Matter with API Key using official param "?key=..."
-      console.log('[Map] Using CARTO Dark Matter with API Key');
-      this.tileLayer = L.tileLayer(
-        `https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=${encodeURIComponent(key)}`,
-        {
-          maxZoom: 19,
-          subdomains: 'abcd'
-        }
-      );
-    } else if (this.currentProvider === 'carto') {
-      console.log('[Map] Using CARTO Dark Matter without key');
-      this.tileLayer = L.tileLayer(
-        'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-        {
-          maxZoom: 19,
-          subdomains: 'abcd'
-        }
-      );
-    } else {
-      // Esri World Dark Gray Canvas: High resolution, dark slate, 100% free, no watermark
-      console.log('[Map] Using Esri Dark Canvas');
-      this.tileLayer = L.tileLayer(
-        'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-        {
-          maxZoom: 16
-        }
-      );
-    }
+    this.tileLayer = this.createTileLayer();
 
     if (this.map) {
       this.tileLayer.addTo(this.map);
@@ -128,14 +98,36 @@ class MapController {
     }
   }
 
+  /** A new basemap layer for the current provider (also used by the homepage map). */
+  createTileLayer() {
+    const key = this.cartoApiKey || DEFAULT_CARTO_API_KEY;
+
+    if (this.currentProvider === 'carto') {
+      // CARTO Dark Matter; the key is passed with the official "?key=..." parameter
+      const query = key ? `?key=${encodeURIComponent(key)}` : '';
+      return L.tileLayer(`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png${query}`, {
+        maxZoom: 19,
+        subdomains: 'abcd'
+      });
+    }
+    // Esri World Dark Gray Canvas: free, no watermark
+    return L.tileLayer(
+      'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
+      { maxZoom: 16 }
+    );
+  }
+
+  /** Attribution HTML for the current basemap provider. */
+  attributionHtml() {
+    return this.currentProvider === 'carto'
+      ? '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      : '&copy; <a href="https://www.esri.com/">Esri</a> &copy; OpenStreetMap contributors';
+  }
+
   updateAttribution() {
     if (!this.attributionControl) return;
     this.attributionControl.setPrefix(false);
-    if (this.currentProvider === 'carto') {
-      this.attributionControl.addAttribution('&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>');
-    } else {
-      this.attributionControl.addAttribution('&copy; <a href="https://www.esri.com/">Esri</a> &copy; OpenStreetMap contributors');
-    }
+    this.attributionControl.addAttribution(this.attributionHtml());
   }
 
   setTileProvider(provider, apiKey = '') {

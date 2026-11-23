@@ -183,3 +183,44 @@ body {
   transform: scale(1.25);
   transition: transform 0.3s ease;
 }
+
+/* Homepage hero map: slow flowing routes, no interaction */
+#hero-map {
+  cursor: default;
+}
+
+#hero-map .hero-route {
+  stroke-dasharray: 6 8;
+  animation: dashAnimation 40s linear infinite;
+}
+
+#hero-map .leaflet-control-attribution {
+  background: rgba(11, 15, 25, 0.7);
+  color: #64748b;
+}
+
+#hero-map .leaflet-control-attribution a {
+  color: #94a3b8;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-route,
+  .pipeline-glow-oil,
+  .pipeline-glow-gas,
+  .shipping-glow,
+  .shipping-glow-ocean,
+  .rail-glow,
+  .pulse-marker {
+    animation: none !important;
+  }
+}
+
+/* Map view: body is exactly one viewport tall; the map section takes what navbar and footer leave */
+body.map-mode {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+body.map-mode main {
+  min-height: 0;
+}

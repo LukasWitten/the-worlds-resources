@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The World's Resources | Visualizing Global Trade</title>
-  <meta name="description" content="Minimalist, open-source web application mapping global resource flows from source to everyday consumer products.">
+  <title>The World's Resources – Where does your fuel come from?</title>
+  <meta name="description" content="An open, interactive map of global supply chains: follow oil, gas and lithium from the oil field or mine to the products you use every day.">
   <meta name="theme-color" content="#0b0f19">
   <link rel="canonical" href="https://www.theworldsresources.org/">
 
@@ -16,7 +16,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="The World's Resources">
   <meta property="og:url" content="https://www.theworldsresources.org/">
-  <meta property="og:title" content="The World's Resources – Visualizing the veins of global trade">
+  <meta property="og:title" content="The World's Resources – Where does your fuel come from?">
   <meta property="og:description" content="An interactive, open-source map of global resource flows: from oil fields, ports and pipelines to the products in your everyday life.">
   <meta property="og:image" content="https://www.theworldsresources.org/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -24,7 +24,7 @@
   <meta property="og:image:alt" content="Dark map of Germany with glowing crude oil and natural gas pipelines, ports and refineries">
   <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="The World's Resources – Visualizing the veins of global trade">
+  <meta name="twitter:title" content="The World's Resources – Where does your fuel come from?">
   <meta name="twitter:description" content="An interactive, open-source map of global resource flows: from oil fields, ports and pipelines to the products in your everyday life.">
   <meta name="twitter:image" content="https://www.theworldsresources.org/og-image.jpg">
 
@@ -39,22 +39,20 @@
       <div class="flex items-center justify-between h-16">
         
         <!-- Brand -->
-        <div class="flex items-center space-x-3 cursor-pointer" data-section-target="home">
-          <span class="text-2xl filter drop-shadow">🌐</span>
-          <span class="font-bold text-lg tracking-tight text-white hover:text-indigo-400 transition">
-            The World's Resources
-          </span>
-        </div>
+        <a href="#home" class="flex items-center gap-2.5">
+          <img src="/favicon.svg" alt="" class="w-7 h-7" width="28" height="28">
+          <span class="font-semibold text-base tracking-tight text-white">The World's Resources</span>
+        </a>
 
         <!-- Desktop Menu -->
         <div class="hidden md:flex items-center space-x-8">
-          <button data-section-target="home" class="text-indigo-400 font-medium text-sm transition hover:text-indigo-300">Home</button>
-          <button data-section-target="map" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Resource Map</button>
-          <button data-section-target="sources" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Data Sources</button>
-          <button data-section-target="contact" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Contact</button>
-          <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-xs font-semibold uppercase tracking-wider transition shadow-lg shadow-indigo-600/25 flex items-center space-x-1.5">
+          <button data-nav-item data-section-target="home" class="text-indigo-400 font-medium text-sm transition hover:text-indigo-300">Home</button>
+          <button data-nav-item data-section-target="map" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Resource Map</button>
+          <button data-nav-item data-section-target="sources" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Data Sources</button>
+          <button data-nav-item data-section-target="contact" class="text-slate-300 font-medium text-sm transition hover:text-indigo-300">Contact</button>
+          <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="border border-slate-700 hover:border-slate-500 hover:bg-slate-800/80 text-slate-200 px-3.5 py-1.5 rounded-lg text-sm font-medium transition flex items-center gap-1.5">
             <span>GitHub</span>
-            <span>↗</span>
+            <span aria-hidden="true">↗</span>
           </a>
         </div>
 
@@ -72,11 +70,11 @@
 
     <!-- Mobile Dropdown -->
     <div id="mobile-menu" class="hidden md:hidden bg-cardbg border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
-      <button data-section-target="home" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Home</button>
-      <button data-section-target="map" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Resource Map</button>
-      <button data-section-target="sources" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Data Sources</button>
-      <button data-section-target="contact" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Contact</button>
-      <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" class="block text-center bg-indigo-600 text-white py-2 rounded-lg mt-2 text-sm font-medium">GitHub ↗</a>
+      <button data-nav-item data-section-target="home" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Home</button>
+      <button data-nav-item data-section-target="map" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Resource Map</button>
+      <button data-nav-item data-section-target="sources" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Data Sources</button>
+      <button data-nav-item data-section-target="contact" class="block w-full text-left py-2.5 text-slate-300 hover:text-indigo-400">Contact</button>
+      <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="block text-center border border-slate-700 text-slate-200 py-2 rounded-lg mt-2 text-sm font-medium">GitHub ↗</a>
     </div>
   </nav>
 
@@ -92,71 +90,154 @@
   <main class="flex-grow flex flex-col">
 
     <!-- 1. HOME SECTION -->
-    <section id="section-home" class="py-12 sm:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto flex-grow flex flex-col justify-center">
-      
-      <!-- Hero -->
-      <div class="text-center max-w-3xl mx-auto mb-16">
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-950/80 border border-indigo-700/50 text-indigo-300 text-xs font-semibold mb-6">
-          <span>✨</span>
-          <span>Open-Source MVP Live: Crude Oil, Natural Gas & Intercontinental Lithium Route</span>
-        </div>
-        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
-          Visualizing the Veins of <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-300 to-amber-300">Global Trade.</span>
-        </h1>
-        <p class="text-base sm:text-xl text-slate-400 mb-10 leading-relaxed">
-          An interactive, minimalist world map of humanity’s global resource flows. From the Chilean Atacama Desert and Norwegian offshore gas fields all the way into your living room and electric car.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center gap-4">
-          <button data-section-target="map" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-xl font-semibold text-base transition shadow-xl shadow-indigo-600/30 flex items-center justify-center space-x-2 cursor-pointer">
-            <span>🚀 Launch Interactive Map</span>
-          </button>
-          <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="bg-cardbg hover:bg-slate-800 text-slate-200 border border-slate-700 px-8 py-3.5 rounded-xl font-semibold text-base transition flex items-center justify-center space-x-2">
-            <span>Contribute on GitHub ↗</span>
-          </a>
-        </div>
-      </div>
+    <section id="section-home" class="flex-grow">
 
-      <!-- Interactive Preview Card -->
-      <div class="relative rounded-2xl overflow-hidden border border-slate-800 shadow-2xl mb-16 bg-cardbg cursor-pointer group" data-section-target="map">
-        <div class="h-80 w-full bg-slate-950 flex items-center justify-center relative overflow-hidden">
-          <div class="absolute inset-0 opacity-30 bg-[radial-gradient(#4f46e5_1px,transparent_1px)] [background-size:20px_20px]"></div>
-          <div class="text-center z-10 px-4 group-hover:scale-105 transition duration-300">
-            <span class="text-5xl mb-3 block">🗺️</span>
-            <h3 class="text-2xl font-bold text-white mb-2">Interactive Dark-Mode Map</h3>
-            <p class="text-slate-400 text-sm max-w-md mx-auto">Click here to open the map in full-screen mode with live filters and the route inspector.</p>
+      <!-- Hero: live map with one highlighted supply chain -->
+      <div class="relative border-b border-slate-800/80 lg:h-[min(80vh,720px)] lg:min-h-[560px]">
+        <div id="hero-map" class="relative z-0 h-[22rem] sm:h-[26rem] lg:absolute lg:inset-0 lg:h-auto bg-darkbg" aria-hidden="true"></div>
+        <div class="pointer-events-none hidden lg:block absolute inset-0 z-[401] bg-gradient-to-r from-darkbg via-darkbg/85 to-transparent"></div>
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 z-[401] h-24 bg-gradient-to-t from-darkbg to-transparent"></div>
+
+        <div class="relative z-[402] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:h-full lg:flex lg:flex-col lg:justify-center lg:pointer-events-none">
+          <div class="py-10 lg:py-0 max-w-xl lg:pointer-events-auto">
+            <p class="flex items-center gap-2 text-xs font-medium tracking-wide text-slate-400 mb-5">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              Open data · Open source
+            </p>
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.05] mb-5">
+              Where does your fuel come from?
+            </h1>
+            <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
+              Follow oil, gas and lithium from the oil field or mine to the products you use every day – on an open map where every place has a source.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <a href="#map" class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200 transition">
+                Explore the map
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </a>
+              <a href="#stories" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800/80 hover:border-slate-600 transition">
+                Follow a supply chain
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Which chain the map shows right now -->
+        <div class="relative z-[402] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 lg:pb-0 lg:absolute lg:bottom-8 lg:left-0 lg:right-0 lg:pointer-events-none">
+          <div class="flex items-end justify-between gap-4 lg:pointer-events-auto lg:w-fit">
+            <div id="hero-chain-caption" class="min-h-[3.5rem]" aria-live="polite"></div>
+            <div id="hero-chain-dots" class="flex items-center gap-2 pb-1 lg:ml-8" role="group" aria-label="Choose a supply chain">
+              <button data-chain-index="0" class="w-2.5 h-2.5 rounded-full bg-white transition cursor-pointer" aria-label="Jet fuel for Frankfurt Airport"></button>
+              <button data-chain-index="1" class="w-2.5 h-2.5 rounded-full bg-slate-600 transition cursor-pointer" aria-label="Battery materials for electric cars"></button>
+              <button data-chain-index="2" class="w-2.5 h-2.5 rounded-full bg-slate-600 transition cursor-pointer" aria-label="Diesel and petrol for Bavaria"></button>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Feature Grid -->
-      <div class="grid md:grid-cols-3 gap-6 mb-16">
-        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
-          <div class="text-3xl mb-3">🖤</div>
-          <h3 class="text-lg font-bold mb-2 text-white">Minimalist Dark Design</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            A deep dark map aesthetic makes fluorescent resource flows and infrastructure nodes stand out clearly.
-          </p>
+      <!-- Key numbers (filled from the data) -->
+      <div class="border-b border-slate-800/80">
+        <dl class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 divide-slate-800/80 md:divide-x">
+          <div class="py-6 md:px-6 md:first:pl-0">
+            <dt class="text-xs text-slate-400">Places on the map</dt>
+            <dd class="text-2xl font-semibold text-white mt-1" data-stat="places">41</dd>
+          </div>
+          <div class="py-6 md:px-6">
+            <dt class="text-xs text-slate-400">Routes connecting them</dt>
+            <dd class="text-2xl font-semibold text-white mt-1" data-stat="routes">28</dd>
+          </div>
+          <div class="py-6 md:px-6">
+            <dt class="text-xs text-slate-400">Resources</dt>
+            <dd class="text-2xl font-semibold text-white mt-1">Oil, gas, lithium</dd>
+          </div>
+          <div class="py-6 md:px-6">
+            <dt class="text-xs text-slate-400">Entries with a source</dt>
+            <dd class="text-2xl font-semibold text-white mt-1" data-stat="sourced">100%</dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Featured supply chains -->
+      <div id="stories" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-mt-20">
+        <div class="max-w-2xl mb-10">
+          <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-3">Follow a supply chain</h2>
+          <p class="text-slate-400 leading-relaxed">Every chain is built from public sources. Open one to see each step on the map – from the source to the place where it becomes something you use.</p>
         </div>
-        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
-          <div class="text-3xl mb-3">⚡</div>
-          <h3 class="text-lg font-bold mb-2 text-white">Dynamic Routes & Pipelines</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            Real GeoJSON data with flow directions from North Sea ports, the Adriatic and South America to German processing centers.
-          </p>
+        <div class="grid gap-4 md:grid-cols-3">
+          <a href="#map/refinery-rheinland" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
+            <span class="flex items-center gap-2 text-xs font-medium text-amber-300 mb-4"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Crude oil</span>
+            <span class="text-lg font-semibold text-white mb-2">Jet fuel for Frankfurt Airport</span>
+            <span class="text-sm text-slate-400 leading-relaxed mb-6">Texas, Venezuela and Canada → Wilhelmshaven → Cologne</span>
+            <span class="mt-auto flex items-center justify-between text-xs text-slate-500">
+              <span data-chain-meta="refinery-rheinland"></span>
+              <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
+            </span>
+          </a>
+          <a href="#map/processing-schwarzheide" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
+            <span class="flex items-center gap-2 text-xs font-medium text-purple-300 mb-4"><span class="w-2 h-2 rounded-full bg-purple-400"></span>Lithium</span>
+            <span class="text-lg font-semibold text-white mb-2">Battery materials for electric cars</span>
+            <span class="text-sm text-slate-400 leading-relaxed mb-6">Atacama Desert → Panama Canal → Hamburg → Lusatia</span>
+            <span class="mt-auto flex items-center justify-between text-xs text-slate-500">
+              <span data-chain-meta="processing-schwarzheide"></span>
+              <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
+            </span>
+          </a>
+          <a href="#map/refinery-bayernoil" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
+            <span class="flex items-center gap-2 text-xs font-medium text-amber-300 mb-4"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Crude oil</span>
+            <span class="text-lg font-semibold text-white mb-2">Diesel and petrol for Bavaria</span>
+            <span class="text-sm text-slate-400 leading-relaxed mb-6">Persian Gulf → Suez Canal → Trieste → across the Alps</span>
+            <span class="mt-auto flex items-center justify-between text-xs text-slate-500">
+              <span data-chain-meta="refinery-bayernoil"></span>
+              <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
+            </span>
+          </a>
         </div>
-        <div class="glass-panel p-6 rounded-2xl border border-slate-800">
-          <div class="text-3xl mb-3">💡</div>
-          <h3 class="text-lg font-bold mb-2 text-white">The "Aha Moment"</h3>
-          <p class="text-slate-400 text-sm leading-relaxed">
-            Connects abstract import volumes directly to everyday consumer products – from gasoline and kerosene to plastics, heating and smartphone batteries.
-          </p>
+      </div>
+
+      <!-- How it works -->
+      <div class="border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 grid gap-10 md:grid-cols-3">
+          <div>
+            <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <h3 class="text-base font-semibold text-white mb-2">Pick a place</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Ports, pipelines, refineries, mines and oil fields – each with its operator, capacity and what it means for everyday life.</p>
+          </div>
+          <div>
+            <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H16"/></svg>
+            <h3 class="text-base font-semibold text-white mb-2">See the whole chain</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">The map highlights where a resource comes from and where it goes next, step by step across countries and oceans.</p>
+          </div>
+          <div>
+            <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg>
+            <h3 class="text-base font-semibold text-white mb-2">Check the source</h3>
+            <p class="text-sm text-slate-400 leading-relaxed">Every entry links to the public report or operator data it is based on. Spot something outdated? It can be fixed in minutes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Open source -->
+      <div class="border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+          <div class="max-w-2xl">
+            <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-3">Built in the open</h2>
+            <p class="text-slate-400 leading-relaxed">The code is MIT-licensed and the data is free to reuse under CC BY 4.0. Know a pipeline, a port or a mine? Add it, connect it or correct it – no coding needed.</p>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+            <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200 transition">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+              Contribute on GitHub
+            </a>
+            <a href="https://github.com/LukasWitten/the-worlds-resources/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800/80 hover:border-slate-600 transition">
+              Read the contributor guide
+            </a>
+          </div>
         </div>
       </div>
 
     </section>
 
     <!-- 2. RESOURCE MAP SECTION -->
-    <section id="section-map" class="hidden flex-grow relative flex overflow-hidden w-full h-[calc(100vh-4rem)] transition-[height] duration-300">
+    <section id="section-map" class="hidden flex-grow min-h-0 relative flex overflow-hidden w-full">
       
       <!-- Collapsible Left Sidebar -->
       <div id="map-sidebar" class="relative z-[1040] w-80 h-full bg-cardbg/95 backdrop-blur-md border-r border-slate-800 p-5 flex flex-col justify-between transition-[margin] duration-300 ease-in-out shrink-0">
@@ -399,16 +480,13 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="border-t border-slate-800/80 py-6 px-4 sm:px-6 lg:px-8 bg-darkbg">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-      <div class="flex items-center space-x-2">
-        <span>🌐</span>
-        <span>The World's Resources — Open Source MVP 2026</span>
-      </div>
-      <div class="flex items-center space-x-4">
+  <footer class="border-t border-slate-800/80 py-1 px-4 sm:px-6 lg:px-8 bg-darkbg">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[11px] leading-4 text-slate-500">
+      <span>© 2026 The World's Resources<span class="hidden sm:inline"> contributors · Code MIT · Data CC BY 4.0</span></span>
+      <div class="flex items-center gap-4">
         <button data-section-target="contact" class="hover:text-slate-300 transition">Contact</button>
         <button data-open-imprint class="hover:text-slate-300 transition">Legal Notice & Privacy</button>
-        <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" class="hover:text-slate-300 transition">GitHub ↗</a>
+        <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="hover:text-slate-300 transition">GitHub ↗</a>
       </div>
     </div>
   </footer>

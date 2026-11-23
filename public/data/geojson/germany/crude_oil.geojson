@@ -10,9 +10,7 @@
     "description": "Crude oil import ports, processing refineries, and key supply pipelines for Germany.",
     "primary_sources": [
       "Federal Network Agency (Bundesnetzagentur, BNetzA)",
-      "Federal Statistical Office of Germany (Destatis)",
-      "en2x – German Fuels and Energy Association (formerly MWV)",
-      "OpenStreetMap Infrastructure Data"
+      "en2x – German Fuels and Energy Association (formerly MWV)"
     ]
   },
   "features": [

@@ -17,6 +17,7 @@ class DataService {
         'import_hub',
         'processing_hub',
         'storage_hub',
+        'transit_point',
         'pipeline',
         'rail_corridor',
         'shipping_route',

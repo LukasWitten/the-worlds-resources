@@ -92,6 +92,7 @@ Use **Point** geometry. Coordinates are `[longitude, latitude]` (GeoJSON order).
 | `import_hub` | Import port, LNG terminal, landing station |
 | `processing_hub` | Refinery, plant, compressor, upgrader |
 | `storage_hub` | Storage cavern / tank farm |
+| `transit_point` | Point where shipping routes converge or pass through: sea approach, strait, canal (no extraction or handling there) |
 | `oil_field` | Reserved for polygon “lakes” (see oil_fields layer) |
 
 ### Allowed `resource` values

@@ -685,7 +685,7 @@
         "capacity": "",
         "summary": "Gulf export lane via Hormuz, Red Sea and Suez toward the Mediterranean approach.",
         "description": "Realistic long-haul tanker path: Persian Gulf → Strait of Hormuz → Arabian Sea → Gulf of Aden → Red Sea → Suez Canal → Eastern Mediterranean. Educational approximation of the main commercial sea lane, not a specific vessel track.",
-        "flow_direction": "Ras Tanura → Suez / Eastern Med → Mediterranean Crude Origins",
+        "flow_direction": "Ras Tanura → Suez → Eastern Mediterranean Tanker Approach",
         "supply_chain_stage": "transport",
         "consumer_products": [
           "Crude oil in transit"

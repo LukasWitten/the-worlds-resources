@@ -333,6 +333,10 @@ class MapController {
       mainColor = '#38bdf8';
       glowColor = 'rgba(56, 189, 248, 0.5)';
       iconSymbol = '⚓';
+    } else if (p.type === 'transit_point') {
+      mainColor = '#22d3ee';
+      glowColor = 'rgba(34, 211, 238, 0.45)';
+      iconSymbol = '🧭';
     } else if (p.type === 'storage_hub') {
       mainColor = '#10b981';
       glowColor = 'rgba(16, 185, 129, 0.5)';

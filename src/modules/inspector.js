@@ -11,6 +11,8 @@ class Inspector {
     this.isOpen = false;
     this.isFullscreen = false;
     this.currentFeature = null;
+    /** Called with the shown feature, or null when the inspector closes. */
+    this.onFeatureChange = null;
   }
 
   init(containerId) {
@@ -71,15 +73,20 @@ class Inspector {
     this.container.innerHTML = `
       <!-- Fixed / Sticky Top Header Bar -->
       <div class="sticky top-0 z-20 flex items-center justify-between px-6 py-4 bg-cardbg/95 backdrop-blur-md border-b border-slate-800 shrink-0">
-        <div class="flex items-center space-x-2">
+        <div class="flex flex-wrap items-center gap-1.5 min-w-0 [&>span]:whitespace-nowrap">
           ${typeBadge}
           ${resourceBadge}
         </div>
         <div class="flex items-center space-x-1.5">
+          <!-- Share / Copy Link Button -->
+          <button id="share-feature-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition flex items-center space-x-1.5 cursor-pointer text-xs" title="Copy a link to this place">
+            <span id="share-feature-icon" class="text-base">🔗</span>
+            <span id="share-feature-label" class="font-medium ${this.isFullscreen ? 'hidden sm:inline' : 'hidden'}">Share</span>
+          </button>
           <!-- Toggle Fullscreen Button -->
           <button id="toggle-fullscreen-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition flex items-center space-x-1.5 cursor-pointer text-xs" title="${this.isFullscreen ? 'Reduce to sidebar' : 'Expand to fullscreen'}">
             <span class="text-base">${this.isFullscreen ? '🗗' : '⛶'}</span>
-            <span class="font-medium hidden sm:inline">${this.isFullscreen ? 'Sidebar' : 'Fullscreen'}</span>
+            <span class="font-medium ${this.isFullscreen ? 'hidden sm:inline' : 'hidden'}">${this.isFullscreen ? 'Sidebar' : 'Fullscreen'}</span>
           </button>
           <!-- Close Button -->
           <button id="close-inspector-btn" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition cursor-pointer" title="Close" aria-label="Close">
@@ -181,6 +188,10 @@ class Inspector {
       this.hide();
     });
 
+    document.getElementById('share-feature-btn')?.addEventListener('click', () => {
+      this.shareCurrentFeature();
+    });
+
     document.getElementById('toggle-fullscreen-btn')?.addEventListener('click', () => {
       this.toggleFullscreen();
     });
@@ -188,6 +199,35 @@ class Inspector {
     this.container.classList.remove('translate-x-full');
     this.container.classList.add('translate-x-0');
     this.isOpen = true;
+    this.onFeatureChange?.(feature);
+  }
+
+  /** Link that opens the map directly on the current feature. */
+  getShareUrl(feature = this.currentFeature) {
+    const id = feature?.properties?.id;
+    const base = `${window.location.origin}${window.location.pathname}`;
+    return id ? `${base}#map/${encodeURIComponent(id)}` : `${base}#map`;
+  }
+
+  async shareCurrentFeature() {
+    const url = this.getShareUrl();
+    const label = document.getElementById('share-feature-label');
+    const icon = document.getElementById('share-feature-icon');
+    const button = document.getElementById('share-feature-btn');
+    try {
+      await navigator.clipboard.writeText(url);
+      if (icon) icon.textContent = '✅';
+      if (label) label.textContent = 'Link copied';
+      button?.setAttribute('title', 'Link copied');
+      setTimeout(() => {
+        if (icon) icon.textContent = '🔗';
+        if (label) label.textContent = 'Share';
+        button?.setAttribute('title', 'Copy a link to this place');
+      }, 2000);
+    } catch {
+      // Clipboard not available (e.g. insecure context) – let the user copy manually
+      window.prompt('Copy this link:', url);
+    }
   }
 
   toggleFullscreen() {
@@ -211,7 +251,9 @@ class Inspector {
     if (!this.container) return;
     this.container.classList.remove('translate-x-0');
     this.container.classList.add('translate-x-full');
+    const wasOpen = this.isOpen;
     this.isOpen = false;
+    if (wasOpen) this.onFeatureChange?.(null);
   }
 }
 

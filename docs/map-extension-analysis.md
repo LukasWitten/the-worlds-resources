@@ -595,7 +595,7 @@ Nichts davon verzögert die ersten Phasen spürbar. Es sind Namens- und Struktur
 
 ### 6.2 Phasen
 
-**Phase 0: Quick Wins mit vorhandenen Daten (ca. 2–3 Tage)**
+**Phase 0: Quick Wins mit vorhandenen Daten (ca. 2–3 Tage)**: ✅ umgesetzt am 23.11.2026. `sources.json` wurde auf Phase 1 verschoben, weil es erst mit den ersten Fremddaten eine Verwendung hat.
 1. **`goods.json` und `sources.json`** mit den 3 bestehenden Rohstoffen. Die Duplikate in `colors.js`, `inspector.js` und `heroMap.js` werden ersetzt. Der Validator prüft `resource` gegen den Katalog statt gegen das Enum.
 2. **`mapState.js`** mit allen Dimensionen aus 4.7. Genutzt werden zunächst nur `view=good`, `good`, `country` und `feature`. `#map/<id>` bleibt kompatibel.
 3. **Ressourcen-Ansicht als echter Modus**, global oder auf ein Land gefiltert (Knoten im Land und Ketten, die das Land berühren). Die Checkboxen bleiben als Modus „alle Ressourcen“.

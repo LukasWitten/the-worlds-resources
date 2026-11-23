@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE, organizationJsonLd, websiteJsonLd } from '../lib/site.js';
 import { siteStats, chainMeta } from '../lib/data.js';
+import { FEATURED, chainHref } from '../lib/featured.js';
 
 const stats = siteStats();
 ---
@@ -80,33 +81,17 @@ const stats = siteStats();
       <p class="text-slate-400 leading-relaxed">Every chain is built from public sources. Open one to see each step on the map – from the source to the place where it becomes something you use.</p>
     </div>
     <div class="grid gap-4 md:grid-cols-3">
-      <a href="/map#map/refinery-rheinland" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
-        <span class="flex items-center gap-2 text-xs font-medium text-amber-300 mb-4"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Crude oil</span>
-        <span class="text-lg font-semibold text-white mb-2">Jet fuel for Frankfurt Airport</span>
-        <span class="text-sm text-slate-400 leading-relaxed mb-6">Texas, Venezuela and Canada → Wilhelmshaven → Cologne</span>
-        <span class="mt-auto flex items-center justify-between text-xs text-slate-400">
-          <span>{chainMeta('refinery-rheinland')}</span>
-          <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
-        </span>
-      </a>
-      <a href="/map#map/processing-schwarzheide" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
-        <span class="flex items-center gap-2 text-xs font-medium text-purple-300 mb-4"><span class="w-2 h-2 rounded-full bg-purple-400"></span>Lithium</span>
-        <span class="text-lg font-semibold text-white mb-2">Battery materials for electric cars</span>
-        <span class="text-sm text-slate-400 leading-relaxed mb-6">Atacama Desert → Panama Canal → Hamburg → Lusatia</span>
-        <span class="mt-auto flex items-center justify-between text-xs text-slate-400">
-          <span>{chainMeta('processing-schwarzheide')}</span>
-          <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
-        </span>
-      </a>
-      <a href="/map#map/refinery-bayernoil" class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
-        <span class="flex items-center gap-2 text-xs font-medium text-amber-300 mb-4"><span class="w-2 h-2 rounded-full bg-amber-400"></span>Crude oil</span>
-        <span class="text-lg font-semibold text-white mb-2">Diesel and petrol for Bavaria</span>
-        <span class="text-sm text-slate-400 leading-relaxed mb-6">Persian Gulf → Suez Canal → Trieste → across the Alps</span>
-        <span class="mt-auto flex items-center justify-between text-xs text-slate-400">
-          <span>{chainMeta('refinery-bayernoil')}</span>
-          <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
-        </span>
-      </a>
+      {FEATURED.map(chain => (
+        <a href={chainHref(chain.id)} class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
+          <span class:list={['flex items-center gap-2 text-xs font-medium mb-4', chain.textClass]}><span class:list={['w-2 h-2 rounded-full', chain.dotClass]}></span>{chain.resource}</span>
+          <span class="text-lg font-semibold text-white mb-2">{chain.title}</span>
+          <span class="text-sm text-slate-400 leading-relaxed mb-6">{chain.route}</span>
+          <span class="mt-auto flex items-center justify-between text-xs text-slate-400">
+            <span>{chainMeta(chain.id)}</span>
+            <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
+          </span>
+        </a>
+      ))}
     </div>
   </div>
 

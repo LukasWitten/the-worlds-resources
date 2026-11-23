@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalAddress from '../components/LegalAddress.astro';
-import { SITE } from '../lib/site.js';
+import { SITE, ALTERNATES } from '../lib/site.js';
 ---
 <BaseLayout
   title="Legal Notice"
   description="Legal notice (Impressum) of The World's Resources: who is responsible for this website and how to reach us."
   breadcrumbs={[{ name: 'Legal Notice', path: '/legal' }]}
-  alternates={[{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }]}
+  alternates={ALTERNATES['/legal']}
 >
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
     <h1>Legal Notice</h1>

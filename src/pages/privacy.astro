@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../lib/site.js';
+import { SITE, ALTERNATES } from '../lib/site.js';
 
 const ext = { target: '_blank', rel: 'noopener noreferrer' };
 ---
@@ -8,7 +8,7 @@ const ext = { target: '_blank', rel: 'noopener noreferrer' };
   title="Privacy Policy"
   description="Privacy policy of The World's Resources: no cookies, no tracking across websites. Which providers see technical data when you use the map, and why."
   breadcrumbs={[{ name: 'Privacy Policy', path: '/privacy' }]}
-  alternates={[{ lang: 'en', path: '/privacy' }, { lang: 'de', path: '/de/datenschutz' }]}
+  alternates={ALTERNATES['/privacy']}
 >
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
     <h1>Privacy Policy</h1>

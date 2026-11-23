@@ -20,6 +20,16 @@ export const NAV = [
   { href: '/about', label: 'About' }
 ];
 
+/**
+ * Pages that exist in more than one language (hreflang). Used by the pages
+ * themselves and by the sitemap. German templates for all pages follow later.
+ */
+const LEGAL = [{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }];
+const PRIVACY = [{ lang: 'en', path: '/privacy' }, { lang: 'de', path: '/de/datenschutz' }];
+export const ALTERNATES = Object.fromEntries(
+  [LEGAL, PRIVACY].flatMap(group => group.map(({ path }) => [path, group]))
+);
+
 export const absoluteUrl = (path) => new URL(path, SITE.url).href;
 
 /**

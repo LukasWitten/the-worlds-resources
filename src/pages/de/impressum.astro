@@ -1,14 +1,14 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import LegalAddress from '../../components/LegalAddress.astro';
-import { SITE } from '../../lib/site.js';
+import { SITE, ALTERNATES } from '../../lib/site.js';
 ---
 <BaseLayout
   lang="de"
   title="Impressum"
   description="Impressum von The World's Resources: wer für diese Website verantwortlich ist und wie Sie uns erreichen."
   breadcrumbs={[{ name: 'Impressum', path: '/de/impressum' }]}
-  alternates={[{ lang: 'en', path: '/legal' }, { lang: 'de', path: '/de/impressum' }]}
+  alternates={ALTERNATES['/de/impressum']}
 >
   <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
     <h1>Impressum</h1>

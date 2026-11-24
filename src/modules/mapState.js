@@ -10,8 +10,8 @@
  *   year       e.g. 2024                                         (reserved for later views)
  *   feature    id of the place or route open in the inspector
  *
- * URL: #map[/<feature-id>][?view=good&good=lithium&country=CL]
- * Old links (#map, #map/<feature-id>) keep working and open the overview.
+ * URL: /map#map[/<feature-id>][?view=good&good=lithium&country=CL]
+ * Old links (/#map, /#map/<feature-id>) are sent to /map by public/legacy-hash.js.
  */
 
 export const DEFAULT_STATE = Object.freeze({
@@ -124,10 +124,10 @@ class MapState {
   }
 
   writeUrl(mode) {
-    // Only while the map section is open; other sections own the hash themselves
-    if (!window.location.hash.startsWith('#map')) return;
+    const current = window.location.hash;
     const desired = buildMapHash(this.state);
-    if (window.location.hash === desired) return;
+    // A plain /map stays plain while the default overview is shown
+    if (current === desired || (desired === '#map' && current === '')) return;
     if (mode === 'push') history.pushState(null, '', desired);
     else history.replaceState(null, '', desired);
   }

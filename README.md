@@ -13,7 +13,7 @@ The World's Resources is an open-source, interactive map of global resource flow
 - **Follow a supply chain.** Click a refinery, port, pipeline or oil field and the map highlights its whole chain – where the resource comes from and where it goes. The inspector lists every step; each one is clickable.
 - **Find the "aha moment".** Every place explains why it matters in everyday life: the jet fuel for Frankfurt Airport, the lithium for EV batteries, the gas for your heating.
 - **Focus on one resource or country.** Show only lithium, or everything that touches Chile, and see the country's supply corridors (e.g. Chile → Germany).
-- **Share what you see.** Every node, route and view has its own link, e.g. [`#map/refinery-schwedt`](https://www.theworldsresources.org/#map/refinery-schwedt) or [`#map?view=good&good=lithium&country=CL`](https://www.theworldsresources.org/#map?view=good&good=lithium&country=CL).
+- **Share what you see.** Every node, route and view has its own link, e.g. [`/map#map/refinery-schwedt`](https://www.theworldsresources.org/map#map/refinery-schwedt) or [`/map#map?view=good&good=lithium&country=CL`](https://www.theworldsresources.org/map#map?view=good&good=lithium&country=CL).
 - **Check the sources.** Every feature names its source and links to it.
 
 ### Current coverage
@@ -38,14 +38,14 @@ Contributions of all sizes are welcome – no coding needed for most of them:
 
 ## Run it locally
 
-Requires Node.js 20 or newer.
+Requires Node.js 22.23 or newer.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Then open the address shown in the terminal (usually `http://localhost:5173`).
+Then open the address shown in the terminal (usually `http://localhost:4321`).
 
 | Command | What it does |
 |---------|--------------|
@@ -53,6 +53,8 @@ Then open the address shown in the terminal (usually `http://localhost:5173`).
 | `npm run validate:data` | Checks all data: GeoJSON (schema, unique ids, route endpoints), catalogues and the generated trade files (schemas, codes, sums) |
 | `npm run build` | Production build into `dist/` |
 | `npm run preview` | Serves the build with the same security headers as the live site |
+| `npm run check:seo` | Checks the built pages without JavaScript: titles, descriptions, canonicals, JSON-LD, links, sitemap, robots.txt, llms.txt |
+| `npm run check:lighthouse` | Lighthouse budget for the main pages (needs `npm run preview` running and Chrome) |
 | `npm run data:countries` | Rebuilds `reference/countries.json` (needs the raw data, see below) |
 | `npm run data:trade` | Rebuilds `public/data/trade/` from CEPII BACI (needs the raw data, see below) |
 
@@ -96,7 +98,12 @@ Which goods are included comes from the HS codes in `reference/goods.json`.
 │   │   └── LICENSE.md               # CC BY 4.0
 │   └── favicon.svg, og-image.jpg …
 ├── src/
-│   ├── app.js                       # Entry point, URL routing (#map/<id>)
+│   ├── pages/                       # One file per page (Astro): index, map, methodology, sources …
+│   ├── layouts/, components/        # Page shell: meta tags, structured data, navigation, footer
+│   ├── lib/                         # Build-time helpers (site constants, numbers from the data)
+│   ├── app.js                       # Map page (/map): startup and URL state (#map/<id>?view=…)
+│   ├── home.js                      # Homepage: live hero map
+│   ├── scripts/site.js              # Every page: mobile menu, page-view statistics
 │   ├── modules/
 │   │   ├── dataService.js           # Loading and filtering the datasets, flow API (exportsOf, importsOf, flowsOf)
 │   │   ├── trade.js                 # Trade data, loaded file by file on demand
@@ -105,7 +112,7 @@ Which goods are included comes from the HS codes in `reference/goods.json`.
 │   │   ├── supplyChain.js           # Graph of nodes and routes, upstream/downstream chains, corridors
 │   │   ├── map.js                   # Leaflet map, markers, routes, chain highlight
 │   │   ├── inspector.js             # Detail drawer, aha moment, supply-chain timeline
-│   │   ├── ui.js                    # Navigation, search, filters, dialogs
+│   │   ├── ui.js                    # Map page UI: sidebar, search, filters, legend, dialogs
 │   │   ├── colors.js                # Shared route colors
 │   │   └── html.js                  # Escaping of data values (XSS protection)
 │   └── styles/main.css
@@ -116,7 +123,7 @@ Which goods are included comes from the HS codes in `reference/goods.json`.
 │   ├── CONTRIBUTING_DATA.md         # Full guide to the data format
 │   ├── PROJECT_SPECIFICATIONS.md    # Vision and concept
 │   └── MINI_EDITOR_PLAN.md          # Plan for an in-browser route editor
-├── index.html
+├── astro.config.mjs                 # Static site build (Astro)
 └── vercel.json                      # Build settings and security headers
 ```
 

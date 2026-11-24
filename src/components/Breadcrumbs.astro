@@ -1,0 +1,17 @@
+---
+/** Visible breadcrumb trail; the matching BreadcrumbList JSON-LD is added by the layout. */
+const { crumbs = [], homeLabel = 'Home' } = Astro.props;
+const items = [{ name: homeLabel, path: '/' }, ...crumbs];
+---
+<nav aria-label="Breadcrumb" class="text-xs text-slate-400 mb-6">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    {items.map((crumb, i) => (
+      <li class="flex items-center gap-1.5">
+        {i > 0 && <span aria-hidden="true" class="text-slate-600">/</span>}
+        {i < items.length - 1
+          ? <a href={crumb.path} class="hover:text-white transition">{crumb.name}</a>
+          : <span aria-current="page" class="text-slate-300">{crumb.name}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>

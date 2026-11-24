@@ -178,7 +178,7 @@ body {
 
 #hero-map .leaflet-control-attribution {
   background: rgba(11, 15, 25, 0.7);
-  color: #64748b;
+  color: #94a3b8;
 }
 
 #hero-map .leaflet-control-attribution a {
@@ -201,4 +201,53 @@ body.map-mode {
 }
 body.map-mode main {
   min-height: 0;
+}
+
+/* Text pages (methodology, sources, about, legal): readable long-form typography */
+@layer components {
+  .prose-page {
+    @apply text-slate-300 leading-relaxed;
+  }
+  .prose-page h1 {
+    @apply text-3xl sm:text-4xl font-semibold tracking-tight text-white mb-4;
+  }
+  .prose-page .lead {
+    @apply text-lg text-slate-300 mb-10;
+  }
+  .prose-page h2 {
+    @apply text-xl sm:text-2xl font-semibold tracking-tight text-white mt-12 mb-4 scroll-mt-20;
+  }
+  .prose-page h3 {
+    @apply text-base font-semibold text-white mt-8 mb-2 scroll-mt-20;
+  }
+  .prose-page p {
+    @apply mb-4;
+  }
+  .prose-page ul {
+    @apply list-disc pl-5 mb-4 space-y-1.5;
+  }
+  .prose-page ol {
+    @apply list-decimal pl-5 mb-4 space-y-1.5;
+  }
+  .prose-page a {
+    @apply text-indigo-300 underline decoration-indigo-300/40 underline-offset-2 hover:text-white hover:decoration-white;
+  }
+  .prose-page strong {
+    @apply text-slate-100 font-semibold;
+  }
+  .prose-page code {
+    @apply text-[0.9em] text-amber-200 bg-slate-800/70 rounded px-1 py-0.5;
+  }
+  .prose-page table {
+    @apply w-full text-sm border-collapse mb-6;
+  }
+  .prose-page th {
+    @apply text-left text-xs uppercase tracking-wider text-slate-400 font-semibold border-b border-slate-700 py-2 pr-4;
+  }
+  .prose-page td {
+    @apply border-b border-slate-800 py-2 pr-4 align-top;
+  }
+  .prose-page address {
+    @apply not-italic mb-4;
+  }
 }

@@ -1,0 +1,29 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalAddress from '../../components/LegalAddress.astro';
+import { SITE, ALTERNATES } from '../../lib/site.js';
+---
+<BaseLayout
+  lang="de"
+  title="Impressum"
+  description="Impressum von The World's Resources: wer für diese Website verantwortlich ist und wie Sie uns erreichen."
+  breadcrumbs={[{ name: 'Impressum', path: '/de/impressum' }]}
+  alternates={ALTERNATES['/de/impressum']}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>Impressum</h1>
+    <p class="text-sm text-slate-400">English version: <a href="/legal" hreflang="en" lang="en">Legal Notice</a></p>
+
+    <h2>Angaben gemäß § 5 DDG</h2>
+    <p><strong>Verantwortlich für den Inhalt:</strong></p>
+    <LegalAddress><Fragment slot="country">Deutschland</Fragment></LegalAddress>
+
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+
+    <h2>Über dieses Projekt</h2>
+    <p>„The World's Resources“ ist ein unabhängiges, nicht-kommerzielles Open-Source-Projekt, das weltweite Rohstoffströme sichtbar macht. Der Code steht unter der MIT-Lizenz, die Datensätze unter <a href="https://creativecommons.org/licenses/by/4.0/deed.de" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Alle Daten beruhen auf öffentlich zugänglichen Quellen; für Vollständigkeit und Richtigkeit wird keine Gewähr übernommen.</p>
+
+    <p>Wie wir mit personenbezogenen Daten umgehen, steht in der <a href="/de/datenschutz">Datenschutzerklärung</a>.</p>
+  </article>
+</BaseLayout>

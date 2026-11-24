@@ -25,7 +25,7 @@ npm install
 npm run dev
 ```
 
-Open the address shown in the terminal (usually `http://localhost:5173`). Changes to code and data are picked up automatically.
+Open the address shown in the terminal (usually `http://localhost:4321`). Changes to code and data are picked up automatically.
 
 ## Data contributions
 
@@ -63,12 +63,13 @@ Where things live:
 
 | File | Responsibility |
 |------|----------------|
-| `src/app.js` | Startup and URL routing (`#map/<feature-id>`) |
+| `src/pages/` | The pages of the site (Astro); the map is `map.astro` |
+| `src/app.js` | Map page: startup and URL state (`/map#map/<feature-id>`) |
 | `src/modules/dataService.js` | Loading and filtering datasets |
 | `src/modules/supplyChain.js` | Graph of nodes and routes, upstream/downstream chains |
 | `src/modules/map.js` | Leaflet map, markers, routes, chain highlight |
 | `src/modules/inspector.js` | Detail drawer and supply-chain timeline |
-| `src/modules/ui.js` | Navigation, search, filters, dialogs |
+| `src/modules/ui.js` | Map page UI: sidebar, search, filters, dialogs |
 | `scripts/validate-data.js` | Data validator (local and CI) |
 
 ## Pull requests

@@ -10,8 +10,7 @@
     "description": "Natural gas & LNG import terminals, major transmission pipelines, and strategic underground storage facilities in Germany.",
     "primary_sources": [
       "Federal Network Agency (Bundesnetzagentur, BNetzA)",
-      "FNB Gas (Association of German Transmission System Operators)",
-      "Federal Statistical Office of Germany (Destatis)"
+      "FNB Gas (Association of German Transmission System Operators)"
     ]
   },
   "features": [

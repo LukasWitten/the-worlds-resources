@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Page not found" description="This page doesn't exist." noindex>
+  <div class="max-w-xl mx-auto px-4 sm:px-6 py-24 text-center">
+    <h1 class="text-3xl font-semibold tracking-tight text-white mb-3">This page doesn't exist</h1>
+    <p class="text-slate-300 mb-8">The link may be outdated. Everything on The World's Resources starts from the map.</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <a href="/map" class="inline-flex items-center justify-center rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200 transition">Open the map</a>
+      <a href="/" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800/80 transition">Go to the homepage</a>
+    </div>
+  </div>
+</BaseLayout>

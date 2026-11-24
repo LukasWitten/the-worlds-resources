@@ -2,7 +2,7 @@
 export default {
   // Every file that contains Tailwind class names, including the ones
   // assembled in JavaScript template strings (markers, inspector, sidebar).
-  content: ['./index.html', './src/**/*.js'],
+  content: ['./src/**/*.{astro,js}'],
   darkMode: 'class',
   theme: {
     extend: {

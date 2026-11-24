@@ -1,0 +1,46 @@
+---
+/**
+ * slim: one thin line for the map page, which fills the whole viewport.
+ * Otherwise a footer with the full set of links (also helps crawlers find every page).
+ */
+import { NAV, SITE } from '../lib/site.js';
+
+const { slim = false, lang } = Astro.props;
+const year = new Date().getFullYear();
+const legal = [
+  { href: '/about#contact', label: 'Contact' },
+  { href: '/legal', label: 'Legal Notice' },
+  { href: '/privacy', label: 'Privacy' }
+];
+---
+{slim ? (
+  <footer lang={lang} class="border-t border-slate-800/80 py-1 px-4 sm:px-6 lg:px-8 bg-darkbg">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-0.5 text-[11px] leading-4 text-slate-400">
+      <span>© {year} {SITE.name}<span class="hidden sm:inline"> contributors · Code MIT · Data CC BY 4.0</span></span>
+      <div class="flex items-center gap-4">
+        {legal.map(({ href, label }) => <a href={href} class="hover:text-white transition">{label}</a>)}
+        <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+) : (
+  <footer lang={lang} class="border-t border-slate-800/80 px-4 sm:px-6 lg:px-8 bg-darkbg">
+    <div class="max-w-7xl mx-auto py-8 flex flex-col gap-6 md:flex-row md:items-start md:justify-between text-sm">
+      <div class="max-w-sm">
+        <a href="/" class="flex items-center gap-2 text-white font-semibold">
+          <img src="/favicon.svg" alt="" class="w-5 h-5" width="20" height="20">
+          {SITE.name}
+        </a>
+        <p class="mt-2 text-xs text-slate-400 leading-relaxed">An open map of where resources come from. Code under the MIT License, data under CC BY 4.0.</p>
+      </div>
+      <nav aria-label="Footer" class="grid grid-cols-2 sm:grid-cols-3 gap-x-10 gap-y-2 text-slate-300">
+        {NAV.map(({ href, label }) => <a href={href} class="hover:text-white transition">{label}</a>)}
+        {legal.map(({ href, label }) => <a href={href} class="hover:text-white transition">{label}</a>)}
+        <a href={SITE.github} target="_blank" rel="noopener noreferrer" class="hover:text-white transition">GitHub ↗</a>
+      </nav>
+    </div>
+    <div class="max-w-7xl mx-auto border-t border-slate-800/80 py-3 text-[11px] text-slate-400">
+      © {year} {SITE.name} contributors
+    </div>
+  </footer>
+)}

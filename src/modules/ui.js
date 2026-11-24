@@ -1,5 +1,5 @@
 /**
- * UI Module - Handles top navigation, sidebar toggles, search, filters, and modals.
+ * UI of the map page: sidebar and navbar toggles, search, filters, legend and the basemap dialog.
  */
 
 import { mapController } from './map.js';
@@ -33,94 +33,26 @@ class UIController {
   constructor() {
     this.sidebarOpen = true;
     this.navbarOpen = true;
-    this.currentSection = 'home';
   }
 
   init() {
-    this.setupNavigation();
     this.setupSidebarToggle();
     this.setupNavbarToggle();
     this.setupFilters();
     this.setupSearch();
-    this.setupModal();
     this.setupMapPerspectiveButtons();
     this.setupApiKeyModal();
   }
 
-  setupNavigation() {
-    const navButtons = document.querySelectorAll('[data-section-target]');
-    navButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const target = btn.getAttribute('data-section-target');
-        this.showSection(target);
-      });
-    });
-
-    const mobileBtn = document.getElementById('mobile-menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileBtn && mobileMenu) {
-      mobileBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-      });
-    }
-  }
-
-  showSection(sectionId) {
-    this.currentSection = sectionId;
-
-    ['home', 'map', 'sources', 'contact'].forEach(id => {
-      const el = document.getElementById(`section-${id}`);
-      if (el) el.classList.add('hidden');
-    });
-
-    const targetEl = document.getElementById(`section-${sectionId}`);
-    if (targetEl) targetEl.classList.remove('hidden');
-
-    document.querySelectorAll('[data-nav-item]').forEach(btn => {
-      if (btn.getAttribute('data-section-target') === sectionId) {
-        btn.classList.add('text-indigo-400');
-        btn.classList.remove('text-slate-300');
-      } else {
-        btn.classList.remove('text-indigo-400');
-        btn.classList.add('text-slate-300');
-      }
-    });
-
-    const mobileMenu = document.getElementById('mobile-menu');
-    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-      mobileMenu.classList.add('hidden');
-    }
-
-    // Top navbar toggle button should only appear when viewing the map
-    const topNavbarToggleBtn = document.getElementById('navbar-toggle-btn');
-    const navbar = document.getElementById('top-navbar');
-
-    // The map view fills exactly the viewport (navbar + map + footer), so the page never scrolls
-    // and the inspector's header can't end up above the visible area
-    document.body.classList.toggle('map-mode', sectionId === 'map');
-
-    if (sectionId === 'map') {
-      // Start in clean fullscreen: collapse sidebar + top navbar for maximum "wow" impact
-      this.collapseMapChrome();
-      topNavbarToggleBtn?.classList.remove('hidden');
-      mapController.invalidateSize();
-    } else {
-      topNavbarToggleBtn?.classList.add('hidden');
-      // Ensure navbar is visible when leaving map view
-      if (!this.navbarOpen && navbar) {
-        this.toggleNavbar(true);
-      }
-    }
-
-    // Persist section in the URL so reload / share keeps the same view (#map, #sources, …);
-    // the map keeps its own state (#map/<feature>?view=…)
-    const desiredHash = sectionId === 'map' ? mapState.href() : `#${sectionId}`;
-    if (window.location.hash !== desiredHash) {
-      history.replaceState(null, '', desiredHash);
-    }
-
-    // Instant: a smooth scroll can be cut short when the map view locks the page height
-    window.scrollTo({ top: 0, behavior: 'instant' });
+  /**
+   * The map page (/map) fills exactly the viewport (navbar + map + footer, see
+   * body.map-mode), so the page never scrolls and the inspector's header stays visible.
+   * It starts in a clean fullscreen state: sidebar and top navbar collapsed.
+   */
+  enterMap() {
+    this.collapseMapChrome();
+    document.getElementById('navbar-toggle-btn')?.classList.remove('hidden');
+    mapController.invalidateSize();
   }
 
   /**
@@ -251,27 +183,6 @@ class UIController {
         dataService.setSearchQuery(e.target.value);
         this.refreshMap();
       }, 250);
-    });
-  }
-
-  setupModal() {
-    const modal = document.getElementById('imprint-modal');
-    const openBtns = document.querySelectorAll('[data-open-imprint]');
-    const closeBtn = document.getElementById('close-imprint-btn');
-
-    openBtns.forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        modal?.classList.remove('hidden');
-      });
-    });
-
-    closeBtn?.addEventListener('click', () => {
-      modal?.classList.add('hidden');
-    });
-
-    modal?.addEventListener('click', (e) => {
-      if (e.target === modal) modal.classList.add('hidden');
     });
   }
 

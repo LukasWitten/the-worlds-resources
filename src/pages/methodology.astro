@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteStats } from '../lib/data.js';
+import { SITE } from '../lib/site.js';
+
+const stats = siteStats();
+const ext = { target: '_blank', rel: 'noopener noreferrer' };
+---
+<BaseLayout
+  title="Methodology"
+  description="How the map is built: places and routes, how supply chains are traced, how sources and coordinates are checked, and what the map does not show."
+  breadcrumbs={[{ name: 'Methodology', path: '/methodology' }]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>Methodology</h1>
+    <p class="lead">The map follows resources from where they are extracted to where they are processed. This page explains how the data is built, how a supply chain is traced and where the limits are.</p>
+
+    <nav aria-label="On this page" class="mb-10 rounded-xl border border-slate-800 bg-cardbg/60 p-5 text-sm">
+      <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-2">On this page</p>
+      <ol>
+        <li><a href="#data-model">Places and routes</a></li>
+        <li><a href="#supply-chains">How a supply chain is traced</a></li>
+        <li><a href="#sources">Sources and checks</a></li>
+        <li><a href="#coordinates">Coordinates and shapes</a></li>
+        <li><a href="#provenance">Kinds of data</a></li>
+        <li><a href="#limitations">What the map does not show</a></li>
+        <li><a href="#corrections">Corrections and contributions</a></li>
+      </ol>
+    </nav>
+
+    <h2 id="data-model">1. Places and routes</h2>
+    <p>The map is a network of <strong>places</strong> (nodes) and <strong>routes</strong> (edges). It currently holds {stats.places} places and {stats.routes} routes for crude oil, natural gas and lithium.</p>
+    <ul>
+      <li><strong>Places</strong> are oil fields, mines and extraction sites, ports and import terminals, refineries and processing plants, storage sites and shipping approaches (points where sea routes join, such as straits and canals).</li>
+      <li><strong>Routes</strong> are pipelines, sea routes and rail corridors. Every route names the place it starts at and the place it ends at.</li>
+    </ul>
+    <p>Each entry records what it is, which resource it carries, its operator, its capacity as stated by the operator or authority, its status (in operation or being expanded) and its stage in the supply chain: extraction, export, transport, import or processing.</p>
+
+    <h2 id="supply-chains">2. How a supply chain is traced</h2>
+    <p>Because every route points to its start and end, all places and routes together form one directed graph. When you open a place, the map walks this graph in both directions:</p>
+    <ul>
+      <li><strong>Upstream:</strong> everything the place receives its resource from, step by step back to the oil field or mine.</li>
+      <li><strong>Downstream:</strong> everything the place delivers to.</li>
+    </ul>
+    <p>Places that only share a supplier are not part of the chain. A second refinery fed by the same port, for example, is a sibling, not a step. The number of steps and countries shown for a chain is counted from this graph.</p>
+
+    <h2 id="sources">3. Sources and checks</h2>
+    <p>Every place and route links to a public source with its name, address and year: operator reports and websites, transmission system operators, regulators such as the Bundesnetzagentur, and statistical agencies such as the U.S. Energy Information Administration and the U.S. Geological Survey. The complete list is on the <a href="/sources">data sources</a> page.</p>
+    <p>All data files are checked automatically on every change:</p>
+    <ul>
+      <li>against a JSON schema (required fields, allowed values),</li>
+      <li>for unique ids,</li>
+      <li>that every route really starts and ends at the places it names.</li>
+    </ul>
+
+    <h2 id="coordinates">4. Coordinates and shapes</h2>
+    <p>Coordinates are set by hand from the cited sources and rounded to at most four decimal places (about 10 metres). They mark the site, not individual installations on it.</p>
+    <p>Routes follow the course of a pipeline or shipping lane in simplified form. Sea routes are drawn along common shipping lanes and through the straits and canals ships actually use, not as the exact track of a single vessel. The outlines of oil fields are illustrative: they show location and rough extent, not the geological boundary.</p>
+
+    <h2 id="provenance">5. Kinds of data</h2>
+    <p>The project separates three kinds of data:</p>
+    <ul>
+      <li><strong>Curated:</strong> researched by hand from reports and operator data. All places and routes on the map today are curated.</li>
+      <li><strong>Observed:</strong> taken from official statistics, for example bilateral trade flows from CEPII BACI. These are prepared for the upcoming export and import views.</li>
+      <li><strong>Modelled:</strong> estimates derived from observed data under stated assumptions. Such numbers will always be marked as estimates, with their method and a range instead of a single value.</li>
+    </ul>
+
+    <h2 id="limitations">6. What the map does not show</h2>
+    <ul>
+      <li>The map is not complete. It started with Germany's crude oil, natural gas and LNG infrastructure and one lithium chain; more resources and countries follow.</li>
+      <li>Routes show how a resource can travel, not how much of it travels on a given day. Quantities and shares are only shown where a source states them.</li>
+      <li>Capacities are given as published by operators or authorities and may refer to different years.</li>
+      <li>Ownership, prices and contracts are not part of the data.</li>
+    </ul>
+
+    <h2 id="corrections">7. Corrections and contributions</h2>
+    <p>The data is open (CC BY 4.0) and lives in the <a href={SITE.github} {...ext}>GitHub repository ↗</a>. Anyone can propose a new place or route, or a correction, through an issue or pull request. The <a href={`${SITE.github}/blob/main/docs/CONTRIBUTING_DATA.md`} {...ext}>data guide ↗</a> describes the format. You can also write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+  </article>
+</BaseLayout>

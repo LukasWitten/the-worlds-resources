@@ -1,4 +1,7 @@
+# All crawlers are welcome: search engines, AI search and AI training
+# crawlers alike (decision E7 in docs/seo-geo-plan.md). The data is open
+# under CC BY 4.0; please credit "The World's Resources".
 User-agent: *
 Allow: /
 
-Sitemap: https://www.theworldsresources.org/sitemap.xml
+Sitemap: https://www.theworldsresources.org/sitemap-index.xml

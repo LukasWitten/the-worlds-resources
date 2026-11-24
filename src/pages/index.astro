@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, organizationJsonLd, websiteJsonLd } from '../lib/site.js';
+import { siteStats, chainMeta } from '../lib/data.js';
+import { FEATURED, chainHref } from '../lib/featured.js';
+
+const stats = siteStats();
+---
+<BaseLayout title="The World's Resources – Where does your fuel come from?" description={SITE.description} jsonLd={[websiteJsonLd(), organizationJsonLd()]}>
+  <script slot="head" is:inline src="/legacy-hash.js"></script>
+
+  <!-- Hero: live map with one highlighted supply chain -->
+  <div class="relative border-b border-slate-800/80 lg:h-[min(80vh,720px)] lg:min-h-[560px]">
+    <div id="hero-map" class="relative z-0 h-[22rem] sm:h-[26rem] lg:absolute lg:inset-0 lg:h-auto bg-darkbg" role="region" aria-label="Map preview: one supply chain at a time"></div>
+    <div class="pointer-events-none hidden lg:block absolute inset-0 z-[401] bg-gradient-to-r from-darkbg via-darkbg/85 to-transparent"></div>
+    <div class="pointer-events-none absolute inset-x-0 bottom-0 z-[401] h-24 bg-gradient-to-t from-darkbg to-transparent"></div>
+
+    <div class="relative z-[402] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 lg:h-full lg:flex lg:flex-col lg:justify-center lg:pointer-events-none">
+      <div class="py-10 lg:py-0 max-w-xl lg:pointer-events-auto">
+        <p class="flex items-center gap-2 text-xs font-medium tracking-wide text-slate-400 mb-5">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+          Open data · Open source
+        </p>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight text-white leading-[1.05] mb-5">
+          Where does your fuel come from?
+        </h1>
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed mb-8">
+          Follow oil, gas and lithium from the oil field or mine to the products you use every day – on an open map where every place has a source.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a href="/map" class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200 transition">
+            Explore the map
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#stories" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800/80 hover:border-slate-600 transition">
+            Follow a supply chain
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Which chain the map shows right now -->
+    <div class="relative z-[402] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 lg:pb-0 lg:absolute lg:bottom-8 lg:left-0 lg:right-0 lg:pointer-events-none">
+      <div class="flex items-end justify-between gap-4 lg:pointer-events-auto lg:w-fit">
+        <div id="hero-chain-caption" class="min-h-[3.5rem]" aria-live="polite"></div>
+        <div id="hero-chain-dots" class="flex items-center pb-0.5 lg:ml-6" role="group" aria-label="Choose a supply chain">
+          <button data-chain-index="0" class="w-6 h-6 p-[7px] bg-clip-content rounded-full bg-white transition cursor-pointer" aria-pressed="true" aria-label="Jet fuel for Frankfurt Airport"></button>
+          <button data-chain-index="1" class="w-6 h-6 p-[7px] bg-clip-content rounded-full bg-slate-600 transition cursor-pointer" aria-pressed="false" aria-label="Battery materials for electric cars"></button>
+          <button data-chain-index="2" class="w-6 h-6 p-[7px] bg-clip-content rounded-full bg-slate-600 transition cursor-pointer" aria-pressed="false" aria-label="Diesel and petrol for Bavaria"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key numbers (filled from the data) -->
+  <div class="border-b border-slate-800/80">
+    <dl class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-4 divide-slate-800/80 md:divide-x">
+      <div class="py-6 md:px-6 md:first:pl-0">
+        <dt class="text-xs text-slate-400">Places on the map</dt>
+        <dd class="text-2xl font-semibold text-white mt-1">{stats.places}</dd>
+      </div>
+      <div class="py-6 md:px-6">
+        <dt class="text-xs text-slate-400">Routes connecting them</dt>
+        <dd class="text-2xl font-semibold text-white mt-1">{stats.routes}</dd>
+      </div>
+      <div class="py-6 md:px-6">
+        <dt class="text-xs text-slate-400">Resources</dt>
+        <dd class="text-2xl font-semibold text-white mt-1">Oil, gas, lithium</dd>
+      </div>
+      <div class="py-6 md:px-6">
+        <dt class="text-xs text-slate-400">Entries with a source</dt>
+        <dd class="text-2xl font-semibold text-white mt-1">{stats.sourcedPercent}%</dd>
+      </div>
+    </dl>
+  </div>
+
+  <!-- Featured supply chains -->
+  <div id="stories" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 scroll-mt-20">
+    <div class="max-w-2xl mb-10">
+      <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-3">Follow a supply chain</h2>
+      <p class="text-slate-400 leading-relaxed">Every chain is built from public sources. Open one to see each step on the map – from the source to the place where it becomes something you use.</p>
+    </div>
+    <div class="grid gap-4 md:grid-cols-3">
+      {FEATURED.map(chain => (
+        <a href={chainHref(chain.id)} class="group flex flex-col rounded-xl border border-slate-800 bg-cardbg/60 p-6 hover:border-slate-600 hover:bg-cardbg transition">
+          <span class:list={['flex items-center gap-2 text-xs font-medium mb-4', chain.textClass]}><span class:list={['w-2 h-2 rounded-full', chain.dotClass]}></span>{chain.resource}</span>
+          <span class="text-lg font-semibold text-white mb-2">{chain.title}</span>
+          <span class="text-sm text-slate-400 leading-relaxed mb-6">{chain.route}</span>
+          <span class="mt-auto flex items-center justify-between text-xs text-slate-400">
+            <span>{chainMeta(chain.id)}</span>
+            <span class="text-slate-300 group-hover:text-white transition">Open on map →</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 grid gap-10 md:grid-cols-3">
+      <div>
+        <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        <h3 class="text-base font-semibold text-white mb-2">Pick a place</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">Ports, pipelines, refineries, mines and oil fields – each with its operator, capacity and what it means for everyday life.</p>
+      </div>
+      <div>
+        <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h6.5a3.5 3.5 0 0 0 0-7h-5a3.5 3.5 0 0 1 0-7H16"/></svg>
+        <h3 class="text-base font-semibold text-white mb-2">See the whole chain</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">The map highlights where a resource comes from and where it goes next, step by step across countries and oceans.</p>
+      </div>
+      <div>
+        <svg class="w-6 h-6 text-slate-300 mb-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="m9 14 2 2 4-4"/></svg>
+        <h3 class="text-base font-semibold text-white mb-2">Check the source</h3>
+        <p class="text-sm text-slate-400 leading-relaxed">Every entry links to the public report or operator data it is based on. Spot something outdated? It can be fixed in minutes.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Open source -->
+  <div class="border-t border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-3">Built in the open</h2>
+        <p class="text-slate-400 leading-relaxed">The code is MIT-licensed and the data is free to reuse under CC BY 4.0. Know a pipeline, a port or a mine? Add it, connect it or correct it – no coding needed.</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+        <a href="https://github.com/LukasWitten/the-worlds-resources" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200 transition">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+          Contribute on GitHub
+        </a>
+        <a href="https://github.com/LukasWitten/the-worlds-resources/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-lg border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 hover:bg-slate-800/80 hover:border-slate-600 transition">
+          Read the contributor guide
+        </a>
+      </div>
+    </div>
+  </div>
+
+</BaseLayout>
+
+<script>
+  import '../home.js';
+</script>

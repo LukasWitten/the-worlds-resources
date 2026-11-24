@@ -1,0 +1,90 @@
+---
+/**
+ * Generated from the data at build time: every source cited by a place or route,
+ * plus the register of external datasets (public/data/reference/sources.json).
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { featureSources, sourceRegister, siteStats } from '../lib/data.js';
+import { goods } from '../modules/goods.js';
+import { SITE } from '../lib/site.js';
+
+const groups = featureSources();
+const register = sourceRegister();
+const stats = siteStats();
+const entryCount = groups.reduce((n, g) => n + g.entries.length, 0);
+// Years are numbers or ranges ("2020–2025"): show the span they cover
+const years = groups.flatMap(g => g.entries.flatMap(e => String(e.year ?? '').match(/\d{4}/g) || [])).map(Number);
+const LICENSES = {
+  'Etalab-2.0': 'Licence Ouverte / Etalab 2.0',
+  'Public-Domain': 'Public domain'
+};
+const ext = { target: '_blank', rel: 'noopener noreferrer' };
+const citation = `The World's Resources contributors (${new Date().getFullYear()}). The World's Resources – open supply chain map data. CC BY 4.0. ${SITE.url}/sources`;
+---
+<BaseLayout
+  title="Data Sources"
+  description={`Where every place and route on the map comes from: ${entryCount} entries, each linked to a public source – operator reports, government agencies and statistics.`}
+  breadcrumbs={[{ name: 'Data Sources', path: '/sources' }]}
+>
+  <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 prose-page">
+    <h1>Data Sources</h1>
+    <p class="lead">Every place and route on the map links to the public source it is based on: operator websites and reports, government agencies and official statistics. This page lists them all. It is generated from the data itself, so it is always complete.</p>
+
+    <ul>
+      <li><strong>{stats.places} places and {stats.routes} routes</strong>, {stats.sourcedPercent}% of them with a source.</li>
+      <li><strong>{groups.length} publishers</strong>, most cited first.</li>
+      <li>The sources cover the years {Math.min(...years)} to {Math.max(...years)}.</li>
+    </ul>
+    <p>How places and routes are researched and connected is explained in the <a href="/methodology">methodology</a>.</p>
+
+    <h2 id="places-and-routes">Sources of the places and routes</h2>
+    {groups.map(group => (
+      <section aria-labelledby={`src-${group.host}`}>
+        <h3 id={`src-${group.host}`}>{group.host} <span class="text-sm font-normal text-slate-400">· {group.entries.length} {group.entries.length === 1 ? 'entry' : 'entries'}</span></h3>
+        <div class="overflow-x-auto">
+          <table>
+            <thead>
+              <tr><th scope="col">Place or route</th><th scope="col">Source</th><th scope="col">Year</th></tr>
+            </thead>
+            <tbody>
+              {group.entries.map(entry => (
+                <tr>
+                  <td>
+                    <a href={`/map#map/${encodeURIComponent(entry.id)}`}>{entry.name}</a>
+                    {entry.resource && goods.has(entry.resource) && <span class="block text-xs text-slate-400">{goods.label(entry.resource)}</span>}
+                  </td>
+                  <td><a href={entry.url} {...ext}>{entry.sourceName} ↗</a></td>
+                  <td class="whitespace-nowrap">{entry.year}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    ))}
+
+    <h2 id="datasets">Statistical datasets</h2>
+    <p>These datasets are processed into the trade and country files in the repository (<code>public/data/</code>). They are prepared for the upcoming export and import views.</p>
+    {register.map(source => (
+      <section aria-labelledby={`dataset-${source.id}`}>
+        <h3 id={`dataset-${source.id}`}>{source.name}</h3>
+        <ul>
+          <li>Publisher: {source.publisher}{source.version && `, version ${source.version}`}</li>
+          {source.coverage && <li>Coverage: {source.coverage}</li>}
+          <li>Used for: {source.used_for}</li>
+          <li>License: <a href={source.license_url} {...ext}>{LICENSES[source.license] || source.license} ↗</a></li>
+          <li><a href={source.url} {...ext}>Dataset website ↗</a></li>
+        </ul>
+        {source.citation && <p class="text-sm text-slate-400">Citation: {source.citation}</p>}
+      </section>
+    ))}
+
+    <h2 id="basemap">Basemap</h2>
+    <p>The background map (land, borders, place names) is provided by <a href="https://carto.com/attributions" {...ext}>CARTO ↗</a> and based on <a href="https://www.openstreetmap.org/copyright" {...ext}>© OpenStreetMap contributors ↗</a>. It is only the backdrop: the places and routes on top of it are researched by hand from the sources listed above.</p>
+
+    <h2 id="reuse">Reuse and citation</h2>
+    <p>The data is free to reuse under <a href="https://creativecommons.org/licenses/by/4.0/" {...ext}>CC BY 4.0 ↗</a>; the code is MIT-licensed. The raw files (GeoJSON) are in the <a href={SITE.github} {...ext}>GitHub repository ↗</a>. Please cite as:</p>
+    <p class="rounded-lg border border-slate-800 bg-cardbg/60 p-4 text-sm">{citation}</p>
+    <p>Found an outdated or wrong entry? <a href={`${SITE.github}/issues`} {...ext}>Open an issue ↗</a> or write to <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+  </article>
+</BaseLayout>

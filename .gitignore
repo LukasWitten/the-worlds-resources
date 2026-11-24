@@ -6,5 +6,8 @@ dist/
 # Raw source data for the pipeline (BACI, Natural Earth): downloaded locally, never committed
 data-raw/
 
+# Astro build cache and generated types
+.astro/
+
 # Rendered story images (npm run render:story)
 exports/

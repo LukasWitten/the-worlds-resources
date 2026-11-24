@@ -1819,7 +1819,7 @@
       {
         "id": "intro",
         "title": "Where does a Lebkuchen come from?",
-        "text": "Nürnberger Lebkuchen must be baked in Nuremberg – a protected geographical indication since 1996. Its ingredients come from all over the world.",
+        "text": "Nürnberger Lebkuchen must be baked in Nuremberg. It has been a protected geographical indication since 1996. Its ingredients come from all over the world.",
         "camera": {
           "bounds": [
             [
@@ -1847,7 +1847,7 @@
       {
         "id": "nuts",
         "title": "Nuts: the heart of the dough",
-        "text": "Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country – 65 % from Turkey. 47 % of its almonds come from the United States.",
+        "text": "Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country, 65 % of them from Turkey. 47 % of its almonds come from the United States.",
         "camera": {
           "bounds": [
             [
@@ -1886,7 +1886,7 @@
       {
         "id": "honey",
         "title": "Honey: Germany imports the second most in the world",
-        "text": "Germany imported 80,000 tonnes of honey in 2024 – only the United States bought more. The largest suppliers: Ukraine (15 %), New Zealand, Argentina and Hungary.",
+        "text": "Germany imported 80,000 tonnes of honey in 2024. Only the United States bought more. The largest suppliers: Ukraine (15 %), New Zealand, Argentina and Hungary.",
         "camera": {
           "bounds": [
             [
@@ -1920,7 +1920,7 @@
       {
         "id": "spices",
         "title": "Spices from the tropics",
-        "text": "Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. 54 % of Germany's nutmeg comes from Indonesia, 39 % of its cloves from Madagascar – and 52 % of its cardamom from Guatemala.",
+        "text": "Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. 54 % of Germany's nutmeg comes from Indonesia, 39 % of its cloves from Madagascar and, surprisingly, 52 % of its cardamom from Guatemala.",
         "camera": {
           "bounds": [
             [
@@ -1977,7 +1977,7 @@
       {
         "id": "detour",
         "title": "The long way round",
-        "text": "In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope – a detour of thousands of kilometres on the way to Hamburg.",
+        "text": "In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope. That is a detour of thousands of kilometres on the way to Hamburg.",
         "camera": {
           "bounds": [
             [

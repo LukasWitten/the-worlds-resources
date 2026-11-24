@@ -110,11 +110,11 @@ const TEXT = {
     goodShare: { hazelnuts: 'hazelnut', almonds: 'almond', honey: 'honey', cinnamon: 'cinnamon', cloves: 'clove', nutmeg: 'nutmeg', cardamom: 'cardamom', ginger: 'ginger' },
     edgeText: (p, g) => `${p} % of Germany's ${g} imports (by value).`,
     steps: {
-      intro: ['Where does a Lebkuchen come from?', 'Nürnberger Lebkuchen must be baked in Nuremberg – a protected geographical indication since 1996. Its ingredients come from all over the world.'],
-      nuts: ['Nuts: the heart of the dough', `Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country – ${pct('hazelnuts', 'TR')} % from Turkey. ${pct('almonds', 'US')} % of its almonds come from the United States.`],
-      honey: ['Honey: Germany imports the second most in the world', `Germany imported ${kt('honey')},000 tonnes of honey in 2024 – only the United States bought more. The largest suppliers: Ukraine (${pct('honey', 'UA')} %), New Zealand, Argentina and Hungary.`],
-      spices: ['Spices from the tropics', `Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. ${pct('nutmeg', 'ID')} % of Germany's nutmeg comes from Indonesia, ${pct('cloves', 'MG')} % of its cloves from Madagascar – and ${pct('cardamom', 'GT')} % of its cardamom from Guatemala.`],
-      detour: ['The long way round', 'In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope – a detour of thousands of kilometres on the way to Hamburg.'],
+      intro: ['Where does a Lebkuchen come from?', 'Nürnberger Lebkuchen must be baked in Nuremberg. It has been a protected geographical indication since 1996. Its ingredients come from all over the world.'],
+      nuts: ['Nuts: the heart of the dough', `Elisenlebkuchen contain at least 25 % nuts and at most 10 % flour. Germany imports more hazelnuts than any other country, ${pct('hazelnuts', 'TR')} % of them from Turkey. ${pct('almonds', 'US')} % of its almonds come from the United States.`],
+      honey: ['Honey: Germany imports the second most in the world', `Germany imported ${kt('honey')},000 tonnes of honey in 2024. Only the United States bought more. The largest suppliers: Ukraine (${pct('honey', 'UA')} %), New Zealand, Argentina and Hungary.`],
+      spices: ['Spices from the tropics', `Lebkuchen spice is mostly cinnamon, cloves, nutmeg, cardamom and ginger. ${pct('nutmeg', 'ID')} % of Germany's nutmeg comes from Indonesia, ${pct('cloves', 'MG')} % of its cloves from Madagascar and, surprisingly, ${pct('cardamom', 'GT')} % of its cardamom from Guatemala.`],
+      detour: ['The long way round', 'In 2024 most ships from Asia avoided the Red Sea and sailed around the Cape of Good Hope. That is a detour of thousands of kilometres on the way to Hamburg.'],
       nuremberg: ['All routes lead to Nuremberg', `${origins.length} countries on four continents for one biscuit. The Netherlands also show up as a big spice supplier: Rotterdam and Amsterdam re-export what arrives from the tropics.`]
     }
   },
@@ -139,11 +139,11 @@ const TEXT = {
     goodShare: { hazelnuts: 'Haselnuss', almonds: 'Mandel', honey: 'Honig', cinnamon: 'Zimt', cloves: 'Nelken', nutmeg: 'Muskat', cardamom: 'Kardamom', ginger: 'Ingwer' },
     edgeText: (p, g) => `${p} % der deutschen ${g}-Importe (nach Wert).`,
     steps: {
-      intro: ['Woher kommt ein Lebkuchen?', 'Nürnberger Lebkuchen muss in Nürnberg gebacken werden – er ist seit 1996 eine geschützte geografische Angabe. Seine Zutaten kommen aus der ganzen Welt.'],
-      nuts: ['Nüsse: das Herz des Teigs', `Elisenlebkuchen enthalten mindestens 25 % Nüsse und höchstens 10 % Mehl. Deutschland importiert mehr Haselnüsse als jedes andere Land – ${pct('hazelnuts', 'TR')} % davon aus der Türkei. ${pct('almonds', 'US')} % der Mandeln kommen aus den USA.`],
-      honey: ['Honig: Deutschland auf Platz zwei der Welt', `${kt('honey')}.000 Tonnen Honig hat Deutschland 2024 eingeführt – nur die USA kauften mehr. Die größten Lieferanten: Ukraine (${pct('honey', 'UA')} %), Neuseeland, Argentinien und Ungarn.`],
-      spices: ['Gewürze aus den Tropen', `Lebkuchengewürz besteht vor allem aus Zimt, Nelken, Muskat, Kardamom und Ingwer. ${pct('nutmeg', 'ID')} % der Muskatnuss kommen aus Indonesien, ${pct('cloves', 'MG')} % der Nelken aus Madagaskar – und ${pct('cardamom', 'GT')} % des Kardamoms aus Guatemala.`],
-      detour: ['Der lange Weg ums Kap', '2024 mieden die meisten Schiffe aus Asien das Rote Meer und fuhren ums Kap der Guten Hoffnung – ein Umweg von Tausenden Kilometern bis Hamburg.'],
+      intro: ['Woher kommt ein Lebkuchen?', 'Nürnberger Lebkuchen muss in Nürnberg gebacken werden. Er ist seit 1996 eine geschützte geografische Angabe. Seine Zutaten kommen aus der ganzen Welt.'],
+      nuts: ['Nüsse: das Herz des Teigs', `Elisenlebkuchen enthalten mindestens 25 % Nüsse und höchstens 10 % Mehl. Deutschland importiert mehr Haselnüsse als jedes andere Land, ${pct('hazelnuts', 'TR')} % davon aus der Türkei. ${pct('almonds', 'US')} % der Mandeln kommen aus den USA.`],
+      honey: ['Honig: Deutschland auf Platz zwei der Welt', `${kt('honey')}.000 Tonnen Honig hat Deutschland 2024 eingeführt. Nur die USA kauften mehr. Die größten Lieferanten: Ukraine (${pct('honey', 'UA')} %), Neuseeland, Argentinien und Ungarn.`],
+      spices: ['Gewürze aus den Tropen', `Lebkuchengewürz besteht vor allem aus Zimt, Nelken, Muskat, Kardamom und Ingwer. ${pct('nutmeg', 'ID')} % der Muskatnuss kommen aus Indonesien, ${pct('cloves', 'MG')} % der Nelken aus Madagaskar und, überraschend, ${pct('cardamom', 'GT')} % des Kardamoms aus Guatemala.`],
+      detour: ['Der lange Weg ums Kap', '2024 mieden die meisten Schiffe aus Asien das Rote Meer und fuhren ums Kap der Guten Hoffnung. Das ist ein Umweg von Tausenden Kilometern bis Hamburg.'],
       nuremberg: ['Alle Wege führen nach Nürnberg', `${origins.length} Länder auf vier Kontinenten für ein Gebäck. Auch die Niederlande tauchen als großer Gewürzlieferant auf: Über Rotterdam und Amsterdam wird weiterverkauft, was aus den Tropen ankommt.`]
     }
   }

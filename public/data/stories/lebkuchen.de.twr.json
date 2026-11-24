@@ -1819,7 +1819,7 @@
       {
         "id": "intro",
         "title": "Woher kommt ein Lebkuchen?",
-        "text": "Nürnberger Lebkuchen muss in Nürnberg gebacken werden – er ist seit 1996 eine geschützte geografische Angabe. Seine Zutaten kommen aus der ganzen Welt.",
+        "text": "Nürnberger Lebkuchen muss in Nürnberg gebacken werden. Er ist seit 1996 eine geschützte geografische Angabe. Seine Zutaten kommen aus der ganzen Welt.",
         "camera": {
           "bounds": [
             [
@@ -1847,7 +1847,7 @@
       {
         "id": "nuts",
         "title": "Nüsse: das Herz des Teigs",
-        "text": "Elisenlebkuchen enthalten mindestens 25 % Nüsse und höchstens 10 % Mehl. Deutschland importiert mehr Haselnüsse als jedes andere Land – 65 % davon aus der Türkei. 47 % der Mandeln kommen aus den USA.",
+        "text": "Elisenlebkuchen enthalten mindestens 25 % Nüsse und höchstens 10 % Mehl. Deutschland importiert mehr Haselnüsse als jedes andere Land, 65 % davon aus der Türkei. 47 % der Mandeln kommen aus den USA.",
         "camera": {
           "bounds": [
             [
@@ -1886,7 +1886,7 @@
       {
         "id": "honey",
         "title": "Honig: Deutschland auf Platz zwei der Welt",
-        "text": "80.000 Tonnen Honig hat Deutschland 2024 eingeführt – nur die USA kauften mehr. Die größten Lieferanten: Ukraine (15 %), Neuseeland, Argentinien und Ungarn.",
+        "text": "80.000 Tonnen Honig hat Deutschland 2024 eingeführt. Nur die USA kauften mehr. Die größten Lieferanten: Ukraine (15 %), Neuseeland, Argentinien und Ungarn.",
         "camera": {
           "bounds": [
             [
@@ -1920,7 +1920,7 @@
       {
         "id": "spices",
         "title": "Gewürze aus den Tropen",
-        "text": "Lebkuchengewürz besteht vor allem aus Zimt, Nelken, Muskat, Kardamom und Ingwer. 54 % der Muskatnuss kommen aus Indonesien, 39 % der Nelken aus Madagaskar – und 52 % des Kardamoms aus Guatemala.",
+        "text": "Lebkuchengewürz besteht vor allem aus Zimt, Nelken, Muskat, Kardamom und Ingwer. 54 % der Muskatnuss kommen aus Indonesien, 39 % der Nelken aus Madagaskar und, überraschend, 52 % des Kardamoms aus Guatemala.",
         "camera": {
           "bounds": [
             [
@@ -1977,7 +1977,7 @@
       {
         "id": "detour",
         "title": "Der lange Weg ums Kap",
-        "text": "2024 mieden die meisten Schiffe aus Asien das Rote Meer und fuhren ums Kap der Guten Hoffnung – ein Umweg von Tausenden Kilometern bis Hamburg.",
+        "text": "2024 mieden die meisten Schiffe aus Asien das Rote Meer und fuhren ums Kap der Guten Hoffnung. Das ist ein Umweg von Tausenden Kilometern bis Hamburg.",
         "camera": {
           "bounds": [
             [

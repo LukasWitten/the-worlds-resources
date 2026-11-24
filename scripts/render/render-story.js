@@ -265,22 +265,69 @@ function placesSvg(project, state, toXY, fmt) {
   // Strong labels first; each label takes the first position around its point that
   // does not overlap a label already placed (or the rings of focused places).
   labels.sort((a, b) => b.strong - a.strong);
+  const routePoints = [];
+  for (const id of state.visible) {
+    const e = project.edgeMap.get(id);
+    if (!e) continue;
+    const pts = e.points.map(toXY);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const [x1, y1] = pts[i], [x2, y2] = pts[i + 1];
+      const steps = Math.max(1, Math.ceil(Math.hypot(x2 - x1, y2 - y1) / (4 * unit)));
+      for (let k = 0; k <= steps; k++) routePoints.push([x1 + (x2 - x1) * k / steps, y1 + (y2 - y1) * k / steps]);
+    }
+  }
   const taken = [...markers, ...labels.filter(l => l.strong).map(l => ring(l.x, l.y, 24 * unit))];
   for (const { n, x, y, strong } of labels) {
     if (strong) out.push(`<circle cx="${r1(x)}" cy="${r1(y)}" r="${22 * unit}" fill="none" stroke="${C.accent}" stroke-width="${2.5 * unit}" stroke-opacity="0.9"/>`);
     const size = (strong ? 30 : 23) * unit;
     const w = n.name.length * size * 0.56;
     const gap = (strong ? 30 : 13) * unit;
+    const h = size * 1.1;
     const preferRight = x < fmt.w * 0.75;
-    const candidates = [
-      { anchor: 'start', tx: x + gap, ty: y + size * 0.35, box: [x + gap, y - size * 0.65, w, size * 1.1] },
-      { anchor: 'end', tx: x - gap, ty: y + size * 0.35, box: [x - gap - w, y - size * 0.65, w, size * 1.1] },
-      { anchor: 'middle', tx: x, ty: y - gap - size * 0.2, box: [x - w / 2, y - gap - size, w, size * 1.1] },
-      { anchor: 'middle', tx: x, ty: y + gap + size * 0.9, box: [x - w / 2, y + gap, w, size * 1.1] }
-    ];
-    if (!preferRight) candidates.unshift(candidates.splice(1, 1)[0]);
-    const pick = candidates.find(c => !taken.some(t => overlaps(t, c.box) && t.own !== n.id)) || candidates[0];
+    // Positions around the point: right, left, above, below, the four diagonals, each
+    // also a bit further out. Each is scored by how much route it covers and whether
+    // it hits another label or marker; ties keep the order (right first, near first).
+    const candidates = [];
+    for (const k of [1, 1.8]) {
+      const g = gap * k;
+      const d = g * 0.75;
+      const sides = [
+        { anchor: 'start', tx: x + g, ty: y + size * 0.35, box: [x + g, y - size * 0.65, w, h] },
+        { anchor: 'end', tx: x - g, ty: y + size * 0.35, box: [x - g - w, y - size * 0.65, w, h] },
+        { anchor: 'middle', tx: x, ty: y - g - size * 0.2, box: [x - w / 2, y - g - size, w, h] },
+        { anchor: 'middle', tx: x, ty: y + g + size * 0.9, box: [x - w / 2, y + g, w, h] },
+        { anchor: 'start', tx: x + d, ty: y - d - size * 0.2, box: [x + d, y - d - size, w, h] },
+        { anchor: 'end', tx: x - d, ty: y - d - size * 0.2, box: [x - d - w, y - d - size, w, h] },
+        { anchor: 'start', tx: x + d, ty: y + d + size * 0.9, box: [x + d, y + d, w, h] },
+        { anchor: 'end', tx: x - d, ty: y + d + size * 0.9, box: [x - d - w, y + d, w, h] }
+      ];
+      if (!preferRight) sides.unshift(sides.splice(1, 1)[0]);
+      // Small penalties keep labels close and beside their point when there is room.
+      sides.forEach((c, i) => { c.penalty = (k > 1 ? 8 : 0) + (i >= 4 ? 3 : 0); });
+      candidates.push(...sides);
+    }
+    const score = c => {
+      const [bx, by, bw, bh] = c.box;
+      const outside = bx < 8 * unit || by < 8 * unit || bx + bw > fmt.w - 8 * unit || by + bh > fmt.h - 8 * unit;
+      const hits = taken.some(t => overlaps(t, c.box) && t.own !== n.id);
+      const pad = 4 * unit;
+      const covered = routePoints.filter(([px, py]) => px > bx - pad && px < bx + bw + pad && py > by - pad && py < by + bh + pad).length;
+      return (outside ? 1e6 : 0) + (hits ? 1e5 : 0) + covered + c.penalty;
+    };
+    let pick = candidates[0], best = Infinity;
+    candidates.forEach((c, i) => { const v = score(c) + i * 0.01; if (v < best) { best = v; pick = c; } });
     taken.push(Object.assign(pick.box, { own: n.id }));
+    // A label pushed further out gets a thin leader line back to its point.
+    if (pick.penalty >= 8) {
+      const [bx, by, bw, bh] = pick.box;
+      const cx = Math.max(bx, Math.min(x, bx + bw)), cy = Math.max(by, Math.min(y, by + bh));
+      const len = Math.hypot(cx - x, cy - y) || 1;
+      const r0 = (strong ? 23 : 8) * unit, r1end = len - 4 * unit;
+      if (r1end > r0) {
+        const ux = (cx - x) / len, uy = (cy - y) / len;
+        out.push(`<line x1="${r1(x + ux * r0)}" y1="${r1(y + uy * r0)}" x2="${r1(x + ux * r1end)}" y2="${r1(y + uy * r1end)}" stroke="${C.text}" stroke-width="${2 * unit}" stroke-opacity="0.75" stroke-linecap="round"/>`);
+      }
+    }
     out.push(`<text x="${r1(pick.tx)}" y="${r1(pick.ty)}" font-size="${r1(size)}" font-weight="${strong ? 700 : 500}" fill="${strong ? C.text : '#cbd5e1'}" text-anchor="${pick.anchor}" stroke="${C.bg}" stroke-width="${5 * unit}" paint-order="stroke" stroke-linejoin="round">${esc(n.name)}</text>`);
   }
   return out.join('');

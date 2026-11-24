@@ -201,6 +201,7 @@ function routesSvg(project, state, toXY, fmt) {
   }
   const anyFresh = [...segments.values()].some(s => [...s.goods.values()].some(v => v.fresh));
   const lines = [];
+  const arrows = [];
   for (const seg of segments.values()) {
     const [x1, y1] = toXY(seg.a), [x2, y2] = toXY(seg.b);
     const len = Math.hypot(x2 - x1, y2 - y1) || 1;
@@ -215,8 +216,22 @@ function routesSvg(project, state, toXY, fmt) {
       const opacity = !anyFresh || v.fresh ? 0.95 : 0.3;
       lines.push(`<line x1="${r1(x1 + nx * o)}" y1="${r1(y1 + ny * o)}" x2="${r1(x2 + nx * o)}" y2="${r1(y2 + ny * o)}" stroke="${goodColor(g)}" stroke-width="${r1(w)}" stroke-opacity="${opacity}" stroke-linecap="round"/>`);
     }
+    // A light chevron in the middle of longer segments shows the direction of transport.
+    // Only on longer segments of the routes this step is about, so the map stays calm.
+    const current = !anyFresh || strands.some(([, v]) => v.fresh);
+    if (current && len > 170 * unit) {
+      const dx = (x2 - x1) / len, dy = (y2 - y1) / len;
+      const mxp = (x1 + x2) / 2, myp = (y1 + y2) / 2;
+      const half = Math.max(10 * unit, total / 2 + 5 * unit);
+      const depth = Math.max(11 * unit, half * 0.9);
+      const tip = [mxp + dx * depth / 2, myp + dy * depth / 2];
+      const back = [mxp - dx * depth / 2, myp - dy * depth / 2];
+      const d = `M${r1(back[0] + nx * half)} ${r1(back[1] + ny * half)}L${r1(tip[0])} ${r1(tip[1])}L${r1(back[0] - nx * half)} ${r1(back[1] - ny * half)}`;
+      arrows.push(`<path d="${d}" fill="none" stroke="${C.bg}" stroke-width="${r1(5.5 * unit)}" stroke-opacity="0.55" stroke-linecap="round" stroke-linejoin="round"/>`
+        + `<path d="${d}" fill="none" stroke="${C.text}" stroke-width="${r1(2.5 * unit)}" stroke-opacity="0.9" stroke-linecap="round" stroke-linejoin="round"/>`);
+    }
   }
-  return `<g>${lines.join('')}</g>`;
+  return `<g>${lines.join('')}${arrows.join('')}</g>`;
 }
 
 function placesSvg(project, state, toXY, fmt) {
@@ -331,6 +346,9 @@ function slideSvg({ project, countries, state, index, total, fmt }) {
   const sourceNames = [...new Set((step.sourceIds || []).map(id => project.sources.find(s => s.id === id)).filter(Boolean).map(s => s.publisher || s.title))];
   const sourceLine = sourceNames.length ? `${ui('sources')}: ${sourceNames.join('; ')}` : '';
   const footer = `theworldsresources.org · ${ui('footer')}`;
+  // Push the source line and footer down if a long text would run into them.
+  const bodyEnd = fmt.text + bodySize + (bodyLines.length - 1) * bodySize * 1.38;
+  const footerY = Math.max(fmt.footer, bodyEnd + (sourceLine ? 82 : 44) * unit);
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${fmt.w}" height="${fmt.h}" viewBox="0 0 ${fmt.w} ${fmt.h}" font-family="${FONT}">
 <defs>
@@ -347,9 +365,9 @@ ${placesSvg(project, state, toXY, fmt)}
 ${textBlock(titleLines, side, top + 70 * unit + titleSize * 1.1, titleSize, titleSize * 1.12, `font-weight="800" fill="${C.text}" letter-spacing="${-0.5 * unit}"`)}
 ${legend}
 ${textBlock(bodyLines, side, fmt.text + bodySize, bodySize, bodySize * 1.38, `fill="${C.text}"`)}
-${sourceLine ? `<text x="${side}" y="${fmt.footer - 38 * unit}" font-size="${19 * unit}" fill="${C.muted}">${esc(sourceLine)}</text>` : ''}
-<text x="${side}" y="${fmt.footer}" font-size="${19 * unit}" fill="${C.muted}">${esc(footer)}</text>
-${index + 1 < total ? `<text x="${fmt.w - side}" y="${fmt.footer}" font-size="${19 * unit}" font-weight="600" fill="${C.link}" text-anchor="end">${esc(ui('next'))}</text>` : ''}
+${sourceLine ? `<text x="${side}" y="${footerY - 38 * unit}" font-size="${19 * unit}" fill="${C.muted}">${esc(sourceLine)}</text>` : ''}
+<text x="${side}" y="${footerY}" font-size="${19 * unit}" fill="${C.muted}">${esc(footer)}</text>
+${index + 1 < total ? `<text x="${fmt.w - side}" y="${footerY}" font-size="${19 * unit}" font-weight="600" fill="${C.link}" text-anchor="end">${esc(ui('next'))}</text>` : ''}
 </svg>
 `;
 }

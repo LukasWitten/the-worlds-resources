@@ -8,3 +8,6 @@ data-raw/
 
 # Astro build cache and generated types
 .astro/
+
+# Rendered story images (npm run render:story)
+exports/

@@ -100,8 +100,10 @@ Use **Point** geometry. Coordinates are `[longitude, latitude]` (GeoJSON order).
 `resource` must be the id of a good in the goods catalogue
 [`public/data/reference/goods.json`](../public/data/reference/goods.json).
 Goods with places on the map today: `crude_oil` · `natural_gas` · `lithium`.
-The catalogue also lists `copper` · `iron_ore` · `coal` · `nickel`, which so far
-only appear in the trade data; they can be used for new places right away.
+The catalogue also lists goods that so far only appear in the trade data:
+`copper` · `iron_ore` · `coal` · `nickel` and the food and spice goods `cocoa` ·
+`honey` · `almonds` · `hazelnuts` · `cinnamon` · `cloves` · `nutmeg` · `cardamom` ·
+`ginger`. They can be used for new places right away.
 
 The catalogue is the single place for a good's label, colour, icon and HS codes.
 To add a new resource, add an entry there first – the map, the filters and the

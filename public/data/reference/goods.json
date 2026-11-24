@@ -2,7 +2,7 @@
   "metadata": {
     "description": "Catalogue of goods shown on the map. A good is a raw material, an intermediate or a final product. The resource views (export, import, resource) use the goods with stage \"raw\". Every \"resource\" value in the GeoJSON datasets must be an id from this file.",
     "license": "CC-BY-4.0",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "last_updated": "2026-11-23",
     "notes": {
       "stage": "raw = extracted or first-processed commodity as counted by USGS (crude oil, ore concentrate, lithium carbonate); intermediate = input for further production; final = product for end use.",
@@ -114,6 +114,150 @@
       "style": {
         "color": "#a3e635",
         "icon": "⚪"
+      }
+    },
+    "cocoa": {
+      "label": "Cocoa Beans",
+      "stage": "raw",
+      "category": "food",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["1801"],
+        "precision": "exact",
+        "note": "Whole or broken cocoa beans, raw or roasted. Cocoa paste, butter and powder (1803–1805) and chocolate (1806) are not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#a16207",
+        "icon": "🍫"
+      }
+    },
+    "honey": {
+      "label": "Honey",
+      "stage": "raw",
+      "category": "food",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["0409"],
+        "precision": "exact",
+        "note": "Natural honey."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#fde047",
+        "icon": "🍯"
+      }
+    },
+    "almonds": {
+      "label": "Almonds",
+      "stage": "raw",
+      "category": "food",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["080211", "080212"],
+        "precision": "exact",
+        "note": "Almonds in shell and shelled. Almond paste and marzipan are not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#e7c9a0",
+        "icon": "🌰"
+      }
+    },
+    "hazelnuts": {
+      "label": "Hazelnuts",
+      "stage": "raw",
+      "category": "food",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["080221", "080222"],
+        "precision": "exact",
+        "note": "Hazelnuts in shell and shelled."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#c2853d",
+        "icon": "🌰"
+      }
+    },
+    "cinnamon": {
+      "label": "Cinnamon",
+      "stage": "raw",
+      "category": "spice",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["0906"],
+        "precision": "exact",
+        "note": "Cinnamon and cinnamon-tree flowers, whole, crushed or ground."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#ea580c",
+        "icon": "🪵"
+      }
+    },
+    "cloves": {
+      "label": "Cloves",
+      "stage": "raw",
+      "category": "spice",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["0907"],
+        "precision": "exact",
+        "note": "Cloves (whole fruit, cloves and stems)."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#e11d48",
+        "icon": "🌸"
+      }
+    },
+    "nutmeg": {
+      "label": "Nutmeg & Mace",
+      "stage": "raw",
+      "category": "spice",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["090811", "090812", "090821", "090822"],
+        "precision": "exact",
+        "note": "Nutmeg and mace, whole, crushed or ground."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#d97706",
+        "icon": "🟤"
+      }
+    },
+    "cardamom": {
+      "label": "Cardamom",
+      "stage": "raw",
+      "category": "spice",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["090831", "090832"],
+        "precision": "exact",
+        "note": "Cardamom, whole, crushed or ground."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#84cc16",
+        "icon": "🌿"
+      }
+    },
+    "ginger": {
+      "label": "Ginger",
+      "stage": "raw",
+      "category": "spice",
+      "hs": {
+        "rev": "HS17",
+        "codes": ["091011", "091012"],
+        "precision": "exact",
+        "note": "Ginger, whole, crushed or ground. Preserved or candied ginger (2006, 2008) is not included."
+      },
+      "unit": "t",
+      "style": {
+        "color": "#f59e0b",
+        "icon": "🫚"
       }
     }
   }

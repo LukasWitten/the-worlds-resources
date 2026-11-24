@@ -1,0 +1,225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://theworldsresources.org/data/schemas/project-1.schema.json",
+  "title": "TwrProject",
+  "description": "Project file (*.twr.json), format version 1.x: a supply-chain network of places, waypoints and routes with sources, a reliability level per claim and an optional story. Used for curated stories, editor projects and contributions. See docs/vision-assessment.md, section 4. Validated by scripts/validate-data.js. Unknown fields are allowed so that newer files still open in older tools.",
+  "type": "object",
+  "required": ["format", "formatVersion", "meta", "sources", "nodes", "edges"],
+  "definitions": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]*$" },
+    "goodId": {
+      "description": "Id of a good in public/data/reference/goods.json, or a project good starting with x-.",
+      "type": "string",
+      "pattern": "^(x-)?[a-z0-9_-]+$"
+    },
+    "coord": {
+      "type": "array",
+      "items": [
+        { "type": "number", "minimum": -180, "maximum": 180 },
+        { "type": "number", "minimum": -90, "maximum": 90 }
+      ],
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "date": { "type": "string", "pattern": "^[0-9]{4}(-[0-9]{2}(-[0-9]{2})?)?$" },
+    "confidence": {
+      "description": "documented = a primary source or two independent reliable sources state exactly this; plausible = one reliable source or clear indirect evidence; estimated = own derivation or assumption, with a note.",
+      "enum": ["documented", "plausible", "estimated"]
+    },
+    "claim": {
+      "type": "object",
+      "required": ["confidence", "sourceIds"],
+      "properties": {
+        "about": { "type": "string", "description": "What is claimed, if not just that the element exists (e.g. \"qty\", \"share\")." },
+        "confidence": { "$ref": "#/definitions/confidence" },
+        "sourceIds": { "type": "array", "items": { "$ref": "#/definitions/id" }, "uniqueItems": true },
+        "note": { "type": "string" }
+      }
+    },
+    "claims": { "type": "array", "items": { "$ref": "#/definitions/claim" }, "minItems": 1 },
+    "amount": {
+      "type": "object",
+      "required": ["good", "qty", "unit"],
+      "properties": {
+        "good": { "$ref": "#/definitions/goodId" },
+        "qty": { "type": "number", "minimum": 0 },
+        "unit": { "type": "string", "minLength": 1 }
+      }
+    },
+    "ref": {
+      "description": "Where an element comes from on the website: lets imported elements be matched later.",
+      "type": "object",
+      "required": ["dataset", "id"],
+      "properties": {
+        "dataset": { "enum": ["twr", "twr-trade"] },
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string" }
+      }
+    },
+    "camera": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["bounds"],
+          "properties": {
+            "bounds": { "type": "array", "items": { "$ref": "#/definitions/coord" }, "minItems": 2, "maxItems": 2 },
+            "padding": { "type": "number", "minimum": 0 }
+          }
+        },
+        {
+          "type": "object",
+          "required": ["center", "zoom"],
+          "properties": {
+            "center": { "$ref": "#/definitions/coord" },
+            "zoom": { "type": "number", "minimum": 0, "maximum": 22 }
+          }
+        }
+      ]
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "format": { "const": "twr-project" },
+    "formatVersion": { "type": "string", "pattern": "^1\\.[0-9]+\\.[0-9]+$" },
+    "meta": {
+      "type": "object",
+      "required": ["title", "language", "license", "created"],
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "subtitle": { "type": "string" },
+        "language": { "type": "string", "pattern": "^[a-z]{2}$" },
+        "license": { "type": "string", "minLength": 1 },
+        "author": { "type": "string" },
+        "created": { "$ref": "#/definitions/date" },
+        "modified": { "$ref": "#/definitions/date" },
+        "dataYear": { "type": "integer" },
+        "example": { "type": "boolean", "description": "true = illustrative example data, not a statement about real supply chains." },
+        "disclaimer": { "type": "string" },
+        "basedOn": { "type": "string", "description": "Version of the website data the project was built from." }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "type", "accessed"],
+        "properties": {
+          "id": { "$ref": "#/definitions/id" },
+          "title": { "type": "string", "minLength": 1 },
+          "publisher": { "type": "string" },
+          "url": { "type": "string", "pattern": "^https?://" },
+          "type": { "enum": ["primary", "secondary", "self_reported", "dataset"] },
+          "accessed": { "$ref": "#/definitions/date" },
+          "registryId": { "type": "string", "description": "Id in public/data/reference/sources.json, for datasets we process ourselves." },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "goods": {
+      "description": "Goods that are not in the catalogue. Ids start with x-.",
+      "type": "object",
+      "propertyNames": { "pattern": "^x-[a-z0-9_-]+$" },
+      "additionalProperties": {
+        "type": "object",
+        "required": ["label", "stage", "unit"],
+        "properties": {
+          "label": { "type": "string", "minLength": 1 },
+          "stage": { "enum": ["raw", "intermediate", "final"] },
+          "category": { "type": "string" },
+          "unit": { "type": "string" },
+          "parent": { "$ref": "#/definitions/goodId" },
+          "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+          "icon": { "type": "string" },
+          "hs": { "type": "object" }
+        }
+      }
+    },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "coord"],
+        "properties": {
+          "id": { "$ref": "#/definitions/id" },
+          "kind": { "enum": ["site", "transfer", "waypoint"] },
+          "type": { "enum": ["extraction_site", "processing_hub", "import_hub", "storage_hub", "transit_point", "retail", "region"] },
+          "name": { "type": "string" },
+          "coord": { "$ref": "#/definitions/coord" },
+          "precision": { "enum": ["exact", "city", "region", "country"], "description": "How precisely the coordinate is known." },
+          "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+          "goods": { "type": "array", "items": { "$ref": "#/definitions/goodId" } },
+          "process": {
+            "type": "object",
+            "properties": {
+              "inputs": { "type": "array", "items": { "$ref": "#/definitions/amount" } },
+              "outputs": { "type": "array", "items": { "$ref": "#/definitions/amount" } }
+            }
+          },
+          "text": { "type": "string" },
+          "ref": { "$ref": "#/definitions/ref" },
+          "claims": { "$ref": "#/definitions/claims" }
+        },
+        "if": { "properties": { "kind": { "enum": ["site", "transfer"] } } },
+        "then": { "required": ["name", "type", "claims"] }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "from", "to", "mode", "goods", "claims"],
+        "properties": {
+          "id": { "$ref": "#/definitions/id" },
+          "from": { "$ref": "#/definitions/id" },
+          "to": { "$ref": "#/definitions/id" },
+          "via": {
+            "description": "Waypoints between from and to: ids of waypoint nodes (shared between routes) or free coordinates (only for this route).",
+            "type": "array",
+            "items": { "oneOf": [{ "$ref": "#/definitions/id" }, { "$ref": "#/definitions/coord" }] }
+          },
+          "mode": { "enum": ["sea", "pipeline", "rail", "road", "inland_waterway", "air", "mixed"] },
+          "goods": { "type": "array", "items": { "$ref": "#/definitions/goodId" }, "minItems": 1, "uniqueItems": true },
+          "qty": {
+            "type": "object",
+            "required": ["value", "unit"],
+            "properties": {
+              "value": { "type": "number", "minimum": 0 },
+              "unit": { "type": "string" },
+              "year": { "type": "integer" },
+              "share": { "type": "number", "minimum": 0, "maximum": 1, "description": "Share of the destination's total for this good, if known." }
+            }
+          },
+          "text": { "type": "string" },
+          "ref": { "$ref": "#/definitions/ref" },
+          "claims": { "$ref": "#/definitions/claims" }
+        }
+      }
+    },
+    "story": {
+      "type": "object",
+      "required": ["steps"],
+      "properties": {
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "title", "camera"],
+            "properties": {
+              "id": { "type": "string", "minLength": 1 },
+              "title": { "type": "string", "minLength": 1 },
+              "text": { "type": "string" },
+              "camera": { "$ref": "#/definitions/camera" },
+              "transition": { "enum": ["fly", "cut"] },
+              "reveal": { "type": "array", "items": { "$ref": "#/definitions/id" } },
+              "hide": { "type": "array", "items": { "$ref": "#/definitions/id" } },
+              "focus": { "type": "array", "items": { "$ref": "#/definitions/id" } },
+              "durationMs": { "type": "integer", "minimum": 500 },
+              "sourceIds": { "type": "array", "items": { "$ref": "#/definitions/id" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}

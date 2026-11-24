@@ -1,6 +1,6 @@
 # Kartenerweiterung: Export-, Import- und Ressourcen-Ansicht – Analyse
 
-Stand: 23.11.2026 · Status: Analyse (Teil A), Revision 2 mit Produkt-Ansicht, noch keine Codeänderung
+Stand: 23.11.2026 · Status: Revision 3. Phase 0 und 1 umgesetzt. Rev. 3 übernimmt die Entscheidungen aus [vision-assessment.md](vision-assessment.md) (Editor, Präsentationsmodus, Export, Verkehrsnetze, Bündelung, Lizenz). Geänderte Stellen sind mit „(Rev. 3)“ markiert.
 
 Ziel: Die Karte wird schrittweise zu einem **Lieferketten-Atlas** ausgebaut:
 
@@ -385,6 +385,13 @@ Die Provenienz steht einmal pro Datei und nur bei Abweichung pro Zeile. Ströme 
 
 Optional gibt es je Land Variantenanteile (`{ "CN": { "LFP": 0.7, "NMC811": 0.3 } }`). Fehlen sie, gilt ein globaler Mix, und die UI zeigt das an.
 
+**Ergänzungen (Rev. 3, aus [vision-assessment.md](vision-assessment.md), Abschnitt 2 und 4):**
+- **Projektdatei `*.twr.json`** (W1): ein offenes, versioniertes Format für Stories, Editor-Projekte und Beiträge, mit eigenem Schema `project-1.schema.json`. Rezepte nutzen denselben Aufbau wie `process` (Inputs → Outputs) in der Projektdatei.
+- **Wegpunkte als Knoten** (W4): `kind: waypoint` bzw. GeoJSON-Point mit `type: waypoint`, `visible: false`. Routen dürfen an Wegpunkten beginnen und enden und nennen sie in `via_node_ids`. Mehrere Routen über dieselben Wegpunkte teilen sich ein Teilstück; dieses wird einmal gezeichnet, Breite nach Summe der Mengen.
+- **Verkehrsträger** (W5): `mode` = `sea` | `pipeline` | `rail` | `road` | `inland_waterway` | `air` an jeder Route. `type` bleibt als Darstellungsart.
+- **Verlässlichkeit und Quellen** (W5): `confidence` = `documented` | `plausible` | `estimated` (UI: belegt, plausibel, geschätzt) an jedem Knoten und jeder Kante, dazu `sources` als Liste mit `url` und Abrufdatum `accessed`. Das bisherige Feld `source` bleibt gültig. `confidence` ergänzt `provenance.kind`: Diese sagt, *wie* eine Zahl entstand, `confidence`, *wie sicher* eine Aussage ist.
+- **ODbL getrennt halten** (W8): Aus OSM abgeleitete Daten (Verkehrsnetze, eingerastete Routen) nur in eigenen Dateien mit eigener Lizenzangabe, nie in den CC-BY-Datensätzen.
+
 ### 4.5 Mehrstufige Herkunft (upstream): Methode und Kennzeichnung
 
 Mehrstufige Herkunft ist **nicht messbar**, nur schätzbar. Der Standardansatz (wie bei OECD TiVA) ist die **Proportionalitätsannahme**: Ein Land verwendet ein Vorprodukt im selben Länder-Mix, in dem es das Vorprodukt bezieht.
@@ -442,8 +449,12 @@ Ein kleines Modul `modules/mapState.js` ohne Framework, als einfacher Store mit 
   good:      'lithium' | null,
   depth:     1..3,
   year:      2024,
-  feature:   'refinery-schwedt' | null }   // bestehender Deep Link
+  feature:   'refinery-schwedt' | null,   // bestehender Deep Link
+  story:     'lithium-atacama' | null,    // Rev. 3: kuratierte Story oder Auto-Story einer Ansicht
+  step:      1..n | null }                // Rev. 3: Schritt der Story
 ```
+
+**Story (Rev. 3):** Eine Story ist eine Folge von Schritten (Kamera, neu sichtbare und hervorgehobene Elemente, Text, Dauer), siehe [vision-assessment.md](vision-assessment.md) 1.2. Export- und Import-Ansicht erzeugen ihre Story automatisch. `story` und `step` ändern sich per `pushState`, damit jeder Schritt verlinkbar ist. Was die Karte zeigt, berechnet eine Funktion `frameAt(state, story, t)` aus einer Zeitleiste `t` (W7). Das gilt für die Live-Karte, den Bild-Export und den Video-Export gleichermaßen.
 
 | Ansicht (UI-Name) | URL | Gültige `direction` |
 |---|---|---|
@@ -609,26 +620,43 @@ Nichts davon verzögert die ersten Phasen spürbar. Es sind Namens- und Struktur
 9. **`dataService` mit Fluss-API**: `exportsOf`, `importsOf`, `flowsOf(good, {country})`. Lädt Dateien bei Bedarf und speichert sie zwischen.
 10. **4–5 weitere Rohstoffe** im Katalog (Vorschlag: Kupfer, Eisenerz, Kohle, Nickel).
 
-**Phase 2: Export-Ansicht (ca. 1 Woche)**
+**Weichen und Zwischenstufen vor Phase 2 (Rev. 3)**, Details in [vision-assessment.md](vision-assessment.md) Abschnitt 2 und 3:
+- **L: Lebkuchen-Beitrag** (Anfang Dezember 2026): Projektformat W1 vorziehen, Renderskript für Bilder pro Schritt, Gewürze, Mandeln, Haselnüsse, Honig und Kakao in Katalog und Pipeline, Bilder-Karussell für Social Media.
+- **W: Weichen** W4–W8: Wegpunkte als Knoten, `mode` und `confidence`, `story`/`step` im Kartenzustand, Zeitleisten-Regel, Lizenz und CLA (MIT + CLA, Daten CC BY 4.0).
+- **A2a: MapLibre GL statt Leaflet** (aus Phase 7 vorgezogen, F4), zunächst mit dem CARTO-Vektorstil. Eigener Basemap (Protomaps/PMTiles) als Option für Export und offline (F5). Darstellung gemeinsamer Teilstücke über Wegpunkte.
+
+**Phase 2: Export-Ansicht (ca. 1 Woche)**, ✏️ Rev. 3: auf MapLibre, liefert eine Auto-Story mit
 11. Ansichtsumschalter, Länder-Marker nach Leitgut, „Global leader“-Ring, Legende.
 12. Länderpanel mit Top 1–3, Bögen nach Wert, echte Route falls ein Korridor existiert.
 13. Mobil: Bottom-Sheet, kein Rotations-Zwang.
 14. **Generisch für Güter bauen**, nicht für Ressourcen. Dann kostet Produkt-downstream später fast nichts.
+14a. (Rev. 3) Bögen laufen kurz vor Ziel bzw. Quelle leicht gebündelt zusammen. Kein allgemeines Edge Bundling.
+14b. (Rev. 3) Die Ansicht erzeugt ihre Story (Land → Leitgut → Abnehmer nacheinander), noch ohne Abspiel-UI.
 
 **Phase 3: Import-Ansicht (ca. 3–4 Tage)**
 15. Gleiche Komponenten mit `direction=import`, dazu die Lieferantenkonzentration (HHI).
+
+**C1 (Rev. 3, neu): Story-Engine und Präsentationsmodus (ca. 1,5 Wochen)**: Stories abspielen (Website-Ansichten und kuratierte Ketten), PNG-Export pro Schritt (16:9, 4:5, 9:16). Ersetzt „Ansicht als Bild exportieren“ aus SEO Phase 3.
 
 **Phase 4: Kombinationen I und Produktion der Rohstoffe (ca. 1 Woche)**
 16. **Länderprofil** mit Import und Export nebeneinander, Wechsel zwischen den Ansichten ohne Kontextverlust.
 17. **Produktionsdaten der Rohstoffe** (USGS, EIA) → `production/<jahr>.json`. Damit werden „Global leader“ nach Produktion, die Erkennung von Re-Export-Drehscheiben und der **Versorgungsmix** möglich, nicht nur der Importmix.
 18. **Abhängigkeit, Tiefe 1**: „Woher kommt Deutschlands Erdgas?“ als Versorgungsmix mit Kennzeichnung.
 
+**C2 (Rev. 3, neu): Editor-MVP (ca. 3–4 Wochen)**: ersetzt [MINI_EDITOR_PLAN.md](MINI_EDITOR_PLAN.md). Leere Karte oder „In Editor öffnen“, Knoten, Wegpunkte, Kanten, eigene Güter mit `process`, Quellen und Verlässlichkeit je Element, Story-Schritte, Datei speichern und laden, PNG- und PPTX-Export. Danach Praxistest: Schokolade, Lebkuchen, E-Bike, Fairphone/iPhone.
+
+**C3 (Rev. 3, neu): Video-Export (1–2 Wochen)**: MP4 in 16:9 und 9:16, GIF. Bild für Bild aus der Zeitleiste gerendert (WebCodecs, Mediabunny), Basemap ohne CARTO.
+
 **Phase 5: Produkt-Pilot (ca. 2–3 Wochen)**
 19. **Ein Pilotprodukt** mit kuratiertem Rezept in 2–3 Stufen und Varianten. Vorschlag: **Lithium-Ionen-Batterie**, weil unsere Lithiumkette schon im Kathodenwerk Schwarzheide endet.
 20. Zusätzliche Güter im Katalog (Kathodenmaterial, Graphit, Nickel, Kobalt, Mangan, Batterie), dazu die passenden Handelsdaten aus der Pipeline.
 21. **upstream** modelliert bis Tiefe 3 (im Browser), **downstream** Tiefe 1 als Export-Ansicht des Produkts.
 22. UI für die Provenienz: Linienarten, Badge „geschätzt“, Spannen, **Methodik-Seite**.
-23. Verarbeitungsknoten bekommen `inputs`/`outputs` (zuerst Schwarzheide und die Raffinerien).
+23. Verarbeitungsknoten bekommen `inputs`/`outputs` (zuerst Schwarzheide und die Raffinerien). ✏️ Rev. 3: im gleichen Aufbau wie `process` in der Projektdatei.
+
+**C4 (Rev. 3, neu): Editor als PWA und Beitragen (1–2 Wochen)**: offline mit eigenem Basemap, Projekt → Prüfung → Issue/PR, Katalog-Vorschläge. Vorher muss die CLA stehen.
+
+**T1 (Rev. 3, neu): Verkehrsnetze als Ebenen**: Hochgeschwindigkeitsstrecken und Autobahnen aus eigenen Vektordaten (Natural Earth für die Weltkarte, OSM-Auszug für Details, ODbL-Datei getrennt). Keine fremden Kacheln.
 
 **Phase 6: Produkt-Ansicht ausbauen (fortlaufend)**
 - Liste der wichtigsten hergestellten Waren je Land: zuerst über Exporte (RCA), dann PRODCOM (EU) und UN Industrial Commodity Statistics.
@@ -642,8 +670,10 @@ Nichts davon verzögert die ersten Phasen spürbar. Es sind Namens- und Struktur
 - Transportarten (LNG/Pipeline, Eurostat Comext)
 - Choropleth
 - Seewege statt Luftlinien
-- MapLibre und Vektor-Tiles
-- Förderstätten und Unternehmen, nur mit Quelle
+- ~~MapLibre und Vektor-Tiles~~ → vorgezogen (A2a, Rev. 3)
+- Förderstätten und Unternehmen, nur mit Quelle (Rev. 3: Unternehmen öffentlich nur mit Verlässlichkeit „belegt“, F10)
+- (Rev. 3) Einrasten und Routing auf Verkehrsnetzen (T2): Schiene und See im Browser, Straße erst mit einem Server
+- (Rev. 3) Live-Einbettung in PowerPoint (Add-in), Desktop-App (Tauri) nur bei Bedarf, Accounts nur mit einem konkreten Grund
 
 ### 6.3 Offene Entscheidungen
 

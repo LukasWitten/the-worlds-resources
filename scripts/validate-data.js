@@ -13,6 +13,11 @@
  *    known goods, countries (or "ZZ" = rest of the world) and sources, and add
  *    up: flows of a good = its world total, flows of an exporter = the value in
  *    its country profile, world.json = the top goods in the country profiles
+ *  - project files (*.twr.json: stories, examples) match project-1.schema.json
+ *    and are consistent: routes start and end at known places, waypoints are
+ *    waypoint nodes, goods exist in the catalogue or the project, claims and
+ *    story steps point to existing sources and elements, "documented" claims
+ *    name a source
  *  - feature ids are unique across the whole project
  *  - every route names its start/end via from_node_id / to_node_id, the ids
  *    exist, and the first/last coordinate lies on that node (or inside that
@@ -41,6 +46,8 @@ const COUNTRIES_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'countries.schema.
 const TRADE_DIR = path.join(DATA_ROOT, 'trade');
 const TRADE_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'trade.schema.json');
 const REST_OF_WORLD = 'ZZ';
+const PROJECT_SCHEMA_PATH = path.join(DATA_ROOT, 'schemas', 'project-1.schema.json');
+const PROJECT_EXT = '.twr.json';
 
 // How close a route's first/last coordinate must be to its referenced node
 const NODE_MATCH_TOLERANCE_DEG = 0.08;
@@ -259,7 +266,7 @@ function checkFeature(file, feature, index) {
 
 // 1. Datasets --------------------------------------------------------------
 const datasets = [];
-const datasetFiles = listFiles(GEOJSON_DIR, ['.geojson', '.json']);
+const datasetFiles = listFiles(GEOJSON_DIR, ['.geojson', '.json']).filter(f => !f.endsWith(PROJECT_EXT));
 
 for (const file of datasetFiles) {
   const data = readJson(file);
@@ -274,11 +281,86 @@ for (const file of datasetFiles) {
 }
 
 // 2. Templates (single Features, excluded from the id/topology checks) ------
-for (const file of listFiles(TEMPLATES_DIR, ['.json'])) {
+for (const file of listFiles(TEMPLATES_DIR, ['.json']).filter(f => !f.endsWith(PROJECT_EXT))) {
   const feature = readJson(file);
   if (feature) checkFeature(file, feature, 0);
   console.log(`[checked] ${file} (template)`);
 }
+
+// 2b. Project files (*.twr.json) -------------------------------------------------
+const projectSchema = readJson(PROJECT_SCHEMA_PATH);
+const validateProject = projectSchema ? ajv.compile(projectSchema) : null;
+
+function checkProject(file) {
+  const project = readJson(file);
+  if (!project || !validateProject) return;
+  if (!validateProject(project)) {
+    for (const msg of formatAjvErrors(validateProject.errors).slice(0, 15)) fail(file, msg);
+    return;
+  }
+  const sourceSet = new Set();
+  for (const src of project.sources) {
+    if (sourceSet.has(src.id)) fail(file, `duplicate source id "${src.id}"`);
+    sourceSet.add(src.id);
+    if (src.registryId && !sourceIds.has(src.registryId)) fail(file, `source "${src.id}": registryId "${src.registryId}" is not in ${SOURCES_PATH}`);
+  }
+  const projectGoods = new Set(Object.keys(project.goods || {}));
+  const knownGood = (g) => goodIds.has(g) || projectGoods.has(g);
+  for (const [id, good] of Object.entries(project.goods || {})) {
+    if (good.parent && !knownGood(good.parent)) fail(file, `good "${id}": unknown parent "${good.parent}"`);
+  }
+
+  const nodes = new Map();
+  const elementIds = new Set();
+  const addId = (id) => {
+    if (elementIds.has(id)) fail(file, `duplicate id "${id}"`);
+    elementIds.add(id);
+  };
+  const checkClaims = (label, claims = []) => {
+    for (const claim of claims) {
+      for (const sid of claim.sourceIds) if (!sourceSet.has(sid)) fail(file, `${label}: unknown source "${sid}"`);
+      if (claim.confidence === 'documented' && !claim.sourceIds.length) fail(file, `${label}: a "documented" claim needs at least one source`);
+    }
+  };
+  for (const node of project.nodes) {
+    addId(node.id);
+    nodes.set(node.id, node);
+    const label = `node "${node.id}"`;
+    if (node.country && countryCodes.size && !countryCodes.has(node.country)) fail(file, `${label}: country "${node.country}" is not in ${COUNTRIES_PATH}`);
+    for (const g of node.goods || []) if (!knownGood(g)) fail(file, `${label}: unknown good "${g}"`);
+    for (const a of [...(node.process?.inputs || []), ...(node.process?.outputs || [])]) {
+      if (!knownGood(a.good)) fail(file, `${label}: process uses unknown good "${a.good}"`);
+    }
+    checkClaims(label, node.claims);
+  }
+  for (const edge of project.edges) {
+    addId(edge.id);
+    const label = `edge "${edge.id}"`;
+    for (const end of ['from', 'to']) {
+      const node = nodes.get(edge[end]);
+      if (!node) fail(file, `${label}: ${end} "${edge[end]}" is not a node`);
+    }
+    if (edge.from === edge.to) fail(file, `${label}: starts and ends at the same node`);
+    for (const via of edge.via || []) {
+      if (typeof via !== 'string') continue;
+      const node = nodes.get(via);
+      if (!node) fail(file, `${label}: via "${via}" is not a node`);
+      else if (node.kind !== 'waypoint') fail(file, `${label}: via "${via}" is a ${node.kind}, not a waypoint (split the route at that place instead)`);
+    }
+    for (const g of edge.goods) if (!knownGood(g)) fail(file, `${label}: unknown good "${g}"`);
+    checkClaims(label, edge.claims);
+  }
+  for (const step of project.story?.steps || []) {
+    const label = `story step "${step.id}"`;
+    for (const key of ['reveal', 'hide', 'focus']) {
+      for (const id of step[key] || []) if (!elementIds.has(id)) fail(file, `${label}: ${key} names unknown element "${id}"`);
+    }
+    for (const sid of step.sourceIds || []) if (!sourceSet.has(sid)) fail(file, `${label}: unknown source "${sid}"`);
+  }
+  console.log(`[checked] ${file} (${project.nodes.length} nodes, ${project.edges.length} edges, ${project.story?.steps?.length || 0} steps)`);
+}
+
+for (const file of listFiles(DATA_ROOT, [PROJECT_EXT])) checkProject(file);
 
 // 3. Unique ids across all datasets ------------------------------------------
 const seenIds = new Map();

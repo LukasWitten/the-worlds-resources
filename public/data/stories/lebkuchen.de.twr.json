@@ -1,0 +1,2027 @@
+{
+  "$schema": "../schemas/project-1.schema.json",
+  "format": "twr-project",
+  "formatVersion": "1.0.0",
+  "meta": {
+    "title": "Die Welt im Lebkuchen",
+    "subtitle": "Woher die Zutaten für Nürnberger Lebkuchen kommen",
+    "language": "de",
+    "license": "CC-BY-4.0",
+    "author": "The World's Resources",
+    "created": "2026-11-23",
+    "modified": "2026-11-23",
+    "dataYear": 2024,
+    "basedOn": "twr-trade 2024 (BACI V202601)",
+    "disclaimer": "Lieferländer und Anteile beziehen sich auf alle deutschen Importe der jeweiligen Zutat (BACI 2024), nicht auf die Lieferkette einer bestimmten Bäckerei. Die Routen sind schematisch. Dieses Projekt ist unabhängig und mit keinem Unternehmen und nicht mit dem Schutzverband Nürnberger Lebkuchen verbunden."
+  },
+  "sources": [
+    {
+      "id": "baci",
+      "title": "BACI – International Trade Database at the Product-Level, HS17 V202601, trade year 2024",
+      "publisher": "CEPII",
+      "url": "https://www.cepii.fr/CEPII/en/bdd_modele/bdd_modele_item.asp?id=37",
+      "type": "dataset",
+      "registryId": "baci-202601",
+      "note": "Processed by scripts/pipeline/build-trade.js into public/data/trade/2024/. Partner = country the goods were shipped from; re-exports (e.g. via the Netherlands) count for the shipping country.",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "lgl-gga",
+      "title": "Geschützte Herkunftsangaben (Nürnberger Lebkuchen)",
+      "publisher": "Bayerisches Landesamt für Gesundheit und Lebensmittelsicherheit (LGL)",
+      "url": "https://www.lgl.bayern.de/lebensmittel/kennzeichnung/echtheit_herkunft/herkunftsangaben.htm",
+      "type": "primary",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "nbg-lebkuchen",
+      "title": "Nürnberger Lebkuchen – geschützte geografische Angabe",
+      "publisher": "Stadt Nürnberg, EU-Büro",
+      "url": "https://www.nuernberg.de/internet/eu_buero/nuernbergerlebkuchen.html",
+      "type": "primary",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "leitsaetze-backwaren",
+      "title": "Leitsätze für Feine Backwaren (text as published by umwelt-online)",
+      "publisher": "umwelt-online (Deutsche Lebensmittelbuch-Kommission)",
+      "url": "https://umwelt-online.de/recht/lebensmt/lebensmb.ges/yback.htm",
+      "type": "secondary",
+      "note": "Elisenlebkuchen: at least 25 % almonds, hazelnuts or walnuts, at most 10 % flour. The Leitsätze were revised on 19.11.2024; check against the current official text before publishing.",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "lebkuchen-schmidt-press",
+      "title": "Pressemappe (Elisenlebkuchen)",
+      "publisher": "Lebkuchen-Schmidt",
+      "url": "https://www.lebkuchen-schmidt.com/userdata/filegallery/original/52_pressemappe.pdf",
+      "type": "self_reported",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "dm-gewuerz",
+      "title": "Lebkuchengewürz selber machen",
+      "publisher": "dm",
+      "url": "https://www.dm.de/tipps-und-trends/food/lebkuchengewuerz-selber-machen-2041132",
+      "type": "secondary",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "oekotest-gewuerz",
+      "title": "Lebkuchengewürz selber machen: Einfaches Rezept für die perfekte Gewürzmischung",
+      "publisher": "ÖKO-TEST",
+      "url": "https://www.oekotest.de/essen-trinken/Lebkuchengewuerz-selber-machen-Einfaches-Rezept-fuer-die-perfekte-Gewuerzmischung_15917_1.html",
+      "type": "secondary",
+      "accessed": "2026-11-23"
+    },
+    {
+      "id": "unctad-rmt2024",
+      "title": "Review of Maritime Transport 2024: Navigating maritime chokepoints",
+      "publisher": "UNCTAD",
+      "url": "https://unctad.org/publication/review-maritime-transport-2024",
+      "type": "primary",
+      "note": "By mid-2024 tonnage through the Suez Canal was down about 70 %; ship arrivals at the Cape of Good Hope up about 89 %.",
+      "accessed": "2026-11-23"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "nuremberg",
+      "kind": "site",
+      "type": "processing_hub",
+      "name": "Nürnberg",
+      "coord": [
+        11.077,
+        49.452
+      ],
+      "precision": "city",
+      "country": "DE",
+      "goods": [
+        "hazelnuts",
+        "almonds",
+        "honey",
+        "cinnamon",
+        "cloves",
+        "nutmeg",
+        "cardamom",
+        "ginger"
+      ],
+      "text": "Nürnberger Lebkuchen ist eine geschützte geografische Angabe (g.g.A., seit 2. Juli 1996): Er muss in Nürnberg gebacken werden. Die Zutaten dürfen von überall kommen.",
+      "claims": [
+        {
+          "about": "pgi",
+          "confidence": "documented",
+          "sourceIds": [
+            "lgl-gga",
+            "nbg-lebkuchen"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "hamburg",
+      "kind": "transfer",
+      "type": "import_hub",
+      "name": "Hamburg",
+      "coord": [
+        9.97,
+        53.54
+      ],
+      "precision": "city",
+      "country": "DE",
+      "text": "Steht für die Nordseehäfen. Seefracht nach Deutschland kommt auch über Bremerhaven, Rotterdam und Antwerpen.",
+      "claims": [
+        {
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematischer Ankunftshafen. BACI erfasst Länder, keine Häfen."
+        }
+      ]
+    },
+    {
+      "id": "tr",
+      "kind": "site",
+      "type": "region",
+      "name": "Türkei",
+      "coord": [
+        38.39,
+        40.92
+      ],
+      "precision": "country",
+      "country": "TR",
+      "goods": [
+        "hazelnuts"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "it",
+      "kind": "site",
+      "type": "region",
+      "name": "Italien",
+      "coord": [
+        12.6,
+        42.4
+      ],
+      "precision": "country",
+      "country": "IT",
+      "goods": [
+        "hazelnuts",
+        "almonds"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "es",
+      "kind": "site",
+      "type": "region",
+      "name": "Spanien",
+      "coord": [
+        -1.13,
+        37.99
+      ],
+      "precision": "country",
+      "country": "ES",
+      "goods": [
+        "almonds"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "ua",
+      "kind": "site",
+      "type": "region",
+      "name": "Ukraine",
+      "coord": [
+        30.52,
+        50.45
+      ],
+      "precision": "country",
+      "country": "UA",
+      "goods": [
+        "honey"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "hu",
+      "kind": "site",
+      "type": "region",
+      "name": "Ungarn",
+      "coord": [
+        19.04,
+        47.5
+      ],
+      "precision": "country",
+      "country": "HU",
+      "goods": [
+        "honey"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "us",
+      "kind": "site",
+      "type": "region",
+      "name": "USA",
+      "coord": [
+        -122.3,
+        37.8
+      ],
+      "precision": "country",
+      "country": "US",
+      "goods": [
+        "almonds"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "gt",
+      "kind": "site",
+      "type": "region",
+      "name": "Guatemala",
+      "coord": [
+        -88.6,
+        15.7
+      ],
+      "precision": "country",
+      "country": "GT",
+      "goods": [
+        "cardamom"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "ar",
+      "kind": "site",
+      "type": "region",
+      "name": "Argentinien",
+      "coord": [
+        -58.4,
+        -34.6
+      ],
+      "precision": "country",
+      "country": "AR",
+      "goods": [
+        "honey"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "cn",
+      "kind": "site",
+      "type": "region",
+      "name": "China",
+      "coord": [
+        113.6,
+        22.3
+      ],
+      "precision": "country",
+      "country": "CN",
+      "goods": [
+        "cinnamon",
+        "ginger"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "vn",
+      "kind": "site",
+      "type": "region",
+      "name": "Vietnam",
+      "coord": [
+        106.7,
+        20.8
+      ],
+      "precision": "country",
+      "country": "VN",
+      "goods": [
+        "cinnamon",
+        "nutmeg"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "id",
+      "kind": "site",
+      "type": "region",
+      "name": "Indonesien",
+      "coord": [
+        106.9,
+        -6.1
+      ],
+      "precision": "country",
+      "country": "ID",
+      "goods": [
+        "cinnamon",
+        "cloves",
+        "nutmeg",
+        "cardamom"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "lk",
+      "kind": "site",
+      "type": "region",
+      "name": "Sri Lanka",
+      "coord": [
+        79.85,
+        6.93
+      ],
+      "precision": "country",
+      "country": "LK",
+      "goods": [
+        "cinnamon",
+        "cloves",
+        "nutmeg"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "mg",
+      "kind": "site",
+      "type": "region",
+      "name": "Madagaskar",
+      "coord": [
+        49.4,
+        -18.15
+      ],
+      "precision": "country",
+      "country": "MG",
+      "goods": [
+        "cinnamon",
+        "cloves"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "km",
+      "kind": "site",
+      "type": "region",
+      "name": "Komoren",
+      "coord": [
+        43.25,
+        -11.7
+      ],
+      "precision": "country",
+      "country": "KM",
+      "goods": [
+        "cloves"
+      ],
+      "claims": [
+        {
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Lieferland in BACI 2024. Die Koordinate ist ein typischer Hafen oder eine typische Region."
+        }
+      ]
+    },
+    {
+      "id": "wp-south-china-sea",
+      "kind": "waypoint",
+      "name": "Südchinesisches Meer",
+      "coord": [
+        111,
+        12
+      ]
+    },
+    {
+      "id": "wp-singapore",
+      "kind": "waypoint",
+      "name": "Straße von Singapur",
+      "coord": [
+        104.3,
+        1.2
+      ]
+    },
+    {
+      "id": "wp-malacca",
+      "kind": "waypoint",
+      "name": "Straße von Malakka (Nord)",
+      "coord": [
+        97.5,
+        6
+      ]
+    },
+    {
+      "id": "wp-sri-lanka",
+      "kind": "waypoint",
+      "name": "Südlich von Sri Lanka",
+      "coord": [
+        80.3,
+        5.4
+      ]
+    },
+    {
+      "id": "wp-madagascar",
+      "kind": "waypoint",
+      "name": "Südlich von Madagaskar",
+      "coord": [
+        47,
+        -28.5
+      ]
+    },
+    {
+      "id": "wp-agulhas",
+      "kind": "waypoint",
+      "name": "Vor Kap Agulhas",
+      "coord": [
+        28,
+        -35
+      ]
+    },
+    {
+      "id": "wp-cape",
+      "kind": "waypoint",
+      "name": "Kap der Guten Hoffnung",
+      "coord": [
+        17.5,
+        -35.3
+      ]
+    },
+    {
+      "id": "wp-cape-verde",
+      "kind": "waypoint",
+      "name": "Vor Kap Verde",
+      "coord": [
+        -20,
+        14
+      ]
+    },
+    {
+      "id": "wp-finisterre",
+      "kind": "waypoint",
+      "name": "Vor Kap Finisterre",
+      "coord": [
+        -11,
+        44
+      ]
+    },
+    {
+      "id": "wp-panama",
+      "kind": "waypoint",
+      "name": "Panamakanal",
+      "coord": [
+        -79.7,
+        9.1
+      ]
+    },
+    {
+      "id": "wp-north-atlantic",
+      "kind": "waypoint",
+      "name": "Nordatlantik",
+      "coord": [
+        -40,
+        41
+      ]
+    },
+    {
+      "id": "wp-channel",
+      "kind": "waypoint",
+      "name": "Westlicher Ärmelkanal",
+      "coord": [
+        -5.5,
+        49.3
+      ]
+    },
+    {
+      "id": "wp-dover",
+      "kind": "waypoint",
+      "name": "Straße von Dover",
+      "coord": [
+        1.6,
+        51
+      ]
+    },
+    {
+      "id": "wp-german-bight",
+      "kind": "waypoint",
+      "name": "Deutsche Bucht",
+      "coord": [
+        8.2,
+        54
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "tr-hazelnuts",
+      "from": "tr",
+      "to": "nuremberg",
+      "via": [
+        [
+          29,
+          41.05
+        ],
+        [
+          20.46,
+          44.81
+        ],
+        [
+          16.37,
+          48.21
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "hazelnuts"
+      ],
+      "qty": {
+        "value": 363952026,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.6483
+      },
+      "text": "65 % der deutschen Haselnuss-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "it-hazelnuts",
+      "from": "it",
+      "to": "nuremberg",
+      "via": [
+        [
+          11.4,
+          47.3
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "hazelnuts"
+      ],
+      "qty": {
+        "value": 81281896,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1448
+      },
+      "text": "14 % der deutschen Haselnuss-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "us-almonds",
+      "from": "us",
+      "to": "hamburg",
+      "via": [
+        [
+          -110,
+          20
+        ],
+        "wp-panama",
+        [
+          -74,
+          19.8
+        ],
+        "wp-north-atlantic",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "almonds"
+      ],
+      "qty": {
+        "value": 239264191,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.469
+      },
+      "text": "47 % der deutschen Mandel-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Seeroute."
+        }
+      ]
+    },
+    {
+      "id": "es-almonds",
+      "from": "es",
+      "to": "nuremberg",
+      "via": [
+        [
+          2,
+          41.6
+        ],
+        [
+          4.8,
+          45.8
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "almonds"
+      ],
+      "qty": {
+        "value": 142968906,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.2802
+      },
+      "text": "28 % der deutschen Mandel-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "it-almonds",
+      "from": "it",
+      "to": "nuremberg",
+      "via": [
+        [
+          11.4,
+          47.3
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "almonds"
+      ],
+      "qty": {
+        "value": 24097772,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.0472
+      },
+      "text": "5 % der deutschen Mandel-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "ua-honey",
+      "from": "ua",
+      "to": "nuremberg",
+      "via": [
+        [
+          21,
+          50.1
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "honey"
+      ],
+      "qty": {
+        "value": 37332874,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.15
+      },
+      "text": "15 % der deutschen Honig-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "ar-honey",
+      "from": "ar",
+      "to": "hamburg",
+      "via": [
+        [
+          -40,
+          -22
+        ],
+        [
+          -30,
+          -5
+        ],
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "honey"
+      ],
+      "qty": {
+        "value": 24370129,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.0979
+      },
+      "text": "10 % der deutschen Honig-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Seeroute."
+        }
+      ]
+    },
+    {
+      "id": "hu-honey",
+      "from": "hu",
+      "to": "nuremberg",
+      "via": [
+        [
+          16.37,
+          48.21
+        ]
+      ],
+      "mode": "road",
+      "goods": [
+        "honey"
+      ],
+      "qty": {
+        "value": 18253822,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.0733
+      },
+      "text": "7 % der deutschen Honig-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Landroute per Lkw."
+        }
+      ]
+    },
+    {
+      "id": "cn-cinnamon",
+      "from": "cn",
+      "to": "hamburg",
+      "via": [
+        "wp-south-china-sea",
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 4149137,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.195
+      },
+      "text": "20 % der deutschen Zimt-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "vn-cinnamon",
+      "from": "vn",
+      "to": "hamburg",
+      "via": [
+        "wp-south-china-sea",
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 3950899,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1857
+      },
+      "text": "19 % der deutschen Zimt-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "id-cinnamon",
+      "from": "id",
+      "to": "hamburg",
+      "via": [
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 3049804,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1433
+      },
+      "text": "14 % der deutschen Zimt-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "lk-cinnamon",
+      "from": "lk",
+      "to": "hamburg",
+      "via": [
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 2263826,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1064
+      },
+      "text": "11 % der deutschen Zimt-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "mg-cinnamon",
+      "from": "mg",
+      "to": "hamburg",
+      "via": [
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 1737315,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.0816
+      },
+      "text": "8 % der deutschen Zimt-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "mg-cloves",
+      "from": "mg",
+      "to": "hamburg",
+      "via": [
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cloves"
+      ],
+      "qty": {
+        "value": 3102193,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.385
+      },
+      "text": "39 % der deutschen Nelken-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "km-cloves",
+      "from": "km",
+      "to": "hamburg",
+      "via": [
+        [
+          40,
+          -21
+        ],
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cloves"
+      ],
+      "qty": {
+        "value": 968188,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1202
+      },
+      "text": "12 % der deutschen Nelken-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "id-cloves",
+      "from": "id",
+      "to": "hamburg",
+      "via": [
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cloves"
+      ],
+      "qty": {
+        "value": 887546,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1102
+      },
+      "text": "11 % der deutschen Nelken-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "lk-cloves",
+      "from": "lk",
+      "to": "hamburg",
+      "via": [
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cloves"
+      ],
+      "qty": {
+        "value": 887230,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1101
+      },
+      "text": "11 % der deutschen Nelken-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "id-nutmeg",
+      "from": "id",
+      "to": "hamburg",
+      "via": [
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "nutmeg"
+      ],
+      "qty": {
+        "value": 14228226,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.5444
+      },
+      "text": "54 % der deutschen Muskat-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "vn-nutmeg",
+      "from": "vn",
+      "to": "hamburg",
+      "via": [
+        "wp-south-china-sea",
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "nutmeg"
+      ],
+      "qty": {
+        "value": 5485085,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.2099
+      },
+      "text": "21 % der deutschen Muskat-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "lk-nutmeg",
+      "from": "lk",
+      "to": "hamburg",
+      "via": [
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "nutmeg"
+      ],
+      "qty": {
+        "value": 1525151,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.0584
+      },
+      "text": "6 % der deutschen Muskat-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "gt-cardamom",
+      "from": "gt",
+      "to": "hamburg",
+      "via": [
+        [
+          -85.6,
+          21.8
+        ],
+        [
+          -79.8,
+          25.6
+        ],
+        [
+          -76,
+          30
+        ],
+        "wp-north-atlantic",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cardamom"
+      ],
+      "qty": {
+        "value": 5669644,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.5213
+      },
+      "text": "52 % der deutschen Kardamom-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "estimated",
+          "sourceIds": [],
+          "note": "Schematische Seeroute."
+        }
+      ]
+    },
+    {
+      "id": "id-cardamom",
+      "from": "id",
+      "to": "hamburg",
+      "via": [
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "cardamom"
+      ],
+      "qty": {
+        "value": 1461843,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.1344
+      },
+      "text": "13 % der deutschen Kardamom-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "cn-ginger",
+      "from": "cn",
+      "to": "hamburg",
+      "via": [
+        "wp-south-china-sea",
+        "wp-singapore",
+        "wp-malacca",
+        "wp-sri-lanka",
+        "wp-madagascar",
+        "wp-agulhas",
+        "wp-cape",
+        "wp-cape-verde",
+        "wp-finisterre",
+        "wp-channel",
+        "wp-dover",
+        "wp-german-bight"
+      ],
+      "mode": "sea",
+      "goods": [
+        "ginger"
+      ],
+      "qty": {
+        "value": 43504958,
+        "unit": "USD",
+        "year": 2024,
+        "share": 0.5961
+      },
+      "text": "60 % der deutschen Ingwer-Importe (nach Wert).",
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "documented",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Wert der deutschen Importe aus diesem Land; Anteil = an allen deutschen Importen der Zutat."
+        },
+        {
+          "about": "route",
+          "confidence": "plausible",
+          "sourceIds": [
+            "unctad-rmt2024"
+          ],
+          "note": "Schematische Seeroute. 2024 mieden die meisten Containerdienste zwischen Asien und Europa das Rote Meer und fuhren ums Kap der Guten Hoffnung."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-almonds",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "almonds"
+      ],
+      "qty": {
+        "value": 239264191,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-honey",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "honey"
+      ],
+      "qty": {
+        "value": 24370129,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-cinnamon",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "cinnamon"
+      ],
+      "qty": {
+        "value": 15150981,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-cloves",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "cloves"
+      ],
+      "qty": {
+        "value": 5845157,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-nutmeg",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "nutmeg"
+      ],
+      "qty": {
+        "value": 21238462,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-cardamom",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "cardamom"
+      ],
+      "qty": {
+        "value": 7131487,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    },
+    {
+      "id": "hamburg-nuremberg-ginger",
+      "from": "hamburg",
+      "to": "nuremberg",
+      "mode": "mixed",
+      "goods": [
+        "ginger"
+      ],
+      "qty": {
+        "value": 43504958,
+        "unit": "USD",
+        "year": 2024
+      },
+      "claims": [
+        {
+          "about": "qty",
+          "confidence": "estimated",
+          "sourceIds": [
+            "baci"
+          ],
+          "note": "Summe der hier gezeigten Seetransporte. Nicht alles geht nach Nürnberg; steht für den Weitertransport per Bahn oder Lkw."
+        }
+      ]
+    }
+  ],
+  "story": {
+    "steps": [
+      {
+        "id": "intro",
+        "title": "Woher kommt ein Lebkuchen?",
+        "text": "Nürnberger Lebkuchen muss in Nürnberg gebacken werden. Er ist seit 1996 eine geschützte geografische Angabe. Seine Zutaten kommen aus der ganzen Welt.",
+        "camera": {
+          "bounds": [
+            [
+              -130,
+              -45
+            ],
+            [
+              150,
+              62
+            ]
+          ]
+        },
+        "transition": "cut",
+        "reveal": [
+          "nuremberg"
+        ],
+        "focus": [
+          "nuremberg"
+        ],
+        "sourceIds": [
+          "lgl-gga",
+          "nbg-lebkuchen"
+        ]
+      },
+      {
+        "id": "nuts",
+        "title": "Nüsse: das Herz des Teigs",
+        "text": "Elisenlebkuchen enthalten mindestens 25 % Nüsse und höchstens 10 % Mehl. Deutschland importiert mehr Haselnüsse als jedes andere Land, 65 % davon aus der Türkei. 47 % der Mandeln kommen aus den USA.",
+        "camera": {
+          "bounds": [
+            [
+              -125,
+              25
+            ],
+            [
+              45,
+              58
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "hamburg",
+          "tr",
+          "it",
+          "us",
+          "es",
+          "tr-hazelnuts",
+          "it-hazelnuts",
+          "us-almonds",
+          "es-almonds",
+          "it-almonds",
+          "hamburg-nuremberg-almonds"
+        ],
+        "focus": [
+          "tr",
+          "us"
+        ],
+        "sourceIds": [
+          "leitsaetze-backwaren",
+          "baci"
+        ]
+      },
+      {
+        "id": "honey",
+        "title": "Honig: Deutschland auf Platz zwei der Welt",
+        "text": "80.000 Tonnen Honig hat Deutschland 2024 eingeführt. Nur die USA kauften mehr. Die größten Lieferanten: Ukraine (15 %), Neuseeland, Argentinien und Ungarn.",
+        "camera": {
+          "bounds": [
+            [
+              -75,
+              -50
+            ],
+            [
+              45,
+              60
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "ua",
+          "ar",
+          "hu",
+          "ua-honey",
+          "ar-honey",
+          "hu-honey",
+          "hamburg-nuremberg-honey"
+        ],
+        "focus": [
+          "ua",
+          "ar"
+        ],
+        "sourceIds": [
+          "baci"
+        ]
+      },
+      {
+        "id": "spices",
+        "title": "Gewürze aus den Tropen",
+        "text": "Lebkuchengewürz besteht vor allem aus Zimt, Nelken, Muskat, Kardamom und Ingwer. 54 % der Muskatnuss kommen aus Indonesien, 39 % der Nelken aus Madagaskar und, überraschend, 52 % des Kardamoms aus Guatemala.",
+        "camera": {
+          "bounds": [
+            [
+              -95,
+              -40
+            ],
+            [
+              125,
+              58
+            ]
+          ]
+        },
+        "transition": "fly",
+        "reveal": [
+          "cn",
+          "vn",
+          "id",
+          "lk",
+          "mg",
+          "km",
+          "gt",
+          "cn-cinnamon",
+          "vn-cinnamon",
+          "id-cinnamon",
+          "lk-cinnamon",
+          "mg-cinnamon",
+          "mg-cloves",
+          "km-cloves",
+          "id-cloves",
+          "lk-cloves",
+          "id-nutmeg",
+          "vn-nutmeg",
+          "lk-nutmeg",
+          "gt-cardamom",
+          "id-cardamom",
+          "cn-ginger",
+          "hamburg-nuremberg-cinnamon",
+          "hamburg-nuremberg-cloves",
+          "hamburg-nuremberg-nutmeg",
+          "hamburg-nuremberg-cardamom",
+          "hamburg-nuremberg-ginger"
+        ],
+        "focus": [
+          "id",
+          "mg",
+          "gt"
+        ],
+        "sourceIds": [
+          "dm-gewuerz",
+          "oekotest-gewuerz",
+          "baci"
+        ]
+      },
+      {
+        "id": "detour",
+        "title": "Der lange Weg ums Kap",
+        "text": "2024 mieden die meisten Schiffe aus Asien das Rote Meer und fuhren ums Kap der Guten Hoffnung. Das ist ein Umweg von Tausenden Kilometern bis Hamburg.",
+        "camera": {
+          "bounds": [
+            [
+              -30,
+              -50
+            ],
+            [
+              125,
+              58
+            ]
+          ]
+        },
+        "transition": "fly",
+        "focus": [
+          "wp-cape"
+        ],
+        "sourceIds": [
+          "unctad-rmt2024"
+        ]
+      },
+      {
+        "id": "nuremberg",
+        "title": "Alle Wege führen nach Nürnberg",
+        "text": "14 Länder auf vier Kontinenten für ein Gebäck. Auch die Niederlande tauchen als großer Gewürzlieferant auf: Über Rotterdam und Amsterdam wird weiterverkauft, was aus den Tropen ankommt.",
+        "camera": {
+          "bounds": [
+            [
+              -130,
+              -45
+            ],
+            [
+              150,
+              62
+            ]
+          ]
+        },
+        "transition": "fly",
+        "focus": [
+          "nuremberg"
+        ],
+        "sourceIds": [
+          "baci"
+        ]
+      }
+    ]
+  }
+}
